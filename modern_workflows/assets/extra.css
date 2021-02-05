@@ -10,13 +10,22 @@ font-weight: 900;
 }
 
 .pull-right li {
-  padding-bottom: 20px;
+  padding-bottom: 0px;
+  line-height: 1.3;
+}
+
+.pull-rightcompact li {
+  padding-bottom: 0px;
   line-height: 1.3;
 }
 
 .pull-left h1 {
   text-align:center;
   color: #333f48;
+}
+
+.burntorange {
+  color:#bf5700;
 }
 
 .title-slide {
