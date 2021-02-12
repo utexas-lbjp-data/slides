@@ -49,7 +49,7 @@ census_api_key <- Sys.getenv("CENSUS_API_KEY")
 ```
 
 ```{r xaringanExtra, include=FALSE}
-xaringanExtra::use_xaringan_extra(c("tile_view", "panelset", "animate_css", "tachyons", "webcam", "broadcast"))
+xaringanExtra::use_xaringan_extra(c("tile_view", "panelset", "animate_css", "tachyons"))
 
 xaringanExtra::use_share_again()
 xaringanExtra::style_share_again(
