@@ -1,5 +1,5 @@
 ---
-title: "Modern Project Workflows - Prework"
+title: "Data Initiatives Architecture"
 subtitle: "Becoming Proficient and Efficient with R and RStudio for Policy Work <html><div style='float:left'></div><hr color='#e2f1fc' size=1px width=1100px></html>"
 author: 
 - "<span style='color:#005f86; font-weight:500'>D. Cale Reeves</span> | Ph.D."

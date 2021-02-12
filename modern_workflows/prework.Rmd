@@ -2,9 +2,12 @@
 title: "Modern Project Workflows - Prework"
 subtitle: "Becoming Proficient and Efficient with R and RStudio for Policy Work <html><div style='float:left'></div><hr color='#e2f1fc' size=1px width=1100px></html>"
 author: 
-- "<span style='color:#005f86; font-weight:500'>D. Cale Reeves</span> | Ph.D."
-- "<span style='color:#005f86; font-weight:500'>Noorah Alhasan</span> | Ph.D."
-- "<span style='color:#005f86; font-weight:500'>Matt Worthington</span> | M.Ed./M.PAff"
+# - "<span style='color:#005f86; font-weight:500'>Noorah Alhasan</span> | M.PAff"
+# - "<span style='color:#005f86; font-weight:500'>D. Cale Reeves</span> | Ph.D."
+# - "<span style='color:#005f86; font-weight:500'>Matt Worthington</span> | M.Ed./M.PAff"
+- "<span style='color:#005f86; font-weight:500'>Noorah Alhasan</span> | Policy Researcher & Doctoral Candidate, UT Austin - LBJ"
+- "<span style='color:#005f86; font-weight:500'>D. Cale Reeves</span> | Visiting Assistant Professor, Georgia Tech; Research Affiliate, UT Austin - LBJ"
+- "<span style='color:#005f86; font-weight:500'>Matt Worthington</span> | Sr. Project Manager for Data Initiatives, UT Austin - LBJ"
 date: '<span style="color:#bf5700; font-weight:300">`r format(Sys.Date(), "%B %d, %Y")`</span>'
 output:
   xaringan::moon_reader:
@@ -19,6 +22,9 @@ output:
       ratio: "16:9"
       navigation:
         scroll: false # disable slide transitions by scrolling
+    includes:
+      in_header:
+        - 'header.html'
 ---
 class: middle
 
@@ -37,12 +43,13 @@ library(cowplot)          # Helps with arranging and layering of ggplot2 objects
 library(hrbrthemes)       # A ppackage I really like with lots of useful functions
 library(htmlwidgets)
 library(lbjdata)
+library(gt)
 readRenviron("~/.Renviron")
 census_api_key <- Sys.getenv("CENSUS_API_KEY")
 ```
 
 ```{r xaringanExtra, include=FALSE}
-xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons", "webcam", "broadcast"))
+xaringanExtra::use_xaringan_extra(c("tile_view", "panelset", "animate_css", "tachyons", "webcam", "broadcast"))
 
 xaringanExtra::use_share_again()
 xaringanExtra::style_share_again(
@@ -72,11 +79,18 @@ htmltools::tagList(
 
 # Prework
 
-This is a resource to get prepared for the "Modern Information Workflows" workshop using R and Rstudio workshop that will be done on {INSERT DATE}. In order for the workshop to go smoothly and, more importantly, for you to get something out of it, you'll need to do a few things to get setup. If you have any questions during prework, please contact one of us at the following emails:
+This is a resource to get prepared for the "Modern Project Workflows" workshop using R and Rstudio. In order for the workshop to go smoothly and, more importantly, for you to get something out of it, you'll need to do a few things to get setup. If you have any questions during prework, please contact one of us at the following emails:
 
-* D. Cale Reeves: [d.cale.reeves@utexas.edu](mailto:d.cale.reeves@utexas.edu)
+* D. Cale Reeves: [d.cale.reeves@utexas.edu](d.cale.reeves@gatech.edu)
 * Noorah Alhasan: [noorah.alhasan@utexas.edu](mailto:noorah.alhasan@utexas.edu)
 * Matt Worthington: [matthew.worthington@austin.utexas.edu](matthew.worthington@austin.utexas.edu)
+
+#### Workshop Dates:
+
+* Modern Project Workflows, Part 1: Mar 8, 2021
+* Modern Project Workflows, Part 1: Mar 22, 2021
+
+
 
 ---
 class: middle
@@ -92,23 +106,25 @@ Constructed from easily accessed free services, this example workflow is designe
 
 .pull-right.b--gray.ba.bw2.ma2.pa4.shadow-1[
 
-**In the first session (On DATEXXX), we cover:**
+**In the first session, we cover:**
 
 *	Getting set with Git
-*	Cloning a Repo
-*	Editing a Repo
-*	Rebuilding/cloning a website
-*	Rstudio and RMarkdown
-*	Turning analyses into PDF/HTML/DOCX
+  *	Cloning a Repo of a website
+*	Navigating Rstudio
+  *	Rstudio Interface
+  *	R Projects
+  *	Create an RMarkdown document
+*	Edit the cloned website
+  *	Pushing project to the Web
 
-**In the second session(On DATEXXX), we dig deeper into deliverables with:**
 
-*	Graphics in R
-*	Basics of ggplot2 
-*	“Tuning” ggplot2 plots
-*	Integrating graphics and text
-*	RMarkdown for deliverables
-*	Outputting slides & reports
+**In the second session, we cover:**
+
+*	INPUTS
+  *	Basics of importing data (csv, xlsx, google sheets, and API).
+*	OUTPUTS
+  *	Charts with ggplot2
+  *	Reporting with RMarkdown
 
 ]
 
@@ -141,5 +157,124 @@ While I know this is a workshop whose title is all about R, the very first thing
 
 * **Next, download the Github desktop client:** Go to [desktop.github.com](https://desktop.github.com) and download the client for your platform. Once downloaded, make sure you open and log into the app with the account you created.
 ]
+
+---
+class: middle
+
+## Ways To Use R For This Workshop
+
+The next and last step to get ready for the workshop is to get setup with an RStudio environment. Fortunately, there are two ways to do this---both are relatively straightforward, but one requires a little extra work. Below is a comparison of using RStudio Cloud versus setting it up on your laptop or desktop computer. <span style='font-size: 1em; display: inline-block;text-align: center; color: #005f86;'><i class='fal fa-medal'></i></span> indicates the setup method with an advantage. <span style='font-size: 1em; display: inline-block;text-align: center; color: #bf5700;'><i class='fal fa-tools'></i></span> indicates the setup method that works perfect, but requires a bit more work.
+
+<div class="gt_center">
+```{r echo=FALSE}
+
+tibble(type = c("Setup","Ease of Use", "Speed", "Customization"),
+       cloud = c("<span style='font-size: 3em; display: inline-block;text-align: center; color: #005f86;'><i class='fal fa-medal'></i></span>",
+                 "<span style='font-size: 3em; display: inline-block;text-align: center; color: #005f86;'><i class='fal fa-medal'></i></span>",
+                 "<span style='font-size: 3em; display: inline-block;text-align: center; color: #bf5700;'><i class='fal fa-tools'></i></span>",
+                 "<span style='font-size: 3em; display: inline-block;text-align: center; color: #bf5700;'><i class='fal fa-tools'></i></span>"),
+       desktop = c("<span style='font-size: 3em; display: inline-block;text-align: center; color: #bf5700;'><i class='fal fa-tools'></i></span>",
+                   "<span style='font-size: 3em; display: inline-block;text-align: center; color: #bf5700;'><i class='fal fa-tools'></i></span>",
+                   "<span style='font-size: 3em; display: inline-block;text-align: center; color: #005f86;'><i class='fal fa-medal'></i></span>",
+                   "<span style='font-size: 3em; display: inline-block;text-align: center; color: #005f86;'><i class='fal fa-medal'></i></span>")) %>% 
+  gt(rowname_col = "type") %>% 
+  cols_align(align = "center", columns = vars(desktop)) %>% 
+  cols_align(align = "center", columns = vars(cloud)) %>% 
+  cols_label(type = " ",
+             cloud = md("**Rstudio Cloud**"),
+             desktop = md("**RStudio Desktop**")) %>% 
+  cols_width(vars(type) ~ px(175)) %>% 
+  tab_style(
+    style = list(cell_text(weight = "bold", align = "center", color = "#333f48")),
+    locations = cells_body(columns = vars(type))
+    ) %>%
+  tab_style(
+    style = list(cell_text(weight = "500", align = "center", color = "#333f48")),
+    locations = cells_column_labels(columns = vars(cloud, desktop))
+    ) %>%
+  tab_options(table.width = "950px",
+              table.font.size = "18px",
+              table.font.names = "'Libre Franklin', -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial;",
+              column_labels.font.weight = "bold",
+              column_labels.border.top.color = "#ffffff",
+              row.striping.background_color = "#ffffff",
+              heading.title.font.weight = "bolder")
+
+```
+
+</div>
+
+---
+class: middle
+
+## Cloud Setup RStudio Cloud
+
+The easiest method to get started with RStudio + R is to use RStudio.Cloud, which is a new service for using R that the RStudio team provides. 
+
+.pull-left.b--gray.ba.bw2.ma2.pa4.shadow-1[
+
+**INSTRUCTIONS**
+
+**Step 1:** In a web browser, go to [rstudio.cloud](http://rstudio.cloud)  
+
+**Step 2:** Log into it with the github account you created earlier.  
+
+**Step 3:** Congrats! You're ready!
+
+]
+
+.pull-right[ 
+
+**Benefits of using RStudio.cloud:** virtually no setup is required on your part other than logging in. If you use RStudio's cloud product, you're almost guaranteed to have every task or piece of code we ask you to use work perfectly.
+
+**Drawback of using RStudio.cloud:** while the cloud setup is an easier method, the speed of the cloud application isn't as fast as the next method--local setup--nor does it offer the same level of flexibility. The occasions in which this will matter to you will likely come after the workshop, but it's something to consider.
+  
+]
+  
+---
+class: middle
+
+### Local Setup RStudio Cloud
+
+The next method to get started with RStudio is by setting up RStudio locally on your desktop. Until recently, this was the only free option for most users to use RStudio, so despite some drawbacks, this method is tried and true. 
+
+.pull-left.b--gray.ba.bw2.ma2.pa4.shadow-1[
+
+**INSTRUCTIONS**
+
+**Step 1:** Go to [this link](https://rstudio.com/products/rstudio/download/#download).  
+
+**Step 2:** Follow the two-step instructions on that page. 
+
+**Step 3:** For visual assistance, use the video tutorial on the right. 
+
+**Step 4:** Congrats, you're ready! 
+
+
+
+]
+
+.pull-right[ 
+
+.panelset[
+.panel[.panel-name[Tutorial]
+
+<iframe width="550" height = "316" src="https://www.youtube-nocookie.com/embed/k7DuOUEO7SE" frameborder="0" style = "border: solid 0px #ffffff" color = "white"  modestbranding = "1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1"></iframe>
+
+]
+
+.panel[.panel-name[Benefits and Drawbacks]
+
+**Benefits of using RStudio Desktop:** Setting up RStudio locally on your desktop is beneficial for a number of reasons, but mostly because it allows you to customize your RStudio environment to your liking. Another good reason for using RStudio locally is that it's faster for most tasks.
+
+**Drawback of using RStudio Desktop:** while the desktop setup is preferred for many users, it does require more effort on the initial setup than using RStudio Cloud. Also, in more rare cases, certain packages may require additional setup that can be complicated. While those cases don't impact this workshop, down the road in your coding journey, you may bump up against that.
+
+]
+]
+
+
+  
+]
+
 
 

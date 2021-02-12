@@ -40,14 +40,14 @@
   --header-h3-font-size: 1.75rem;
 
   /* Colors */
-  --text-color: #000;
-  --header-color: #000;
+  --text-color: #333f48;
+  --header-color: #005f86;
   --background-color: #FFF;
-  --link-color: rgb(249, 38, 114);
+  --link-color: #bf5700;
   --code-highlight-color: rgba(255,255,0,0.5);
-  --inverse-text-color: #d6d6d6;
-  --inverse-background-color: #272822;
-  --inverse-header-color: #f3f3f3;
+  --inverse-text-color: #fff;
+  --inverse-background-color: #333f48;
+  --inverse-header-color: #fff;
   --title-slide-background-color: #272822;
   --title-slide-text-color: #d6d6d6;
   --header-background-color: #000;

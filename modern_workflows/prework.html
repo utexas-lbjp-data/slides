@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Modern Information Workflows - Prework</title>
+    <title>Modern Project Workflows - Prework</title>
     <meta charset="utf-8" />
-    <meta name="author" content="D. Cale Reeves | Ph.D." />
-    <meta name="author" content="Noorah Alhasan | Ph.D." />
-    <meta name="author" content="Matt Worthington | M.Ed./M.PAff" />
-    <meta name="date" content="2021-02-05" />
+    <meta name="author" content="Noorah Alhasan | Policy Researcher &amp; Doctoral Candidate, UT Austin - LBJ" />
+    <meta name="author" content="D. Cale Reeves | Visiting Assistant Professor, Georgia Tech; Research Affiliate, UT Austin - LBJ" />
+    <meta name="author" content="Matt Worthington | Sr. Project Manager for Data Initiatives, UT Austin - LBJ" />
+    <meta name="date" content="2021-02-12" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
     <script src="libs/tile-view/tile-view.js"></script>
     <link href="libs/animate.css/animate.xaringan.css" rel="stylesheet" />
     <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
     <script src="libs/xaringanExtra-webcam/webcam.js"></script>
     <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
     <script src="libs/js-cookie/js.cookie.js"></script>
@@ -31,6 +33,7 @@
     <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
     <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
     <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/fa1ce86f40.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="assets/extra.css" type="text/css" />
   </head>
@@ -38,7 +41,7 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Modern Information Workflows - Prework
+# Modern Project Workflows - Prework
 ## Becoming Proficient and Efficient with R and RStudio for Policy Work
 <html>
 <div style="float:left">
@@ -46,10 +49,10 @@ class: center, middle, inverse, title-slide
 </div>
 <hr color='#e2f1fc' size=1px width=1100px>
 </html>
-### <span style="color:#005f86; font-weight:500">D. Cale Reeves</span> | Ph.D.
-### <span style="color:#005f86; font-weight:500">Noorah Alhasan</span> | Ph.D.
-### <span style="color:#005f86; font-weight:500">Matt Worthington</span> | M.Ed./M.PAff
-### <span style="color:#bf5700; font-weight:300">February 05, 2021</span>
+### <span style="color:#005f86; font-weight:500">Noorah Alhasan</span> | Policy Researcher &amp; Doctoral Candidate, UT Austin - LBJ
+### <span style="color:#005f86; font-weight:500">D. Cale Reeves</span> | Visiting Assistant Professor, Georgia Tech; Research Affiliate, UT Austin - LBJ
+### <span style="color:#005f86; font-weight:500">Matt Worthington</span> | Sr. Project Manager for Data Initiatives, UT Austin - LBJ
+### <span style="color:#bf5700; font-weight:300">February 12, 2021</span>
 
 ---
 
@@ -61,11 +64,18 @@ class: middle
 
 # Prework
 
-This is a resource to get prepared for the "Modern Information Workflows" workshop using R and Rstudio workshop that will be done on {INSERT DATE}. In order for the workshop to go smoothly and, more importantly, for you to get something out of it, you'll need to do a few things to get setup. If you have any questions during prework, please contact one of us at the following emails:
+This is a resource to get prepared for the "Modern Project Workflows" workshop using R and Rstudio. In order for the workshop to go smoothly and, more importantly, for you to get something out of it, you'll need to do a few things to get setup. If you have any questions during prework, please contact one of us at the following emails:
 
-* D. Cale Reeves: [d.cale.reeves@utexas.edu](mailto:d.cale.reeves@utexas.edu)
+* D. Cale Reeves: [d.cale.reeves@utexas.edu](d.cale.reeves@gatech.edu)
 * Noorah Alhasan: [noorah.alhasan@utexas.edu](mailto:noorah.alhasan@utexas.edu)
 * Matt Worthington: [matthew.worthington@austin.utexas.edu](matthew.worthington@austin.utexas.edu)
+
+#### Workshop Dates:
+
+* Modern Project Workflows, Part 1: Mar 8, 2021
+* Modern Project Workflows, Part 1: Mar 22, 2021
+
+
 
 ---
 class: middle
@@ -81,23 +91,25 @@ Constructed from easily accessed free services, this example workflow is designe
 
 .pull-right.b--gray.ba.bw2.ma2.pa4.shadow-1[
 
-**In the first session (On DATEXXX), we cover:**
+**In the first session, we cover:**
 
 *	Getting set with Git
-*	Cloning a Repo
-*	Editing a Repo
-*	Rebuilding/cloning a website
-*	Rstudio and RMarkdown
-*	Turning analyses into PDF/HTML/DOCX
+  *	Cloning a Repo of a website
+*	Navigating Rstudio
+  *	Rstudio Interface
+  *	R Projects
+  *	Create an RMarkdown document
+*	Edit the cloned website
+  *	Pushing project to the Web
 
-**In the second session(On DATEXXX), we dig deeper into deliverables with:**
 
-*	Graphics in R
-*	Basics of ggplot2 
-*	“Tuning” ggplot2 plots
-*	Integrating graphics and text
-*	RMarkdown for deliverables
-*	Outputting slides &amp; reports
+**In the second session, we cover:**
+
+*	INPUTS
+  *	Basics of importing data (csv, xlsx, google sheets, and API).
+*	OUTPUTS
+  *	Charts with ggplot2
+  *	Reporting with RMarkdown
 
 ]
 
@@ -130,6 +142,465 @@ While I know this is a workshop whose title is all about R, the very first thing
 
 * **Next, download the Github desktop client:** Go to [desktop.github.com](https://desktop.github.com) and download the client for your platform. Once downloaded, make sure you open and log into the app with the account you created.
 ]
+
+---
+class: middle
+
+## Ways To Use R For This Workshop
+
+The next and last step to get ready for the workshop is to get setup with an RStudio environment. Fortunately, there are two ways to do this---both are relatively straightforward, but one requires a little extra work. Below is a comparison of using RStudio Cloud versus setting it up on your laptop or desktop computer. &lt;span style='font-size: 1em; display: inline-block;text-align: center; color: #005f86;'&gt;&lt;i class='fal fa-medal'&gt;&lt;/i&gt;&lt;/span&gt; indicates the setup method with an advantage. &lt;span style='font-size: 1em; display: inline-block;text-align: center; color: #bf5700;'&gt;&lt;i class='fal fa-tools'&gt;&lt;/i&gt;&lt;/span&gt; indicates the setup method that works perfect, but requires a bit more work.
+
+&lt;div class="gt_center"&gt;
+<style>html {
+  font-family: "" Libre Franklin ", -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial;";
+}
+
+#cskigsvhdj .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: 950px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#cskigsvhdj .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#cskigsvhdj .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: bolder;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#cskigsvhdj .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#cskigsvhdj .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#cskigsvhdj .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #ffffff;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#cskigsvhdj .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#cskigsvhdj .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#cskigsvhdj .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#cskigsvhdj .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#cskigsvhdj .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#cskigsvhdj .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#cskigsvhdj .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#cskigsvhdj .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#cskigsvhdj .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#cskigsvhdj .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#cskigsvhdj .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#cskigsvhdj .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cskigsvhdj .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#cskigsvhdj .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#cskigsvhdj .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#cskigsvhdj .gt_striped {
+  background-color: #ffffff;
+}
+
+#cskigsvhdj .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#cskigsvhdj .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#cskigsvhdj .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#cskigsvhdj .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#cskigsvhdj .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#cskigsvhdj .gt_left {
+  text-align: left;
+}
+
+#cskigsvhdj .gt_center {
+  text-align: center;
+}
+
+#cskigsvhdj .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#cskigsvhdj .gt_font_normal {
+  font-weight: normal;
+}
+
+#cskigsvhdj .gt_font_bold {
+  font-weight: bold;
+}
+
+#cskigsvhdj .gt_font_italic {
+  font-style: italic;
+}
+
+#cskigsvhdj .gt_super {
+  font-size: 65%;
+}
+
+#cskigsvhdj .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="cskigsvhdj" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table" style="table-layout: fixed;; width: 950px">
+  <colgroup>
+    <col style="width:175px;"/>
+    <col/>
+    <col/>
+  </colgroup>
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="color: #333f48; text-align: center; font-weight: 500;"><strong>Rstudio Cloud</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" style="color: #333f48; text-align: center; font-weight: 500;"><strong>RStudio Desktop</strong></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left gt_stub">Setup</td>
+      <td class="gt_row gt_center">&lt;span style='font-size: 3em; display: inline-block;text-align: center; color: #005f86;'&gt;&lt;i class='fal fa-medal'&gt;&lt;/i&gt;&lt;/span&gt;</td>
+      <td class="gt_row gt_center">&lt;span style='font-size: 3em; display: inline-block;text-align: center; color: #bf5700;'&gt;&lt;i class='fal fa-tools'&gt;&lt;/i&gt;&lt;/span&gt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Ease of Use</td>
+      <td class="gt_row gt_center">&lt;span style='font-size: 3em; display: inline-block;text-align: center; color: #005f86;'&gt;&lt;i class='fal fa-medal'&gt;&lt;/i&gt;&lt;/span&gt;</td>
+      <td class="gt_row gt_center">&lt;span style='font-size: 3em; display: inline-block;text-align: center; color: #bf5700;'&gt;&lt;i class='fal fa-tools'&gt;&lt;/i&gt;&lt;/span&gt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Speed</td>
+      <td class="gt_row gt_center">&lt;span style='font-size: 3em; display: inline-block;text-align: center; color: #bf5700;'&gt;&lt;i class='fal fa-tools'&gt;&lt;/i&gt;&lt;/span&gt;</td>
+      <td class="gt_row gt_center">&lt;span style='font-size: 3em; display: inline-block;text-align: center; color: #005f86;'&gt;&lt;i class='fal fa-medal'&gt;&lt;/i&gt;&lt;/span&gt;</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_stub">Customization</td>
+      <td class="gt_row gt_center">&lt;span style='font-size: 3em; display: inline-block;text-align: center; color: #bf5700;'&gt;&lt;i class='fal fa-tools'&gt;&lt;/i&gt;&lt;/span&gt;</td>
+      <td class="gt_row gt_center">&lt;span style='font-size: 3em; display: inline-block;text-align: center; color: #005f86;'&gt;&lt;i class='fal fa-medal'&gt;&lt;/i&gt;&lt;/span&gt;</td>
+    </tr>
+  </tbody>
+  
+  
+</table></div>
+
+&lt;/div&gt;
+
+---
+class: middle
+
+## Cloud Setup RStudio Cloud
+
+The easiest method to get started with RStudio + R is to use RStudio.Cloud, which is a new service for using R that the RStudio team provides. 
+
+.pull-left.b--gray.ba.bw2.ma2.pa4.shadow-1[
+
+**INSTRUCTIONS**
+
+**Step 1:** In a web browser, go to [rstudio.cloud](http://rstudio.cloud)  
+
+**Step 2:** Log into it with the github account you created earlier.  
+
+**Step 3:** Congrats! You're ready!
+
+]
+
+.pull-right[ 
+
+**Benefits of using RStudio.cloud:** virtually no setup is required on your part other than logging in. If you use RStudio's cloud product, you're almost guaranteed to have every task or piece of code we ask you to use work perfectly.
+
+**Drawback of using RStudio.cloud:** while the cloud setup is an easier method, the speed of the cloud application isn't as fast as the next method--local setup--nor does it offer the same level of flexibility. The occasions in which this will matter to you will likely come after the workshop, but it's something to consider.
+  
+]
+  
+---
+class: middle
+
+### Local Setup RStudio Cloud
+
+The next method to get started with RStudio is by setting up RStudio locally on your desktop. Until recently, this was the only free option for most users to use RStudio, so despite some drawbacks, this method is tried and true. 
+
+.pull-left.b--gray.ba.bw2.ma2.pa4.shadow-1[
+
+**INSTRUCTIONS**
+
+**Step 1:** Go to [this link](https://rstudio.com/products/rstudio/download/#download).  
+
+**Step 2:** Follow the two-step instructions on that page. 
+
+**Step 3:** For visual assistance, use the video tutorial on the right. 
+
+**Step 4:** Congrats, you're ready! 
+
+
+
+]
+
+.pull-right[ 
+
+.panelset[
+.panel[.panel-name[Tutorial]
+
+&lt;iframe width="550" height = "316" src="https://www.youtube-nocookie.com/embed/k7DuOUEO7SE" frameborder="0" style = "border: solid 0px #ffffff" color = "white"  modestbranding = "1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1"&gt;&lt;/iframe&gt;
+
+]
+
+.panel[.panel-name[Benefits and Drawbacks]
+
+**Benefits of using RStudio Desktop:** Setting up RStudio locally on your desktop is beneficial for a number of reasons, but mostly because it allows you to customize your RStudio environment to your liking. Another good reason for using RStudio locally is that it's faster for most tasks.
+
+**Drawback of using RStudio Desktop:** while the desktop setup is preferred for many users, it does require more effort on the initial setup than using RStudio Cloud. Also, in more rare cases, certain packages may require additional setup that can be complicated. While those cases don't impact this workshop, down the road in your coding journey, you may bump up against that.
+
+]
+]
+
+
+  
+]
+
 
 
     </textarea>
