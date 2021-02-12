@@ -207,7 +207,7 @@ tibble(type = c("Setup","Ease of Use", "Speed", "Customization"),
 ---
 class: middle
 
-## Cloud Setup RStudio Cloud
+## RStudio Cloud Setup
 
 The easiest method to get started with RStudio + R is to use RStudio.Cloud, which is a new service for using R that the RStudio team provides. 
 
@@ -234,7 +234,7 @@ The easiest method to get started with RStudio + R is to use RStudio.Cloud, whic
 ---
 class: middle
 
-### Local Setup RStudio Cloud
+### RStudio Desktop Setup
 
 The next method to get started with RStudio is by setting up RStudio locally on your desktop. Until recently, this was the only free option for most users to use RStudio, so despite some drawbacks, this method is tried and true. 
 
