@@ -113,7 +113,6 @@ Constructed from easily accessed free services, this example workflow is designe
 *	Navigating Rstudio
   *	Rstudio Interface
   *	R Projects
-  *	Create an RMarkdown document
 *	Edit the cloned website
   *	Pushing project to the Web
 
