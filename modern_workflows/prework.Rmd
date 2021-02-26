@@ -81,14 +81,14 @@ htmltools::tagList(
 
 This is a resource to get prepared for the "Modern Project Workflows" workshop using R and Rstudio. In order for the workshop to go smoothly and, more importantly, for you to get something out of it, you'll need to do a few things to get setup. If you have any questions during prework, please contact one of us at the following emails:
 
-* D. Cale Reeves: [d.cale.reeves@utexas.edu](d.cale.reeves@gatech.edu)
+* D. Cale Reeves: [d.cale.reeves@gatech.edu](d.cale.reeves@gatech.edu)
 * Noorah Alhasan: [noorah.alhasan@utexas.edu](mailto:noorah.alhasan@utexas.edu)
 * Matt Worthington: [matthew.worthington@austin.utexas.edu](matthew.worthington@austin.utexas.edu)
 
 #### Workshop Dates:
 
-* Modern Project Workflows, Part 1: Mar 8, 2021
 * Modern Project Workflows, Part 1: Mar 22, 2021
+* Modern Project Workflows, Part 1: Mar 29, 2021
 
 
 
