@@ -1,7 +1,7 @@
 ---
 title: "Modern Information Workflows - Part 1"
 subtitle: "Becoming Proficient and Efficient with R and RStudio for Policy Work <html><div style='float:left'></div><hr color='#e2f1fc' size=1px width=1100px></html>"
-author: 
+author:
 - "<span style='color:#005f86; font-weight:500'>**D. Cale Reeves**</span> | Ph.D."
 - "<span style='color:#005f86; font-weight:500'>**Noorah Alhasan**</span> | Ph.D."
 - "<span style='color:#005f86; font-weight:500'>**Matt Worthington**</span> | M.Ed./M.PAff"
@@ -72,18 +72,64 @@ htmltools::tagList(
 ```
 
 
-.pull-left[
-# About This Workshop
 
-In both professional work and in academic settings, projects are getting bigger, analyses are becoming more complex, and there is increasing demand for attractive and interactive content. Meeting the appetite for projects that do more and reach further than ever before places heavy demands on a project’s workflow. In this series, we demonstrate a modern workflow that uses simple building blocks to turn high-quality analytics into memos, papers, presentations, and even web pages – and it’s easy to do. Even participants that have never written a line of code will create and host a webpage in the first session. 
+## About this session
 
-Constructed from easily accessed free services, this example workflow is designed from the ground-up to support teamwork, transparency, replicability, and a broad range of deliverables. We’ll show you how to recycle the same basic techniques to co-create products that are both tailored to the target audience and replicable by the world at-large. 
+We will explore how to navigate Github and Rstudio as ecosystems and establish a basic workflow that includes an interaction between the two systems with a static webpage as a final product.
 
-]
 
-.pull-right[
+---
 
-* .orange[**Personal Background**]: Born and raised in San Antonio, Texas. Live in Austin with my wife and three kids. 
-* .orange[**Education Backgrounds**]: English Studies, Special Education, and Public Policy
-* .orange[**Professional Backgrounds**]: Public School Teacher, School District Administrator, and Data Scientist. 
-]
+In this session we will be adopting the following workflow (of so so many):
+
+![Workflow](assets/images/Workflow.jpg)
+
+Disclaimer: This workflow places strong emphasis on RStudio in terms of content creation, whereas Github is mainly used for product sharing.
+
+---
+
+## Prerequisites
+
+1. GitHub account
+2. GitHub desktop app
+3. RStudio (cloud/desktop)
+4. Local computer has the following programming languages installed:
+  1. R
+  2. Git
+
+
+---
+
+## What is Git?
+
+- Git is a version control programming language.
+  - Version control: think of it as Google doc history
+  - Repository: think of it as a folder on your computer.
+
+## What is GitHub?
+
+- GitHub is an online hosting provider that is based on Git
+
+## What is GitHub Pages?
+
+- Webpages that are created directly from your git repository that is hosted in your GitHub account.
+
+---
+
+## Step 2: Creating a project
+
+- Most of the time when we are creating a new project, we open a new file (Word, Excel, Google doc, etc.) on our computer (local machine to be fancy) and start creating right way.
+- In this workshop, we want to show you a more systematic way of creating and engaging with a project that consists of many elements.
+- Taking a step back, instead of opening a new file to start creating your product, you create a folder for that product.
+
+- That's where R Projects and Github repositories come in.
+
+- There are several ways to create an R Project:
+
+  1. As a brand new folder (aka directory) on your computer
+  2. From an existing directory on you local machine
+  3. From a remote repository (a previously created Github repository)
+  
+- For this session we will go with step 3
+
+---
