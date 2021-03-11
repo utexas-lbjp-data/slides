@@ -179,7 +179,7 @@ knitr::include_graphics("assets/images/step01c.png")
 ## Step 2: Edit homepage
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '900px'}
 knitr::include_graphics("assets/images/step02a.png")
 ```
 ]
@@ -189,7 +189,7 @@ knitr::include_graphics("assets/images/step02a.png")
 ## Step 2: Edit homepage
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '900px'}
 knitr::include_graphics("assets/images/step02b.png")
 ```
 ]
@@ -199,7 +199,7 @@ knitr::include_graphics("assets/images/step02b.png")
 ## Step 3: Build website
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '900px'}
 knitr::include_graphics("assets/images/step03a.png")
 ```
 ]
@@ -209,7 +209,7 @@ knitr::include_graphics("assets/images/step03a.png")
 ## Step 3: Build website
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '900px'}
 knitr::include_graphics("assets/images/step03b.png")
 ```
 ]
@@ -219,7 +219,7 @@ knitr::include_graphics("assets/images/step03b.png")
 ## Step 3: Build website
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '900px'}
 knitr::include_graphics("assets/images/step03c.png")
 ```
 ]
@@ -229,7 +229,7 @@ knitr::include_graphics("assets/images/step03c.png")
 ## Step 3: Build website
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '900px'}
 knitr::include_graphics("assets/images/step03d.png")
 ```
 ]
@@ -239,7 +239,7 @@ knitr::include_graphics("assets/images/step03d.png")
 ## Step 3: Build website
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '900px'}
 knitr::include_graphics("assets/images/step03e.png")
 ```
 ]
@@ -249,7 +249,7 @@ knitr::include_graphics("assets/images/step03e.png")
 ## Step 4: Add a local repository
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '750px'}
 knitr::include_graphics("assets/images/step04a.png")
 ```
 ]
@@ -259,7 +259,7 @@ knitr::include_graphics("assets/images/step04a.png")
 ## Step 4: Add a local repository
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '750px'}
 knitr::include_graphics("assets/images/step04b.png")
 ```
 ]
@@ -269,7 +269,7 @@ knitr::include_graphics("assets/images/step04b.png")
 ## Step 4: Add a local repository
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '750px'}
 knitr::include_graphics("assets/images/step04c.png")
 ```
 ]
@@ -279,7 +279,7 @@ knitr::include_graphics("assets/images/step04c.png")
 ## Step 4: Add a local repository
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '750px'}
 knitr::include_graphics("assets/images/step04d.png")
 ```
 ]
@@ -289,7 +289,7 @@ knitr::include_graphics("assets/images/step04d.png")
 ## Step 5: Link to remote repository
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '800px'}
 knitr::include_graphics("assets/images/step05a.png")
 ```
 ]
@@ -299,7 +299,7 @@ knitr::include_graphics("assets/images/step05a.png")
 ## Step 5: Link to a remote repository
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '800px'}
 knitr::include_graphics("assets/images/step05b.png")
 ```
 ]
@@ -349,7 +349,7 @@ knitr::include_graphics("assets/images/step08.png")
 ## Step 9: Link site to GitHub repository
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '800px'}
 knitr::include_graphics("assets/images/step09a.png")
 ```
 ]
@@ -359,7 +359,7 @@ knitr::include_graphics("assets/images/step09a.png")
 ## Step 9: Link site to GitHub repository
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '800px'}
 knitr::include_graphics("assets/images/step09b.png")
 ```
 ]
@@ -379,7 +379,7 @@ knitr::include_graphics("assets/images/step09c.png")
 ## Step 10: Change website name (optional)
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '800px'}
 knitr::include_graphics("assets/images/step10a.png")
 ```
 ]
@@ -389,7 +389,7 @@ knitr::include_graphics("assets/images/step10a.png")
 ## Step 10: Change website name (optional)
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '800px'}
 knitr::include_graphics("assets/images/step10b.png")
 ```
 ]
@@ -399,7 +399,7 @@ knitr::include_graphics("assets/images/step10b.png")
 ## Step 10: Change website name (optional)
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '800px'}
 knitr::include_graphics("assets/images/step10c.png")
 ```
 ]
@@ -409,7 +409,7 @@ knitr::include_graphics("assets/images/step10c.png")
 ## Step 10: Change website name (optional)
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '800px'}
 knitr::include_graphics("assets/images/step10d.png")
 ```
 ]
