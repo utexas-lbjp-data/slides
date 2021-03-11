@@ -24,7 +24,7 @@ class: middle
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
-knitr::opts_chunk$set(message = FALSE, warning = FALSE, comment = "", cache = FALSE, fig.retina = 3)
+knitr::opts_chunk$set(eval = TRUE, message = FALSE, warning = FALSE, comment = "", cache = FALSE, fig.retina = 3)
 library(flipbookr)        # Makes Step-by-Step Code Demos
 library(xaringanExtra)    # Package with Useful Stuff For Making Slides
 library(tidyverse)        # What loads the core set of Modern R Packages, like ggplot2
@@ -72,22 +72,12 @@ htmltools::tagList(
 ```
 
 
-
 ## About this session
 
-We will explore how to navigate Github and Rstudio as ecosystems and establish a basic workflow that includes an interaction between the two systems with a static webpage as a final product.
+We will explore how to navigate Github and Rstudio as ecosystems and establish a basic workflow that includes an interaction between the two systems with a static webpage as a final product hosted on Netlify.
 
 
 ---
-
-In this session we will be adopting the following workflow (of so so many):
-
-![Workflow](assets/images/Workflow.jpg)
-
-Disclaimer: This workflow places strong emphasis on RStudio in terms of content creation, whereas Github is mainly used for product sharing.
-
----
-
 ## Prerequisites
 
 1. GitHub account
@@ -97,6 +87,27 @@ Disclaimer: This workflow places strong emphasis on RStudio in terms of content 
   1. R
   2. Git
 
+
+---
+
+## General workflow
+
+In this session we will be adopting the following workflow (of so so many):
+
+.center[
+```{r echo=FALSE, out.width = '800px'}
+knitr::include_graphics("assets/images/workflow.png")
+```
+]
+
+Disclaimer: This workflow places strong emphasis on RStudio in terms of content creation, whereas Github is mainly used for product sharing.
+
+---
+
+## What is Rmarkdown?
+
+
+## What is RStudio?
 
 ---
 
@@ -110,13 +121,24 @@ Disclaimer: This workflow places strong emphasis on RStudio in terms of content 
 
 - GitHub is an online hosting provider that is based on Git
 
-## What is GitHub Pages?
-
-- Webpages that are created directly from your git repository that is hosted in your GitHub account.
 
 ---
 
-## Step 2: Creating a project
+## What is Netlify.app?
+
+
+---
+
+## Step 1: Creating an R project
+
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step01a.png")
+```
+]
+
+???
 
 - Most of the time when we are creating a new project, we open a new file (Word, Excel, Google doc, etc.) on our computer (local machine to be fancy) and start creating right way.
 - In this workshop, we want to show you a more systematic way of creating and engaging with a project that consists of many elements.
@@ -130,6 +152,270 @@ Disclaimer: This workflow places strong emphasis on RStudio in terms of content 
   2. From an existing directory on you local machine
   3. From a remote repository (a previously created Github repository)
   
-- For this session we will go with step 3
+- For this session we will go with step 1
 
 ---
+
+## Step 1: Creating an R project
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step01b.png")
+```
+]
+
+---
+
+## Step 1: Creating an R project
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step01c.png")
+```
+]
+
+---
+
+## Step 2: Edit homepage
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step02a.png")
+```
+]
+
+---
+
+## Step 2: Edit homepage
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step02b.png")
+```
+]
+
+---
+
+## Step 3: Build website
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step03a.png")
+```
+]
+
+---
+
+## Step 3: Build website
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step03b.png")
+```
+]
+
+---
+
+## Step 3: Build website
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step03c.png")
+```
+]
+
+---
+
+## Step 3: Build website
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step03d.png")
+```
+]
+
+---
+
+## Step 3: Build website
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step03e.png")
+```
+]
+
+---
+
+## Step 4: Add a local repository
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step04a.png")
+```
+]
+
+---
+
+## Step 4: Add a local repository
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step04b.png")
+```
+]
+
+---
+
+## Step 4: Add a local repository
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step04c.png")
+```
+]
+
+---
+
+## Step 4: Add a local repository
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step04d.png")
+```
+]
+
+---
+
+## Step 5: Link to remote repository
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step05a.png")
+```
+]
+
+---
+
+## Step 5: Link to a remote repository
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step05b.png")
+```
+]
+
+---
+
+## Step 6: Log in using GitHub account
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step06a.png")
+```
+]
+
+---
+
+## Step 6: Log in using GitHub account
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step06b.png")
+```
+]
+
+---
+
+## Step 7: Drop 'site' or 'docs' folder
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step07.png")
+```
+]
+
+---
+
+## Step 8: Site setting > Build & Deploy
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step08.png")
+```
+]
+
+---
+
+## Step 9: Link site to GitHub repository
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step09a.png")
+```
+]
+
+---
+
+## Step 9: Link site to GitHub repository
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step09b.png")
+```
+]
+
+---
+
+## Step 9: Link site to GitHub repository
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step09c.png")
+```
+]
+
+---
+
+## Step 10: Change website name (optional)
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step10a.png")
+```
+]
+
+---
+
+## Step 10: Change website name (optional)
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step10b.png")
+```
+]
+
+---
+
+## Step 10: Change website name (optional)
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step10c.png")
+```
+]
+
+---
+
+## Step 10: Change website name (optional)
+
+.center[
+```{r echo=FALSE, out.width = '600px'}
+knitr::include_graphics("assets/images/step10d.png")
+```
+]
+
+---
+
+.center[
+# Questions?
+]
