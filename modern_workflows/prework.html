@@ -6,7 +6,7 @@
     <meta name="author" content="Noorah Alhasan | Policy Researcher &amp; Doctoral Candidate, UT Austin - LBJ" />
     <meta name="author" content="D. Cale Reeves | Visiting Assistant Professor, Georgia Tech; Research Affiliate, UT Austin - LBJ" />
     <meta name="author" content="Matt Worthington | Sr. Project Manager for Data Initiatives, UT Austin - LBJ" />
-    <meta name="date" content="2021-02-26" />
+    <meta name="date" content="2021-03-13" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
     <script src="libs/tile-view/tile-view.js"></script>
@@ -45,7 +45,7 @@ class: center, middle, inverse, title-slide
 ### <span style="color:#005f86; font-weight:500">Noorah Alhasan</span> | Policy Researcher &amp; Doctoral Candidate, UT Austin - LBJ
 ### <span style="color:#005f86; font-weight:500">D. Cale Reeves</span> | Visiting Assistant Professor, Georgia Tech; Research Affiliate, UT Austin - LBJ
 ### <span style="color:#005f86; font-weight:500">Matt Worthington</span> | Sr. Project Manager for Data Initiatives, UT Austin - LBJ
-### <span style="color:#bf5700; font-weight:300">February 26, 2021</span>
+### <span style="color:#bf5700; font-weight:300">March 13, 2021</span>
 
 ---
 
@@ -87,7 +87,7 @@ Constructed from easily accessed free services, this example workflow is designe
 **In the first session, we cover:**
 
 *	Getting set with Git
-  *	Cloning a Repo of a website
+  *	Creating an account on GitHub
 *	Navigating Rstudio
   *	Rstudio Interface
   *	R Projects
@@ -132,10 +132,14 @@ While I know this is a workshop whose title is all about R, the very first thing
 
 * **First, create a Github account:** Go to [github.com](http://github.com) and sign-up for an account. You'll need this account for the next step and for use in the workshop.
 
-* **Next, download the Github desktop client:** Go to [desktop.github.com](https://desktop.github.com) and download the client for your platform. Once downloaded, make sure you open and log into the app with the account you created.
+* **Next, download the Github desktop client:** Go to [desktop.github.com](https://desktop.github.com) and download the client for your platform. Once downloaded, make sure you open and log into the app with the account you created. 
+
+* **Finally**: GitHub desktop will also ask you to install [Git](https://git-scm.com/downloads) on your machine. Please follow the directions on the webpage.
 ]
 
 ---
+exclude: true
+
 class: middle
 
 ## Ways To Use R For This Workshop
@@ -147,7 +151,7 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   font-family: "" Libre Franklin ", -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial;";
 }
 
-#ogsdknjpnf .gt_table {
+#wqajmtsulz .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -172,7 +176,7 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   border-left-color: #D3D3D3;
 }
 
-#ogsdknjpnf .gt_heading {
+#wqajmtsulz .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -184,7 +188,7 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   border-right-color: #D3D3D3;
 }
 
-#ogsdknjpnf .gt_title {
+#wqajmtsulz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: bolder;
@@ -194,7 +198,7 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   border-bottom-width: 0;
 }
 
-#ogsdknjpnf .gt_subtitle {
+#wqajmtsulz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -204,13 +208,13 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   border-top-width: 0;
 }
 
-#ogsdknjpnf .gt_bottom_border {
+#wqajmtsulz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ogsdknjpnf .gt_col_headings {
+#wqajmtsulz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #ffffff;
@@ -225,7 +229,7 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   border-right-color: #D3D3D3;
 }
 
-#ogsdknjpnf .gt_col_heading {
+#wqajmtsulz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -245,7 +249,7 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   overflow-x: hidden;
 }
 
-#ogsdknjpnf .gt_column_spanner_outer {
+#wqajmtsulz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -257,15 +261,15 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   padding-right: 4px;
 }
 
-#ogsdknjpnf .gt_column_spanner_outer:first-child {
+#wqajmtsulz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ogsdknjpnf .gt_column_spanner_outer:last-child {
+#wqajmtsulz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ogsdknjpnf .gt_column_spanner {
+#wqajmtsulz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -277,7 +281,7 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   width: 100%;
 }
 
-#ogsdknjpnf .gt_group_heading {
+#wqajmtsulz .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -299,7 +303,7 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   vertical-align: middle;
 }
 
-#ogsdknjpnf .gt_empty_group_heading {
+#wqajmtsulz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -314,15 +318,15 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   vertical-align: middle;
 }
 
-#ogsdknjpnf .gt_from_md > :first-child {
+#wqajmtsulz .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ogsdknjpnf .gt_from_md > :last-child {
+#wqajmtsulz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ogsdknjpnf .gt_row {
+#wqajmtsulz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -341,7 +345,7 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   overflow-x: hidden;
 }
 
-#ogsdknjpnf .gt_stub {
+#wqajmtsulz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -353,7 +357,7 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   padding-left: 12px;
 }
 
-#ogsdknjpnf .gt_summary_row {
+#wqajmtsulz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -363,7 +367,7 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   padding-right: 5px;
 }
 
-#ogsdknjpnf .gt_first_summary_row {
+#wqajmtsulz .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -373,7 +377,7 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   border-top-color: #D3D3D3;
 }
 
-#ogsdknjpnf .gt_grand_summary_row {
+#wqajmtsulz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -383,7 +387,7 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   padding-right: 5px;
 }
 
-#ogsdknjpnf .gt_first_grand_summary_row {
+#wqajmtsulz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -393,11 +397,11 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   border-top-color: #D3D3D3;
 }
 
-#ogsdknjpnf .gt_striped {
+#wqajmtsulz .gt_striped {
   background-color: #ffffff;
 }
 
-#ogsdknjpnf .gt_table_body {
+#wqajmtsulz .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -406,7 +410,7 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   border-bottom-color: #D3D3D3;
 }
 
-#ogsdknjpnf .gt_footnotes {
+#wqajmtsulz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -420,13 +424,13 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   border-right-color: #D3D3D3;
 }
 
-#ogsdknjpnf .gt_footnote {
+#wqajmtsulz .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#ogsdknjpnf .gt_sourcenotes {
+#wqajmtsulz .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -440,46 +444,46 @@ The next and last step to get ready for the workshop is to get setup with an RSt
   border-right-color: #D3D3D3;
 }
 
-#ogsdknjpnf .gt_sourcenote {
+#wqajmtsulz .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#ogsdknjpnf .gt_left {
+#wqajmtsulz .gt_left {
   text-align: left;
 }
 
-#ogsdknjpnf .gt_center {
+#wqajmtsulz .gt_center {
   text-align: center;
 }
 
-#ogsdknjpnf .gt_right {
+#wqajmtsulz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ogsdknjpnf .gt_font_normal {
+#wqajmtsulz .gt_font_normal {
   font-weight: normal;
 }
 
-#ogsdknjpnf .gt_font_bold {
+#wqajmtsulz .gt_font_bold {
   font-weight: bold;
 }
 
-#ogsdknjpnf .gt_font_italic {
+#wqajmtsulz .gt_font_italic {
   font-style: italic;
 }
 
-#ogsdknjpnf .gt_super {
+#wqajmtsulz .gt_super {
   font-size: 65%;
 }
 
-#ogsdknjpnf .gt_footnote_marks {
+#wqajmtsulz .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="ogsdknjpnf" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table" style="table-layout: fixed;; width: 950px">
+<div id="wqajmtsulz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table" style="table-layout: fixed;; width: 950px">
   <colgroup>
     <col style="width:175px;"/>
     <col/>
@@ -522,6 +526,8 @@ The next and last step to get ready for the workshop is to get setup with an RSt
 &lt;/div&gt;
 
 ---
+exclude: true
+
 class: middle
 
 ## RStudio Cloud Setup

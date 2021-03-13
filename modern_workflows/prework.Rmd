@@ -109,7 +109,7 @@ Constructed from easily accessed free services, this example workflow is designe
 **In the first session, we cover:**
 
 *	Getting set with Git
-  *	Cloning a Repo of a website
+  *	Creating an account on GitHub
 *	Navigating Rstudio
   *	Rstudio Interface
   *	R Projects
@@ -154,10 +154,14 @@ While I know this is a workshop whose title is all about R, the very first thing
 
 * **First, create a Github account:** Go to [github.com](http://github.com) and sign-up for an account. You'll need this account for the next step and for use in the workshop.
 
-* **Next, download the Github desktop client:** Go to [desktop.github.com](https://desktop.github.com) and download the client for your platform. Once downloaded, make sure you open and log into the app with the account you created.
+* **Next, download the Github desktop client:** Go to [desktop.github.com](https://desktop.github.com) and download the client for your platform. Once downloaded, make sure you open and log into the app with the account you created. 
+
+* **Finally**: GitHub desktop will also ask you to install [Git](https://git-scm.com/downloads) on your machine. Please follow the directions on the webpage.
 ]
 
 ---
+exclude: true
+
 class: middle
 
 ## Ways To Use R For This Workshop
@@ -204,6 +208,8 @@ tibble(type = c("Setup","Ease of Use", "Speed", "Customization"),
 </div>
 
 ---
+exclude: true
+
 class: middle
 
 ## RStudio Cloud Setup
