@@ -1,9 +1,9 @@
 ---
-title: "Modern Information Workflows - Part 1"
+title: "Modern Project Workflows - Part 1"
 subtitle: "Becoming Proficient and Efficient with R and RStudio for Policy Work <html><div style='float:left'></div><hr color='#e2f1fc' size=1px width=1100px></html>"
 author:
 - "<span style='color:#005f86; font-weight:500'>**D. Cale Reeves**</span> | Ph.D."
-- "<span style='color:#005f86; font-weight:500'>**Noorah Alhasan**</span> | Ph.D."
+- "<span style='color:#005f86; font-weight:500'>**Noorah Alhasan**</span> | M.PAff"
 - "<span style='color:#005f86; font-weight:500'>**Matt Worthington**</span> | M.Ed./M.PAff"
 date: '`r format(Sys.Date(), "%B %d, %Y")`'
 output:
