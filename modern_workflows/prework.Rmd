@@ -5,7 +5,7 @@ author:
 # - "<span style='color:#005f86; font-weight:500'>Noorah Alhasan</span> | M.PAff"
 # - "<span style='color:#005f86; font-weight:500'>D. Cale Reeves</span> | Ph.D."
 # - "<span style='color:#005f86; font-weight:500'>Matt Worthington</span> | M.Ed./M.PAff"
-- "<span style='color:#005f86; font-weight:500'>Noorah Alhasan</span> | Policy Researcher & Doctoral Candidate, UT Austin - LBJ"
+- "<span style='color:#005f86; font-weight:500'>Noorah Alhasan</span> | Policy Researcher & Doctoral Student, UT Austin - LBJ"
 - "<span style='color:#005f86; font-weight:500'>D. Cale Reeves</span> | Visiting Assistant Professor, Georgia Tech; Research Affiliate, UT Austin - LBJ"
 - "<span style='color:#005f86; font-weight:500'>Matt Worthington</span> | Sr. Project Manager for Data Initiatives, UT Austin - LBJ"
 date: '<span style="color:#bf5700; font-weight:300">`r format(Sys.Date(), "%B %d, %Y")`</span>'
