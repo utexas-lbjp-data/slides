@@ -315,7 +315,7 @@ knitr::include_graphics("assets/images/step01e.png")
 
 .center[
 ```{r echo=FALSE, out.width = '700px'}
-knitr::include_graphics("assets/images/step01e.png")
+knitr::include_graphics("assets/images/step01f.png")
 ```
 ]
 
@@ -491,40 +491,40 @@ knitr::include_graphics("assets/images/step08d.png")
 
 ---
 
-## Step 9: Add GitHub repository and link "docs" or "_site" folder
+## Step 9: Add GitHub repository
 
 .center[
-```{r echo=FALSE, out.width = '700px'}
+```{r echo=FALSE, out.width = '500px'}
 knitr::include_graphics("assets/images/step09.png")
 ```
 ]
 
 ---
 
-## Step 9: Add GitHub repository and link "docs" or "_site" folder
+## Step 9: Add GitHub repository
 
 .center[
-```{r echo=FALSE, out.width = '600px'}
-knitr::include_graphics("assets/images/step09a.png")
-```
-]
-
----
-
-## Step 9: Add GitHub repository and link "docs" or "_site" folder
-
-.center[
-```{r echo=FALSE, out.width = '600px'}
+```{r echo=FALSE, out.width = '500px'}
 knitr::include_graphics("assets/images/step09b.png")
 ```
 ]
 
 ---
 
-## Step 9: Add GitHub repository and link "docs" or "_site" folder
+## Step 9: Add GitHub repository
 
 .center[
-```{r echo=FALSE, out.width = '700px'}
+```{r echo=FALSE, out.width = '500px'}
+knitr::include_graphics("assets/images/step09a.png")
+```
+]
+
+---
+
+## Step 9: Add GitHub repository
+
+.center[
+```{r echo=FALSE, out.width = '500px'}
 knitr::include_graphics("assets/images/step09c.png")
 ```
 ]
