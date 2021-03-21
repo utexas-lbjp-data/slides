@@ -6,7 +6,7 @@
     <meta name="author" content="Noorah Alhasan | Policy Researcher &amp; Doctoral Candidate, UT Austin - LBJ" />
     <meta name="author" content="D. Cale Reeves | Visiting Assistant Professor, Georgia Tech; Research Affiliate, UT Austin - LBJ" />
     <meta name="author" content="Matt Worthington | Sr. Project Manager for Data Initiatives, UT Austin - LBJ" />
-    <meta name="date" content="2021-03-16" />
+    <meta name="date" content="2021-03-21" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
     <script src="libs/tile-view/tile-view.js"></script>
@@ -44,7 +44,7 @@ class: center, middle, inverse, title-slide
 ### <span style="color:#005f86; font-weight:500">Noorah Alhasan</span> | Policy Researcher &amp; Doctoral Candidate, UT Austin - LBJ
 ### <span style="color:#005f86; font-weight:500">D. Cale Reeves</span> | Visiting Assistant Professor, Georgia Tech; Research Affiliate, UT Austin - LBJ
 ### <span style="color:#005f86; font-weight:500">Matt Worthington</span> | Sr. Project Manager for Data Initiatives, UT Austin - LBJ
-### March 16, 2021
+### March 21, 2021
 
 ---
 
@@ -55,23 +55,39 @@ class: middle
 
 
 
+&lt;style&gt;
+
+.center2 {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+&lt;/style&gt;
+
 ## About this session
 
 We will explore how to navigate Github and Rstudio as ecosystems and establish a basic workflow that includes an interaction between the two systems with a static webpage as a final product hosted on Netlify.
 
 
 ---
+class: middle
+
 ## Prerequisites
 
 1. GitHub account
 2. GitHub desktop app
-3. RStudio (cloud/desktop)
-4. Local computer has the following programming languages installed:
-  1. R
-  2. Git
+3. RStudio (desktop version)
+4. A PDF file of your choice (example: Resume)
+
 
 
 ---
+class:middle
+
 
 ## General workflow
 
@@ -85,28 +101,105 @@ Disclaimer: This workflow places strong emphasis on RStudio in terms of content 
 
 ---
 
+class:middle
+
 ## What is Rmarkdown?
 
+- A type of authoring document that allows the user to conduct data analysis interactively with text.
+
+- Benefits include but are not limited to:
+  - Easily reproduce research analysis.
+  - Easily convert documents into other formats such as PDF, Word, or HTML without the need to format anything manually.
+  - Create other documents such as slides and interactive HTML documents (with Shiny)
 
 ## What is RStudio?
 
+- RStudio is an open-source environment that integrates code execution data management along with all sorts of other features.
+  - Think of it as all of MS Suite in one window without the need to copy/cut/paste from one software/window to another.
+
 ---
+class: middle
+
 
 ## What is Git?
 
-- Git is a version control programming language.
+- Git is a version control system.
   - Version control: think of it as Google doc history
-  - Repository: think of it as a folder on your computer.
+  - Repository: think of it as a folder on your computer that tracks its own history.
 
 ## What is GitHub?
 
 - GitHub is an online hosting provider that is based on Git
 
+## What is Netlify.app?
+
+A company that offers hosting services for static websites.
+
+---
+class: middle
+
+
+## A quick walk through RStudio
+
+.center[
+&lt;img src="assets/images/step00.png" width="700px" /&gt;
+]
 
 ---
 
-## What is Netlify.app?
+## A quick walk through RStudio
 
+.center[
+&lt;img src="assets/images/step00a.png" width="700px" /&gt;
+]
+
+---
+
+## A quick walk through RStudio
+
+.center[
+&lt;img src="assets/images/step00b.png" width="700px" /&gt;
+]
+
+---
+
+## A quick walk through RStudio
+
+.center[
+&lt;img src="assets/images/step00c.png" width="700px" /&gt;
+]
+
+---
+
+## A quick walk through RStudio
+
+.center[
+&lt;img src="assets/images/step00d.png" width="700px" /&gt;
+]
+
+---
+
+## A quick walk through RStudio
+
+.center[
+&lt;img src="assets/images/step00e.png" width="700px" /&gt;
+]
+
+---
+
+## A quick walk through RStudio
+
+.center[
+&lt;img src="assets/images/step00f.png" width="700px" /&gt;
+]
+
+---
+
+## Step 0: Install `distill` package
+
+.center[
+&lt;img src="assets/images/step00g.png" width="700px" /&gt;
+]
 
 ---
 
@@ -114,7 +207,7 @@ Disclaimer: This workflow places strong emphasis on RStudio in terms of content 
 
 
 .center[
-&lt;img src="assets/images/step01a.png" width="600px" /&gt;
+&lt;img src="assets/images/step01a.png" width="700px" /&gt;
 ]
 
 ???
@@ -138,7 +231,7 @@ Disclaimer: This workflow places strong emphasis on RStudio in terms of content 
 ## Step 1: Creating an R project
 
 .center[
-&lt;img src="assets/images/step01b.png" width="600px" /&gt;
+&lt;img src="assets/images/step01b.png" width="700px" /&gt;
 ]
 
 ---
@@ -146,7 +239,31 @@ Disclaimer: This workflow places strong emphasis on RStudio in terms of content 
 ## Step 1: Creating an R project
 
 .center[
-&lt;img src="assets/images/step01c.png" width="600px" /&gt;
+&lt;img src="assets/images/step01c.png" width="700px" /&gt;
+]
+
+---
+
+## Step 1: Creating an R project
+
+.center[
+&lt;img src="assets/images/step01d.png" width="700px" /&gt;
+]
+
+---
+
+## Step 1: Creating an R project
+
+.center[
+&lt;img src="assets/images/step01e.png" width="700px" /&gt;
+]
+
+---
+
+## Step 1: Creating an R project
+
+.center[
+&lt;img src="assets/images/step01e.png" width="700px" /&gt;
 ]
 
 ---
@@ -154,15 +271,7 @@ Disclaimer: This workflow places strong emphasis on RStudio in terms of content 
 ## Step 2: Edit homepage
 
 .center[
-&lt;img src="assets/images/step02a.png" width="900px" /&gt;
-]
-
----
-
-## Step 2: Edit homepage
-
-.center[
-&lt;img src="assets/images/step02b.png" width="900px" /&gt;
+&lt;img src="assets/images/step02.png" width="700px" /&gt;
 ]
 
 ---
@@ -170,39 +279,7 @@ Disclaimer: This workflow places strong emphasis on RStudio in terms of content 
 ## Step 3: Build website
 
 .center[
-&lt;img src="assets/images/step03a.png" width="900px" /&gt;
-]
-
----
-
-## Step 3: Build website
-
-.center[
-&lt;img src="assets/images/step03b.png" width="900px" /&gt;
-]
-
----
-
-## Step 3: Build website
-
-.center[
-&lt;img src="assets/images/step03c.png" width="900px" /&gt;
-]
-
----
-
-## Step 3: Build website
-
-.center[
-&lt;img src="assets/images/step03d.png" width="900px" /&gt;
-]
-
----
-
-## Step 3: Build website
-
-.center[
-&lt;img src="assets/images/step03e.png" width="900px" /&gt;
+&lt;img src="assets/images/step03a.png" width="700px" /&gt;
 ]
 
 ---
@@ -258,7 +335,7 @@ Disclaimer: This workflow places strong emphasis on RStudio in terms of content 
 ## Step 6: Log in using GitHub account
 
 .center[
-&lt;img src="assets/images/step06a.png" width="600px" /&gt;
+&lt;img src="assets/images/step06a.png" width="800px" /&gt;
 ]
 
 ---
@@ -266,47 +343,95 @@ Disclaimer: This workflow places strong emphasis on RStudio in terms of content 
 ## Step 6: Log in using GitHub account
 
 .center[
-&lt;img src="assets/images/step06b.png" width="600px" /&gt;
+&lt;img src="assets/images/step06b.png" width="800px" /&gt;
 ]
 
 ---
 
-## Step 7: Drop 'site' or 'docs' folder
+## Step 6: Log in using GitHub account
 
 .center[
-&lt;img src="assets/images/step07.png" width="600px" /&gt;
+&lt;img src="assets/images/step06c.png" width="800px" /&gt;
 ]
 
 ---
 
-## Step 8: Site setting &gt; Build &amp; Deploy
+## Step 7: "New site from Git"
 
 .center[
-&lt;img src="assets/images/step08.png" width="600px" /&gt;
+&lt;img src="assets/images/step07a.png" width="800px" /&gt;
 ]
 
 ---
 
-## Step 9: Link site to GitHub repository
+## Step 7: "New site from Git"
 
 .center[
-&lt;img src="assets/images/step09a.png" width="800px" /&gt;
+&lt;img src="assets/images/step07b.png" width="800px" /&gt;
 ]
 
 ---
 
-## Step 9: Link site to GitHub repository
+## Step 8: Configure Netlify on GitHub
 
 .center[
-&lt;img src="assets/images/step09b.png" width="800px" /&gt;
+&lt;img src="assets/images/step08a.png" width="800px" /&gt;
 ]
 
 ---
 
-## Step 9: Link site to GitHub repository
+## Step 8: Configure Netlify on GitHub
 
 .center[
-&lt;img src="assets/images/step09c.png" width="600px" /&gt;
+&lt;img src="assets/images/step08b.png" width="600px" /&gt;
+]
+
+---
+
+## Step 8: Configure Netlify on GitHub
+
+.center[
+&lt;img src="assets/images/step08c.png" width="600px" /&gt;
+]
+
+---
+
+## Step 8: Configure Netlify on GitHub
+
+.center[
+&lt;img src="assets/images/step08d.png" width="600px" /&gt;
+]
+
+---
+
+## Step 9: Add GitHub repository and link "docs" or "_site" folder
+
+.center[
+&lt;img src="assets/images/step09.png" width="700px" /&gt;
+]
+
+---
+
+## Step 9: Add GitHub repository and link "docs" or "_site" folder
+
+.center[
+&lt;img src="assets/images/step09a.png" width="600px" /&gt;
+]
+
+---
+
+## Step 9: Add GitHub repository and link "docs" or "_site" folder
+
+.center[
+&lt;img src="assets/images/step09b.png" width="600px" /&gt;
+]
+
+---
+
+## Step 9: Add GitHub repository and link "docs" or "_site" folder
+
+.center[
+&lt;img src="assets/images/step09c.png" width="700px" /&gt;
 ]
 
 ---
@@ -314,7 +439,7 @@ Disclaimer: This workflow places strong emphasis on RStudio in terms of content 
 ## Step 10: Change website name (optional)
 
 .center[
-&lt;img src="assets/images/step10a.png" width="800px" /&gt;
+&lt;img src="assets/images/step10a.png" width="700px" /&gt;
 ]
 
 ---
@@ -322,7 +447,7 @@ Disclaimer: This workflow places strong emphasis on RStudio in terms of content 
 ## Step 10: Change website name (optional)
 
 .center[
-&lt;img src="assets/images/step10b.png" width="800px" /&gt;
+&lt;img src="assets/images/step10b.png" width="700px" /&gt;
 ]
 
 ---
@@ -330,22 +455,95 @@ Disclaimer: This workflow places strong emphasis on RStudio in terms of content 
 ## Step 10: Change website name (optional)
 
 .center[
-&lt;img src="assets/images/step10c.png" width="800px" /&gt;
+&lt;img src="assets/images/step10c.png" width="700px" /&gt;
 ]
 
 ---
 
-## Step 10: Change website name (optional)
+## Add PDF file to new website folder
 
 .center[
-&lt;img src="assets/images/step10d.png" width="800px" /&gt;
+&lt;img src="assets/images/step11a.png" width="700px" /&gt;
 ]
 
 ---
 
+## Add PDF file to new website folder
+
 .center[
+&lt;img src="assets/images/step11b.png" width="700px" /&gt;
+]
+
+---
+
+## Edit "_site.yml" 
+
+.center[
+&lt;img src="assets/images/step12a.png" width="700px" /&gt;
+]
+
+---
+
+## Build website in RStudio
+
+.center[
+&lt;img src="assets/images/step12b.png" width="700px" /&gt;
+]
+
+---
+
+## Build website in RStudio
+
+.center[
+&lt;img src="assets/images/step12c.png" width="700px" /&gt;
+]
+
+---
+
+## Commit new changes on GitHub desktop
+
+.center[
+&lt;img src="assets/images/step13.png" width="800px" /&gt;
+]
+
+---
+
+## Commit new changes on GitHub desktop
+
+.center[
+&lt;img src="assets/images/step13a.png" width="800px" /&gt;
+]
+
+---
+
+## Push new changes to GitHub online
+
+.center[
+&lt;img src="assets/images/step13b.png" width="800px" /&gt;
+]
+
+---
+
+## Refresh website
+
+.center[
+&lt;img src="assets/images/step13c.png" width="700px" /&gt;
+]
+
+---
+
+## Click on newly created tab
+
+.center[
+&lt;img src="assets/images/step13d.png" width="700px" /&gt;
+]
+
+---
+
+class: middle, center
+
 # Questions?
-]
+
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
