@@ -61,6 +61,8 @@ xaringanExtra::use_logo(
 
 xaringanExtra::use_fit_screen()
 
+
+
 htmltools::tagList(
   xaringanExtra::use_clipboard(
     button_text = "<i class=\"fa fa-clipboard\"></i>",
@@ -69,6 +71,10 @@ htmltools::tagList(
   ),
   rmarkdown::html_dependency_font_awesome()
 )
+```
+
+```{r broadcast, echo=FALSE}
+xaringanExtra::use_broadcast()
 ```
 
 
