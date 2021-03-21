@@ -494,7 +494,7 @@ knitr::include_graphics("assets/images/step08d.png")
 ## Step 9: Add GitHub repository
 
 .center[
-```{r echo=FALSE, out.width = '500px'}
+```{r echo=FALSE, out.width = '600px'}
 knitr::include_graphics("assets/images/step09.png")
 ```
 ]
