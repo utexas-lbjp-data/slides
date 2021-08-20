@@ -203,7 +203,7 @@ diamonds %>%  # Call On Your Dataset
     caption = "Source: ggplot2 package | Data: 'diamonds'"  # Specify Source/Caption Label
   ) +
   theme_lbj() + # Add The CTP Theme
-  theme(plot.title = element_text(face = "bold")) +   # Modify Title's Font Weight
+  theme(plot.title = element_text(color = "#bf5700")) +   # Modify Title's Color
   ggthemes::scale_fill_tableau(palette = "Color Blind")   # Add A Color Blind Friendly Palette
 
 ```
@@ -229,7 +229,7 @@ diamonds %>%  # Call On Your Dataset
     caption = "Source: ggplot2 package | Data: 'diamonds'"  # Specify Source/Caption Label
   ) +
   theme_lbj() + # Add The CTP Theme
-  theme(plot.title = element_text(face = "bold")) +   # Modify Title's Font Weight
+  theme(plot.title = element_text(color = "#bf5700")) +   # Modify Title's Color
   scale_fill_tableau(palette = "Color Blind")   # Add A Color Blind Friendly Palette  
 
 ```
