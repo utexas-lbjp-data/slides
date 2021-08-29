@@ -193,6 +193,7 @@ We'll need a few packages during the workshop, so try installing these. If you h
 
 * **Step one:** Open RStudio after you've installed it.
 * **Step two:** Paste the code below in your console (see screenshot)
+* **Step three:** Hit enter
 
 ```r
 install.packages(c("rmarkdown", "tidyverse", "tidycensus", "distill"))
