@@ -7,6 +7,13 @@ color: var(--header-color);
 .remark-slide-content h1 {
 font-size: 55px;
 font-weight: 900;
+margin: .6em 0;
+
+}
+
+.rmd-img img {
+  max-width: 85%;
+  margin-left: 3rem;
 }
 
 .pull-right li {
