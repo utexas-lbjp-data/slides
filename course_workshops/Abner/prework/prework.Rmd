@@ -198,7 +198,8 @@ We'll need a few packages during the workshop, so try installing these. If you h
 * **Step three:** Hit enter
 
 ```r
-install.packages(c("rmarkdown", "tidyverse", "tidycensus", "distill"))
+install.packages(c("rmarkdown", "tidyverse", "tidycensus", "distill", "devtools"))
+devtools::install_github("utexas-lbjp-data/lbjdata")
 ```
 
 ]
