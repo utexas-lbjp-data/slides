@@ -1273,3 +1273,11 @@ ggsave("vaccine_uptake_chart.png", uptake_sorted, dpi = 300, width = 10, height 
 write_csv(ranked_uptake, "vaccine_uptake_top_10.csv")
 ```
 
+---
+class: journey-bg, section, center, middle, inverse
+
+# 🙏 Thank you 🙏
+
+## Questions? lbjdata.org
+
+### 📧: matthew.worthington@utexas.edu
