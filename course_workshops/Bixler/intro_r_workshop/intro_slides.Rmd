@@ -594,7 +594,7 @@ class: journey-bg, section, center, middle, inverse
 
 #### What You Should Reference Later
 
-* [**Today's Slides**](slides.lbjdata.org/course_workshops/abner/intro_r_workshop/intro_slide)
+* [**Today's Slides**](slides.lbjdata.org/course_workshops/Bixler/intro_r_workshop/intro_slide)
 * [**The Published Analysis**](https://demos.lbjdata.org/vaccine_uptake/analyzing-vacine-uptake)
 ]
 ]
