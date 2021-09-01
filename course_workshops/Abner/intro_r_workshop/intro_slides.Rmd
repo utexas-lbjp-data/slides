@@ -44,6 +44,29 @@ readRenviron("~/.Renviron")
 census_api_key <- Sys.getenv("CENSUS_API_KEY")
 ```
 
+```{r metathis, echo=FALSE}
+library(metathis)
+meta() %>%
+  meta_name("github-repo" = "utexas-lbjp-data/Analyzing-Texas-Vaccine-Uptake") %>% 
+  meta_social(
+    title = "Introduction to R + the tidyverse",
+    description = paste(
+      "Becoming familiar with R, R Markdown, and the tidyverse for Policy Work.",
+      "Presented ain Dr. Abner's LBJ School Class in Fall 2021."
+    ),
+    url = "https://slides.lbjdata.org/course_workshops/abner/intro_r_workshop/intro_slides",
+    image = "https://slides.lbjdata.org/course_workshops/abner/intro_r_workshop/assets/images/hp_vs_r.png",
+    image_alt = paste(
+      "Title slide of An Introduction R + the tidyverse"
+      ),
+    og_type = "website",
+    og_author = "Matt Worthington",
+    twitter_card_type = "summary_large_image",
+    twitter_creator = "@mrworthington",
+    twitter_site = "@mrworthington"
+  )
+```
+
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 
 theme_lbj <- function(base_size=14,base_family="SF Pro Text",title_size=18, subtitle_size=14, caption_size=10, ...) {
