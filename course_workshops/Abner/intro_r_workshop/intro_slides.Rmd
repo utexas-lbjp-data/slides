@@ -81,9 +81,7 @@ xaringanExtra::use_extra_styles(
   mute_unhighlighted_code = TRUE  #<<
 )
 
-xaringanExtra::use_logo(
-  image_url = "assets/lbj_logo.svg"
-)
+xaringanExtra::use_broadcast()
 
 xaringanExtra::use_fit_screen()
 
