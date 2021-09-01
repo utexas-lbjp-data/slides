@@ -959,7 +959,7 @@ Whenever you see `library(...)`, it means we are loading the packages into our R
 .rmd-small[![](https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/janitor_clean_names.png)]
 
 .tl.burntorange[
-Courtesy of Alison Presmanes Hill ([@apreshill](https://twitter.com/apreshill))
+Credit: ([@allison_horst](https://twitter.com/allison_horst))
 ]
 
 ---
