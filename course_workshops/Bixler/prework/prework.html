@@ -4,7 +4,7 @@
     <title>Prework - An Introduction R + the tidyverse</title>
     <meta charset="utf-8" />
     <meta name="author" content="Matt Worthington | Sr. Project Manager for Data Initiatives, UT Austin - LBJ" />
-    <meta name="date" content="2021-08-28" />
+    <meta name="date" content="2021-09-01" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
     <script src="libs/tile-view/tile-view.js"></script>
@@ -41,7 +41,7 @@ class: center, middle, inverse, title-slide
 <hr color='#e2f1fc' size=1px width=1100px>
 </html>
 ### <span style="color:#005f86; font-weight:500">Matt Worthington</span> | Sr. Project Manager for Data Initiatives, UT Austin - LBJ
-### <span style="color:#bf5700; font-weight:300">August 28, 2021</span>
+### <span style="color:#bf5700; font-weight:300">September 01, 2021</span>
 
 ---
 
@@ -171,10 +171,13 @@ We'll need a few packages during the workshop, so try installing these. If you h
 
 * **Step one:** Open RStudio after you've installed it.
 * **Step two:** Paste the code below in your console (see screenshot)
+    - If it asks you about Updating, just hit "No" before hitting enter.
 * **Step three:** Hit enter
 
 ```r
-install.packages(c("rmarkdown", "tidyverse", "tidycensus", "distill"))
+install.packages(c("rmarkdown", "tidyverse", "tidycensus", "distill", "devtools"))
+install.packages(c("janitor", "readxl"))
+devtools::install_github("utexas-lbjp-data/lbjdata")
 ```
 
 ]

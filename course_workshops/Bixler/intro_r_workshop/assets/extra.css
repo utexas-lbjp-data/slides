@@ -1,0 +1,271 @@
+h1, h2, h3 {
+font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial;
+font-weight: 700;
+color: var(--header-color);
+}
+
+.remark-slide-content h1 {
+font-size: 55px;
+font-weight: 900;
+margin: .6em 0;
+
+}
+
+.rmd-img img {
+  max-width: 85%;
+  margin-left: 3rem;
+}
+
+.rmd-small img {
+  max-width: 65%;
+  margin-left: 3rem;
+}
+
+.rmd-tiny img {
+  max-width: 43%;
+  margin-left: 3rem;
+}
+
+.footnote-small {
+  font-size: 1rem;
+}
+.section h1 {
+  font-size: 75px;
+  color:#fff;
+}
+
+.vaccine-bg {
+  font-weight: 800;
+color: #fff;
+background: 
+    /* top, transparent red, faked with gradient */ 
+    linear-gradient(
+      rgba(51, 63, 72, 0.9), 
+      rgba(51, 63, 72, 0.9)
+    ),
+    /* bottom, image */
+    url(images/vaccine_stations.jpeg) no-repeat center center fixed;
+-webkit-background-size: cover !important;
+-moz-background-size: cover !important;
+-o-background-size: cover !important;
+background-size:cover !important;
+background-position:0rem 0rem;
+}
+
+.journey-bg {
+  font-weight: 800;
+color: #fff;
+background: 
+    /* top, transparent red, faked with gradient */ 
+    linear-gradient(
+      rgba(51, 63, 72, 0.8), 
+      rgba(51, 63, 72, 0.8)
+    ),
+    /* bottom, image */
+    url(https://images.unsplash.com/photo-1583123720148-96d2ec1bce32?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2944&q=80) no-repeat center center fixed;
+-webkit-background-size: cover !important;
+-moz-background-size: cover !important;
+-o-background-size: cover !important;
+background-size:cover !important;
+background-position:0rem -25rem;
+}
+
+.showcase-bg {
+  font-weight: 800;
+color: #fff;
+background: 
+    /* top, transparent red, faked with gradient */ 
+    linear-gradient(
+      rgba(51, 63, 72, 0.9), 
+      rgba(51, 63, 72, 0.9)
+    ),
+    /* bottom, image */
+    url(https://images.unsplash.com/photo-1542482780641-7f549ee20bc2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3024&q=80) no-repeat center center fixed;
+-webkit-background-size: cover !important;
+-moz-background-size: cover !important;
+-o-background-size: cover !important;
+background-size:cover !important;
+}
+
+.pull-right li {
+  padding-bottom: 4px;
+  line-height: 1.3;
+}
+
+.pull-left h1 {
+  text-align:center;
+  color: #333f48;
+}
+
+.title-slide {
+  background-color: #FAFAFA;
+  background-image: url(lbj_logo.svg);
+  background-position: 6% 0%;
+	background-size: 25%;
+  border-top: 80px solid #FAFAFA;
+}
+
+.title-slide > h1  {
+  color: #333f48;
+  font-size: 45px;
+  text-shadow: none;
+  font-weight: 900;
+  text-align: left;
+  margin-left: 15px;
+  padding-top: 80px;
+}
+.title-slide > h2  {
+  margin-top: -25px;
+  padding-bottom: -20px;
+  color: #7d7d7d;
+  text-shadow: none;
+  font-weight: 400;
+  font-size: 30px;
+  text-align: left;
+  margin-left: 15px;
+}
+.title-slide > h3  {
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial;
+  color: #666e75;
+  text-shadow: none;
+  font-weight: 300;
+  /* text-transform: uppercase; */
+  font-size: 22px;
+  text-align: left;
+  margin-left: 15px;
+  margin-bottom: -20px;
+}
+
+.remark-slide-number {
+  font-size: 13pt;
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial;
+  color: #272822;
+  opacity: 1;
+}
+.inverse .remark-slide-number {
+  font-size: 13pt;
+  font-family: -apple-system, sans-serif;
+  color: #FAFAFA;
+  opacity: 1;
+}
+
+/* turns off slide numbers for title page: https://github.com/gnab/remark/issues/298 */
+.title-slide .remark-slide-number {
+  display: none;
+}
+
+.code10 .remark-code {
+  font-size: 10%;
+}
+
+.code20 .remark-code {
+  font-size: 20%;
+}
+
+.code30 .remark-code {
+  font-size: 30%;
+}
+
+.code40 .remark-code {
+  font-size: 40%;
+}
+
+.code50 .remark-code {
+  font-size: 50%;
+}
+
+.code60 .remark-code {
+  font-size: 60%;
+}
+
+.code70 .remark-code {
+  font-size: 70%;
+}
+
+.code80 .remark-code {
+  font-size: 80%;
+}
+
+.code90 .remark-code {
+  font-size: 90%;
+}
+
+.code100 .remark-code {
+  font-size: 100%;
+}
+
+.font10 {
+  font-size: 10%;
+}
+
+.font20 {
+  font-size: 20%;
+}
+
+.font30 {
+  font-size: 30%;
+}
+
+.font40 {
+  font-size: 40%;
+}
+
+.font50 {
+  font-size: 50%;
+}
+
+.font60 {
+  font-size: 60%;
+}
+
+.font70 {
+  font-size: 70%;
+}
+
+.font80 {
+  font-size: 80%;
+}
+
+.font90 {
+  font-size: 90%;
+}
+
+.font100 {
+  font-size: 100%;
+}
+
+.font110 {
+  font-size: 110%;
+}
+
+.font120 {
+  font-size: 120%;
+}
+
+.font130 {
+  font-size: 130%;
+}
+
+.font140 {
+  font-size: 140%;
+}
+
+.font150 {
+  font-size: 150%;
+}
+
+.font160 {
+  font-size: 160%;
+}
+.font170 {
+  font-size: 170%;
+}
+.font180 {
+  font-size: 180%;
+}
+.font190 {
+  font-size: 190%;
+}
+.font200 {
+  font-size: 200%;
+}

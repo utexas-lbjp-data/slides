@@ -193,10 +193,13 @@ We'll need a few packages during the workshop, so try installing these. If you h
 
 * **Step one:** Open RStudio after you've installed it.
 * **Step two:** Paste the code below in your console (see screenshot)
+    - If it asks you about Updating, just hit "No" before hitting enter.
 * **Step three:** Hit enter
 
 ```r
-install.packages(c("rmarkdown", "tidyverse", "tidycensus", "distill"))
+install.packages(c("rmarkdown", "tidyverse", "tidycensus", "distill", "devtools"))
+install.packages(c("janitor", "readxl"))
+devtools::install_github("utexas-lbjp-data/lbjdata")
 ```
 
 ]
