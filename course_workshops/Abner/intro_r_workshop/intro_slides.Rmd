@@ -21,8 +21,8 @@ output:
       in_header:
         - 'header.html'
 ---
-
-class: middle
+background-image: url('assets/images/analysis_screen1.png')
+background-size: cover
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
@@ -38,6 +38,7 @@ library(ggtext)           # Helps with text in ggplot2 objects
 library(cowplot)          # Helps with arranging and layering of ggplot2 objects 
 library(hrbrthemes)       # A package I really like with lots of useful functions
 library(gt)               # A package for making really nice tables in R
+library(flair)
 library(htmlwidgets)
 readRenviron("~/.Renviron")
 census_api_key <- Sys.getenv("CENSUS_API_KEY")
@@ -96,6 +97,47 @@ htmltools::tagList(
 )
 ```
 
+---
+class: middle, center
+
+```{r echo=FALSE, fig.width=14}
+
+vax_url <- "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls" 
+download.file(url=vax_url, destfile = "raw_data/tx_vaccine_uptake.xlsx")
+
+vaccine_chart <- readxl::read_excel(path = "raw_data/tx_vaccine_uptake.xlsx", sheet = "By County") |> 
+  janitor::clean_names() |> 
+  select(county_name, people_fully_vaccinated, population_12) |> # Pull the three columns we need
+  mutate(people_fully_vaccinated = as.numeric(people_fully_vaccinated), # Reclassify Character Data As Numeric 
+         population_12 = as.numeric(population_12)) |>
+  mutate(pct_uptake = round(people_fully_vaccinated/population_12, digits = 4)) |>  # Create PCT Column
+  filter(county_name!="Texas",                                        # Filter out 'Texas' value
+         county_name!="Other",                                        # Filter our 'Other' value
+         county_name!="Federal Long-Term Care Vaccination Program",   # Filter our Federal Programs
+         county_name!="Federal Pharmacy Retail Vaccination Program") |> 
+  mutate(uptake_rank = dense_rank(desc(pct_uptake))) |> # Create Rank Column
+  filter(uptake_rank <= 10) |>                          # Filter only for Top 10 counties
+  arrange(uptake_rank) |> 
+  ggplot() +
+  aes(x=reorder(county_name, uptake_rank), y = pct_uptake, fill=pct_uptake) +
+  geom_col() +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Leaders of the Vax",
+       subtitle = "Top 10 Counties in Texas for Vaccine Uptake",
+       x = "Vaccine Uptake (%)",
+       y = "County") +
+  lbjdata::theme_lbj(base_family = "Libre Franklin", base_size = 16) +
+  theme(plot.title = element_markdown(size = 28),
+        plot.subtitle = element_markdown(size = 20))
+
+vaccine_chart
+
+```
+
+
+---
+class: middle
+
 .pull-left[
 # About Me
 ]
@@ -130,11 +172,30 @@ background-size: cover
 class: center, bottom, inverse
 
 ---
-background: linear-gradient(rgba(77,77,77, 0.8), rgba(77,77,77, 0.8)), url('https://images.unsplash.com/photo-1584755320115-fc0a3789327b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80')
-background-size: cover
-class: center, middle, inverse
 
-# Spellbook Showcase
+# How I Hope We End Today
+
+.pull-left[
+
+#### Anywhere from here..
+
+.rmd-img[![](https://media3.giphy.com/media/l0EwZ92cG9x9VPC7u/giphy.gif?cid=790b76118edecd6d0b794b704e7116316ccb7d0c3b4d378e&rid=giphy.gif&ct=g)]
+
+]
+
+.pull-right[
+
+#### to here.
+
+
+.rmd-img[![](https://media1.giphy.com/media/xT1R9IKI80368giYne/giphy.gif?cid=790b7611b023f5345d803015ac0a3ada474f508173d36f94&rid=giphy.gif&ct=g)]
+
+]
+
+---
+class: showcase-bg, section, center, middle
+
+# 🪄 Showcase
 
 ---
 
@@ -218,16 +279,20 @@ harris |>
 ```{r eval = FALSE}
 library(gt)
 
+# Create A List of Variables
 demvars <- c(White = "P005003", Black = "P005004",
              Asian = "P005006", Hispanic = "P004003",
              AIAN = "P005005", NHOPI = "P005007",
              Other = "P003007",`Two or More` = "P003008")
 
+# Pull The Census Data 
 harris <- get_decennial(geography = "county", variables = demvars,
                         state = "TX", county = "Harris County", summary_var = "P001001") |> 
-  mutate(pct = 100 * (value / summary_value)) |> 
+  # Create pct column 
+  mutate(pct = (value / summary_value)) |>
   select(variable, value,  pct)
 
+# Draw A Table 
 harris |>
   gt() |> # Pass The Data To A gt table
   tab_header(title = md("**Demographics in Harris County**"),
@@ -238,7 +303,7 @@ harris |>
   cols_label(
     variable = md("**Group**"),
     value = md("**Population**"),
-    pct = md("**Pct. of Total")
+    pct = md("**Pct. of Total**")
   )
 ```
 ]
@@ -257,7 +322,7 @@ demvars <- c(White = "P005003",
 
 harris <- get_decennial(geography = "county", variables = demvars,
                   state = "TX", county = "Harris County", summary_var = "P001001") |> 
-    mutate(pct = 100 * (value / summary_value)) |> 
+    mutate(pct = (value / summary_value)) |> 
   select(variable, value,  pct)
 
 harris |> 
@@ -271,133 +336,25 @@ harris |>
   fmt_percent(columns=c("pct")) |> 
   cols_label(variable=md("**Group**"),
              value=md("**Population**"),
-             pct=md("**Pct. of Total"))
+             pct=md("**Pct. of Total**"))
 ```
 ]
 
 ---
 
-# Document Spellbook: `rmarkdown`
-
-.rmd-img[![](assets/images/rmd_magic.png)]
----
-class: middle
+# Static Charts: [`ggplot`]()
 
 .pull-left[
-## How R Can Make You Feel Sometimes...
+![](https://pbs.twimg.com/media/DZ15NFRXUAAA_yJ?format=jpg&name=large)
 ]
 
 .pull-right[
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">src/ : folder for scripts<br>data/ : original data pulled from database<br>output/ : intermediate RDS data objects needed for Rmd<br>analysis/: Rmd files and HTML output<br>doc/ : any long-form notes to self or documentation<br>ext/: external images or other random files I want to keep in proj</p>&mdash; Emily Riederer (@EmilyRiederer) <a href="https://twitter.com/allison_horst/status/1304134105643118592?s=20">September 10, 2018</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+![](https://pbs.twimg.com/media/E9figN0WYAQOXWK?format=jpg&name=large)
 ]
 
 ---
-background-image: url('assets/images/rstudio_hex.png')
-background-size: cover
-class: center, bottom, inverse
 
----
-background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_17.jpeg')
-background-size: cover
-class: center, bottom, inverse
-
----
-background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_18.jpeg')
-background-size: cover
-class: center, bottom, inverse
-
----
-background-image: url('assets/images/tidyverse_hex.png')
-background-size: cover
-class: center, bottom, inverse
-
----
-background-image: url('assets/images/tidyverse_network.png')
-background-size: cover
-class: center, bottom, inverse animated fadeIn
-
----
-background-image: url('assets/images/tidyverse_data_lifecycle_map.png')
-background-size: cover
-class: center, bottom, inverse animated fadeIn
-
----
-background-image: url('assets/images/lifecycle_focus.png')
-background-size: cover
-class: center, bottom, inverse animated fadeIn
-
----
-background-image: url('assets/images/what_todays_focus_will_be.png')
-background-size: cover
-class: center, bottom, inverse animated animate fadeIn
-
----
-background-image: url('assets/images/marie_kondo.png')
-background-size: cover
-class: center, bottom, inverse animated fadeIn
-
----
-
-# The Basics of a ggplot2 chart
-
-.pull-left[
-
-```{r eval=FALSE}
-
-library(ggplot2)
-library(ggthemes)
-
-diamonds |>  # Call On Your Dataset
-  ggplot() +  # Draw A Canvas
-  aes(cut, fill = cut) +  # Define How The Data Gets Mapped
-  geom_bar(show.legend = FALSE) +  # Define What Kind of Chart to Draw
-  labs(
-    x = "Cut",  # Specify X-Axis Label                       
-    y = "Count",  # Specify Y-Axis Label
-    title = "A Fancy diamonds Plot", # Specify Title Label
-    subtitle = "A compelling subtitle", # Specify Subtitle Label
-    caption = "Source: ggplot2 package | Data: 'diamonds'"  # Specify Source/Caption Label
-  ) +
-  theme_lbj() + # Add The LBJ Theme
-  theme(plot.title = element_text(color = "#bf5700")) +   # Modify Title's Color
-  ggthemes::scale_fill_tableau(palette = "Color Blind")   # Add A Color Blind Friendly Palette
-
-```
-
-]
-
-.pull-right[
-
-```{r fancy_diamonds, echo=FALSE, message=FALSE, warning=FALSE, fig.retina=3}
-
-library(ggplot2)
-library(ggthemes)
-
-diamonds %>%  # Call On Your Dataset
-  ggplot() +  # Draw A Canvas
-  aes(cut, fill = cut) +  # Define How The Data Gets Mapped
-  geom_bar(show.legend = FALSE) +  # Define What Kind of Chart to Draw
-  labs(
-    x = "Cut",  # Specify X-Axis Label                       
-    y = "Count",  # Specify Y-Axis Label
-    title = "A Fancy diamonds Plot", # Specify Title Label
-    subtitle = "A compelling subtitle", # Specify Subtitle Label
-    caption = "Source: ggplot2 package | Data: 'diamonds'"  # Specify Source/Caption Label
-  ) +
-  theme_lbj() + # Add The LBJ Theme
-  theme(plot.title = element_text(color = "#bf5700")) +   # Modify Title's Color
-  scale_fill_tableau(palette = "Color Blind")   # Add A Color Blind Friendly Palette  
-
-```
-]
----
-
-`r chunk_reveal(title = "# A step by step view", chunk_name = "fancy_diamonds", break_type = "auto")`
-
----
-
-# Interactive Charts in R
+# Interactive Charts: [`highcharter`](https://jkunst.com/highcharter/index.html)
 
 ```{r include=FALSE}
 library(highcharter)
@@ -510,6 +467,496 @@ r_naught |>
                    chartOptions = list(title =  list(style = list(fontWeight = '800', fontSize = '22px', textTransform = "uppercase")),
                                        subtitle =  list(style = list(fontSize = '14px'))))
 ```
+
+---
+
+# Dashboards: `shiny`
+
+.pull-left[
+
+#### Texas Workforce Commission
+
+![](assets/images/twc_dashboard.png)
+
+]
+
+.pull-right[
+
+#### National Center for Farmworker Health
+
+![](assets/images/ncfh_dashboard.png)
+
+]
+
+---
+
+# Websites: `blogdown` + `distill`
+
+.pull-left[
+
+.center[#### [Blogdown](https://pkgs.rstudio.com/blogdown/)]
+
+![](assets/images/blogdown.png)
+
+]
+
+.pull-right[
+
+.center[#### [Distill](https://pkgs.rstudio.com/distill/)]
+
+![](assets/images/distill.png)
+
+]
+
+---
+
+# Books: `bookdown`
+
+.rmd-img[![](assets/images/bookdown.png)]
+
+---
+
+# Documents: `rmarkdown`
+
+.rmd-img[![](assets/images/rmd_magic.png)]
+
+---
+
+# Like anything, this is a journey...
+
+.rmd-img[![](https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/r_rollercoaster.png
+)]
+
+---
+class: journey-bg, section, center, middle
+
+# Let's get started 👟
+
+---
+
+# Downloading Materials
+
+.pull-left[
+
+### Today's Agenda
+
+.b--gray.ba.bw2.ma2.shadow-1[
+
+*	Navigating Rstudio
+  *	Rstudio Interface
+  *	R Projects
+  * R Markdown
+      - Markdown Text
+      - Code Chunks
+* Creating Nice Reports
+  * PDF
+  * Word
+  * HTML
+*	Getting Data You Need
+  * Things People Give You
+  * Things That Live Online
+*	Making Good Charts
+* Exporting Data & Charts
+]
+]
+
+
+.pull-right[
+
+### Today's Materials
+
+.b--gray.ba.bw2.ma2.pa2.shadow-1[
+
+#### What You Should Download
+
+* [**Rmarkdown Analysis** ](tinyurl.com/TXVaxUptake): tinyurl.com/TXVaxUptake
+
+#### What You Should Reference Later
+
+* [**Today's Slides**](slides.lbjdata.org/course_workshops/abner/intro_r_workshop/intro_slide)
+]
+]
+
+---
+background-image: url('assets/images/rstudio_hex.png')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+# Downloading The Materials 
+
+* [**Rmarkdown Analysis** ](tinyurl.com/TXVaxUptake): tinyurl.com/TXVaxUptake
+
+![](assets/images/github_repo.png)
+
+
+---
+
+# Open the `.Rproj` file
+
+.rmd-img[![](assets/images/rproject.png)]
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_17.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_18.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('assets/images/tidyverse_hex.png')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('assets/images/tidyverse_network.png')
+background-size: cover
+class: center, bottom, inverse animated fadeIn
+
+---
+background-image: url('assets/images/tidyverse_data_lifecycle_map.png')
+background-size: cover
+class: center, bottom, inverse animated fadeIn
+
+---
+background-image: url('assets/images/lifecycle_focus.png')
+background-size: cover
+class: center, bottom, inverse animated fadeIn
+
+---
+background-image: url('assets/images/what_todays_focus_will_be.png')
+background-size: cover
+class: center, bottom, inverse animated animate fadeIn
+
+---
+background-image: url('assets/images/marie_kondo.png')
+background-size: cover
+class: center, bottom, inverse animated fadeIn
+
+---
+
+# What is R Markdown?
+
+.pull-left.b--gray.ba.bw2.ma2.pa4.shadow-1[
+* ["An authoring framework for data science."](https://rmarkdown.rstudio.com/lesson-1.html) (✔️)
+* [A document format (.Rmd)](https://bookdown.org/yihui/rmarkdown/). (✔️)
+* [An R package named rmarkdown](https://rmarkdown.rstudio.com/docs/). (✔️)
+* ["A file format for making dynamic documents with R."](https://rmarkdown.rstudio.com/articles_intro.html) (✔️)
+* ["A tool for integrating text, code, and results."](https://r4ds.had.co.nz/communicate-intro.html) (✔️)
+* ["A computational document."](http://radar.oreilly.com/2011/07/wolframs-computational-documen.html) (✔️)
+* Wizardry. (🧙️)
+]
+
+.pull-right[
+.rmd-small[![](https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/rmarkdown.png)]
+]
+
+.tl.burntorange[
+Courtesy of Alison Presmanes Hill ([@apreshill](https://twitter.com/apreshill))
+]
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_15.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_16.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_17.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_18.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_19.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_20.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_21.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_22.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_23.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_24.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_25.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_26.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_27.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_28.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_29.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_30.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_31.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_32.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_33.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_34.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_35.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_36.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+class: middle
+
+.pull-left[
+
+### Writing in Markdown 
+
+If you're not familiar with Markdown, that's okay. If you're like me, you grew up using things like Microsoft Office and Google Docs to write, so you're probably not familiar with markdown, but Markdown is a lot easier. So... what is it? 
+
+Markdown is just an easy way to write formatted text.  Like anything else, it takes practice, but is used widely in popular writing apps like [Bear](https://bear.app), [iA Writer](https://ia.net/writer), [Ulysses](https://ulysses.app). For the purposes of this workshop, we'll use it in an RStudio document tool called "[Rmarkdown](https://rmarkdown.rstudio.com)". Here's a quick way to get familiar with writing in Markdown:
+
+.bg--burntorange.b--text-color.ba.bw2.br3.shadow-5.ph4.mt5.f7[
+*__Note__: If writing in Markdown still feels weird, don't worry. You can also use R Markdown's Visual Markdown Editor.*
+]
+
+]
+
+.pull-right[
+
+![Doing the Markdown 10-min Tutorial](https://d33wubrfki0l68.cloudfront.net/59f29676ef5e4d74685e14f801bbc10c2dbd3cef/c0688/lesson-images/markdown-1-markup.png)
+
+* **First, visit this link:** Go to [https://commonmark.org/help/tutorial/](https://commonmark.org/help/tutorial/)  
+* **Then, do the 10-minute tutorial:** It's a bit of time, but goes quick and will help you have a better grasp on writing in markdown by the time we start the workshop.
+* **Finally, bookmark this site**: [https://commonmark.org/help/](https://commonmark.org/help/)
+
+]
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_38.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_39.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_40.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_41.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_42.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_43.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_44.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_45.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_46.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_47.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+class: title center pipe-page
+
+# `|>` and `%>%`
+
+```{r echo=FALSE, tidy=FALSE}
+decorate('
+leave_house(get_dressed(get_out_of_bed(wake_up(me, time = "8:00"), side = "correct"), pants = TRUE, shirt = TRUE), car = TRUE, bike = FALSE)
+', eval = FALSE) |> 
+  flair_args(color = "#005f86") |>
+  flair_funs(color = "#333f48", background = "#FFC0DC", before = "<b>", after = "</b>") |>
+  flair_input_vals(color = "#bf5700") |>
+  knit_print.with_flair()
+```
+
+--
+  
+  ```{r echo=FALSE, tidy=FALSE}
+decorate('
+me |> 
+  wake_up(time = "8:00") |> 
+  get_out_of_bed(side = "correct") |> 
+  get_dressed(pants = TRUE, shirt = TRUE) |> 
+  leave_house(car = TRUE, bike = FALSE)
+', eval = FALSE) |> 
+  flair("|>") |>
+  flair_args(color = "#005f86") |>
+  flair_funs(color = "#333f48", background = "#FFC0DC", before = "<b>", after = "</b>") |>
+  flair_input_vals(color = "#bf5700") |>
+  knit_print.with_flair()
+```
+.tl.footnote-small[
+Courtesy of Andrew Heiss ([@andrewheiss](https://twitter.com/andrewheiss))
+]
+---
+
+# Now, Our Analysis
+
+---
+
+# Importing Our Vaccine
+
+---
+
+# The Basics of a ggplot2 chart
+
+.pull-left[
+
+```{r eval=FALSE}
+
+library(ggplot2)
+library(ggthemes)
+
+diamonds |>  # Call On Your Dataset
+  ggplot() +  # Draw A Canvas
+  aes(cut, fill = cut) +  # Define How The Data Gets Mapped
+  geom_bar(show.legend = FALSE) +  # Define What Kind of Chart to Draw
+  labs(
+    x = "Cut",  # Specify X-Axis Label                       
+    y = "Count",  # Specify Y-Axis Label
+    title = "A Fancy diamonds Plot", # Specify Title Label
+    subtitle = "A compelling subtitle", # Specify Subtitle Label
+    caption = "Source: ggplot2 package | Data: 'diamonds'"  # Specify Source/Caption Label
+  ) +
+  theme_lbj() + # Add The LBJ Theme
+  theme(plot.title = element_text(color = "#bf5700")) +   # Modify Title's Color
+  ggthemes::scale_fill_tableau(palette = "Color Blind")   # Add A Color Blind Friendly Palette
+
+```
+
+]
+
+.pull-right[
+
+```{r fancy_diamonds, echo=FALSE, message=FALSE, warning=FALSE, fig.retina=3}
+
+library(ggplot2)
+library(ggthemes)
+
+diamonds %>%  # Call On Your Dataset
+  ggplot() +  # Draw A Canvas
+  aes(cut, fill = cut) +  # Define How The Data Gets Mapped
+  geom_bar(show.legend = FALSE) +  # Define What Kind of Chart to Draw
+  labs(
+    x = "Cut",  # Specify X-Axis Label                       
+    y = "Count",  # Specify Y-Axis Label
+    title = "A Fancy diamonds Plot", # Specify Title Label
+    subtitle = "A compelling subtitle", # Specify Subtitle Label
+    caption = "Source: ggplot2 package | Data: 'diamonds'"  # Specify Source/Caption Label
+  ) +
+  theme_lbj() + # Add The LBJ Theme
+  theme(plot.title = element_text(color = "#bf5700")) +   # Modify Title's Color
+  scale_fill_tableau(palette = "Color Blind")   # Add A Color Blind Friendly Palette  
+
+```
+]
+---
+
+`r chunk_reveal(title = "# A step by step view", chunk_name = "fancy_diamonds", break_type = "auto")`
 
 ---
 
