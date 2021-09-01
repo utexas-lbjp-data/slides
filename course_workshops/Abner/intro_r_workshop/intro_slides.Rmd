@@ -572,6 +572,7 @@ class: journey-bg, section, center, middle, inverse
 #### What You Should Reference Later
 
 * [**Today's Slides**](slides.lbjdata.org/course_workshops/abner/intro_r_workshop/intro_slide)
+* [**The Published Analysis**](https://demos.lbjdata.org/vaccine_uptake/analyzing-vacine-uptake)
 ]
 ]
 
@@ -901,16 +902,19 @@ class: vaccine-bg, section, center, middle, inverse
 
 # Package Setup
 
-Under the **Analysis Setup** section, there's a chunk tagged `setup` from lines 32:41.
+Under the **Analysis Setup** section, there's a chunk tagged `setup` that starts on line 32.
 
 ```{r eval=FALSE, echo=TRUE, message=FALSE, warning=FALSE, include=TRUE}
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
-# In case these aren't installed, uncomment this and run it.
-# install.packages(c("janitor", "tidyverse", "readxl"))
+# In case these aren't installed already from the prework, uncomment the next three lines and run them.
+# install.packages(c("rmarkdown", "tidyverse", "tidycensus", "distill", "devtools"))
+# install.packages(c("janitor", "readxl"))
+# devtools::install_github("utexas-lbjp-data/lbjdata")
 
 library(janitor)       # Package with useful + convenient data cleaning functions
 library(readxl)        # Package with useful functions for working with Excel Files
 library(tidyverse)     # Core Set of R Data Science Tools (dplyr, ggplot2, tidyr, readr, etc.)
+library(lbjdata)       # LBJ Data Package which has the ggplot2 themes
 
 ```
 
@@ -1272,10 +1276,21 @@ write_csv(ranked_uptake, "vaccine_uptake_top_10.csv")
 ```
 
 ---
+class: journey-bg, section, left, middle, inverse
+
+# 📚 Resources 📚
+
+## Questions? lbjdata.org
+
+#### [#rstats hashtag](https://twitter.com/search?q=%23rstats) on twitter
+#### R For Data Science - [Online Book](https://r4ds.had.co.nz) | [Hard Copy](https://www.oreilly.com/library/view/r-for-data/9781491910382/) | [Slack Community](https://www.rfordatasci.com)
+
+---
 class: journey-bg, section, center, middle, inverse
 
 # 🙏 Thank you 🙏
 
 ## Questions? lbjdata.org
 
-### 📧: matthew.worthington@utexas.edu
+### 📧: matthew.worthington@austin.utexas.edu
+### 🐦: @mrworthington
