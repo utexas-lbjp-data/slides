@@ -528,7 +528,7 @@ r_naught |>
 )]
 
 ---
-class: journey-bg, section, center, middle
+class: journey-bg, section, center, middle, inverse
 
 # Let's get started 👟
 
@@ -580,7 +580,7 @@ class: journey-bg, section, center, middle
 ---
 background-image: url('assets/images/rstudio_hex.png')
 background-size: cover
-class: center, bottom, inverse
+class: center, bottom
 
 ---
 
@@ -801,7 +801,7 @@ Markdown is just an easy way to write formatted text.  Like anything else, it ta
 ![Doing the Markdown 10-min Tutorial](https://d33wubrfki0l68.cloudfront.net/59f29676ef5e4d74685e14f801bbc10c2dbd3cef/c0688/lesson-images/markdown-1-markup.png)
 
 * **First, visit this link:** Go to [https://commonmark.org/help/tutorial/](https://commonmark.org/help/tutorial/)  
-* **Then, do the 10-minute tutorial:** It's a bit of time, but goes quick and will help you have a better grasp on writing in markdown by the time we start the workshop.
+* **Then, do the 10-minute tutorial:** It's a bit of time, but goes quick and will help you have a better grasp on writing in markdown.
 * **Finally, bookmark this site**: [https://commonmark.org/help/](https://commonmark.org/help/)
 
 ]
@@ -875,7 +875,7 @@ leave_house(get_dressed(get_out_of_bed(wake_up(me, time = "8:00"), side = "corre
 
 --
   
-  ```{r echo=FALSE, tidy=FALSE}
+```{r echo=FALSE, tidy=FALSE}
 decorate('
 me |> 
   wake_up(time = "8:00") |> 
@@ -889,16 +889,230 @@ me |>
   flair_input_vals(color = "#bf5700") |>
   knit_print.with_flair()
 ```
+
 .tl.footnote-small[
 Courtesy of Andrew Heiss ([@andrewheiss](https://twitter.com/andrewheiss))
 ]
----
-
-# Now, Our Analysis
 
 ---
+class: vaccine-bg, section, center, middle, inverse
 
-# Importing Our Vaccine
+# And Now... The Analysis
+
+---
+
+# Package Setup
+
+Under the **Analysis Setup** section, there's a chunk tagged `setup` from lines 32:41.
+
+```{r eval=FALSE, echo=TRUE, message=FALSE, warning=FALSE, include=TRUE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+# In case these aren't installed, uncomment this and run it.
+# install.packages(c("janitor", "tidyverse", "readxl"))
+
+library(janitor)       # Package with useful + convenient data cleaning functions
+library(readxl)        # Package with useful functions for working with Excel Files
+library(tidyverse)     # Core Set of R Data Science Tools (dplyr, ggplot2, tidyr, readr, etc.)
+
+```
+
+--
+
+### What's happening here?
+
+.b--burntorange.ba.bw2.ma2.pa2.shadow-1[
+
+Whenever you see `library(...)`, it means we are loading the packages into our Rmarkdown document so we can use the functions inside of them? In other words, we're pulling out the spellbooks and getting ready to do some data magic.
+
+]
+---
+
+## `janitor::clean_names()`
+
+**What it does:** Makes all column names machine readble (huge time saver):
+
+.rmd-small[![](https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/janitor_clean_names.png)]
+
+.tl.burntorange[
+Courtesy of Alison Presmanes Hill ([@apreshill](https://twitter.com/apreshill))
+]
+
+---
+
+# Importing Our Data
+
+.pull-left[
+
+**Step 1: Downloading Our Data**
+
+```{r download-data, eval = FALSE}
+
+vax_url <- "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls" 
+download.file(url=vax_url, destfile = "raw_data/tx_vaccine_uptake.xlsx")
+
+```
+
+**Step 2: Import the Downloaded Data**
+
+```{r import-data, eval = FALSE}
+
+vaccine_data_raw <- readxl::read_excel(path = "raw_data/tx_vaccine_uptake.xlsx", sheet = "By County") |> 
+  janitor::clean_names() # This function makes column headers machine readable
+
+dplyr::glimpse(vaccine_data_raw) # glimpse() lets you preview a data object
+
+```
+
+]
+
+.pull-right[
+
+.rmd-img[![](assets/images/import_screenshot.png)]
+
+```{r import-data-real, include=FALSE}
+
+readxl::read_excel(path = "raw_data/tx_vaccine_uptake.xlsx", 
+                                       sheet = "By County") %>% 
+  janitor::clean_names()
+
+```
+
+```{r import-data-act, include=FALSE}
+
+vaccine_data_raw <- readxl::read_excel(path = "raw_data/tx_vaccine_uptake.xlsx", 
+                                       sheet = "By County") %>% 
+  janitor::clean_names()
+
+```
+
+]
+
+---
+
+`r chunk_reveal(title = "# Importing - step by step view", chunk_name = "import-data-real", break_type = "auto")`
+
+---
+
+## `dplyr::select()`
+
+**What it does:** Selects your preferred columns from your data set. 
+
+<iframe width="750" height = "416" src="https://video.twimg.com/tweet_video/E-D3IWxWYAEIk51.mp4" frameborder="0" style = "border: solid 0px #ffffff" color = "white"  modestbranding = "1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1"></iframe>
+
+.tl.burntorange[
+Credit: ([@illustratedbyte](https://twitter.com/illustratedbyte))
+]
+
+---
+
+## `dplyr::mutate()`
+
+**What it does:** Creates or transforms a variable (column) while keeping the existing ones:
+
+.rmd-tiny[![](https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/dplyr_mutate.png)]
+
+.tl.burntorange[
+Credit: ([@allison_horst](https://twitter.com/allison_horst))
+]
+
+
+---
+
+## `dplyr::filter()`
+
+**What it does:** Subsets rows based on your conditions
+
+.rmd-small[![](https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/dplyr_filter.jpg)]
+
+.tl.burntorange[
+Credit: ([@allison_horst](https://twitter.com/allison_horst))
+]
+---
+
+# Working With Our Data
+
+### Step 1
+
+
+```{r create-pct-column, eval = FALSE}
+
+vaccine_uptake <- vaccine_data_raw %>% 
+  select(county_name, people_fully_vaccinated, population_12) %>% # Pull the three columns we need
+  mutate(people_fully_vaccinated = as.numeric(people_fully_vaccinated), # Reclassify Character Data As Numeric 
+         population_12 = as.numeric(population_12)) %>%
+  mutate(pct_uptake = round(people_fully_vaccinated/population_12, digits = 4)) %>%  # Create PCT Column
+  filter(county_name!="Texas",                                        # Filter out 'Texas' value
+         county_name!="Other",                                        # Filter our 'Other' value
+         county_name!="Federal Long-Term Care Vaccination Program",   # Filter our Federal Programs
+         county_name!="Federal Pharmacy Retail Vaccination Program")
+```
+
+```{r create-pct-column-real, echo=FALSE}
+
+vaccine_data_raw %>% 
+  select(county_name, people_fully_vaccinated, population_12) %>% # Pull the three columns we need
+  mutate(people_fully_vaccinated = as.numeric(people_fully_vaccinated), # Reclassify Character Data As Numeric 
+         population_12 = as.numeric(population_12)) %>%
+  mutate(pct_uptake = round(people_fully_vaccinated/population_12, digits = 4)) %>%  # Create PCT Column
+  filter(county_name!="Texas",                                        # Filter out 'Texas' value
+         county_name!="Other",                                        # Filter our 'Other' value
+         county_name!="Federal Long-Term Care Vaccination Program",   # Filter our Federal Programs
+         county_name!="Federal Pharmacy Retail Vaccination Program")
+```
+
+```{r create-pct-column-act, include=FALSE}
+
+vaccine_uptake <- vaccine_data_raw %>% 
+  select(county_name, people_fully_vaccinated, population_12) %>% # Pull the three columns we need
+  mutate(people_fully_vaccinated = as.numeric(people_fully_vaccinated), # Reclassify Character Data As Numeric 
+         population_12 = as.numeric(population_12)) %>%
+  mutate(pct_uptake = round(people_fully_vaccinated/population_12, digits = 4)) %>%  # Create PCT Column
+  filter(county_name!="Texas",                                        # Filter out 'Texas' value
+         county_name!="Other",                                        # Filter our 'Other' value
+         county_name!="Federal Long-Term Care Vaccination Program",   # Filter our Federal Programs
+         county_name!="Federal Pharmacy Retail Vaccination Program")
+```
+
+---
+
+`r chunk_reveal(title = "# Working with Data - Step 1", chunk_name = "create-pct-column-real", break_type = "auto")`
+
+---
+
+# Working With Our Data
+
+### Step 2
+
+```{r rank-and-limit, eval = FALSE}
+
+ranked_uptake <- vaccine_uptake %>%                      # Create New Object
+  mutate(uptake_rank = dense_rank(desc(pct_uptake))) %>% # Create Rank Column
+  filter(uptake_rank <= 10) %>%                          # Filter only for Top 10 counties
+  arrange(uptake_rank)                                  # Sort by rank
+
+```
+
+```{r rank-and-limit-real, echo = FALSE}
+
+vaccine_uptake %>%                      # Create New Object
+  mutate(uptake_rank = dense_rank(desc(pct_uptake))) %>% # Create Rank Column
+  filter(uptake_rank <= 10) %>%                          # Filter only for Top 10 counties
+  arrange(uptake_rank)                                  # Sort by rank
+
+```
+
+```{r rank-and-limit-act, include=FALSE}
+
+ranked_uptake <- vaccine_uptake %>%                      # Create New Object
+  mutate(uptake_rank = dense_rank(desc(pct_uptake))) %>% # Create Rank Column
+  filter(uptake_rank <= 10) %>%                          # Filter only for Top 10 counties
+  arrange(uptake_rank)                                  # Sort by rank
+
+```
+
+---
+
+`r chunk_reveal(title = "# Working with Data - Step 2", chunk_name = "rank-and-limit-real", break_type = "auto")`
 
 ---
 
@@ -960,50 +1174,102 @@ diamonds %>%  # Call On Your Dataset
 
 ---
 
-# Load Packages
+# Visualizing Our Data
 
-```{r eval=FALSE}
-options(htmltools.dir.version = FALSE)
-library(tidyverse)        # What loads the core set of Modern R Packages, like ggplot2
-library(tidycensus)       # Tidyverse-friendly connection to Census API
-library(janitor)          # Really useful functions for cleaning data
-library(lubridate)        # Makes Working With Dates Pretty Easy
-library(ggtext)           # Incredibl text features for ggplot2 objects
-library(cowplot)          # Helps with arranging and layering of ggplot2 objects 
-readRenviron("~/.Renviron")
-census_api_key <- Sys.getenv("CENSUS_API_KEY")
+.pull-left[
+
+```{r draw-viz, eval = FALSE}
+uptake_chart <- ggplot(ranked_uptake) +
+                aes(x=county_name, y = pct_uptake, fill=pct_uptake) +
+                geom_col() +
+                labs(title = "Leaders of the Vax",
+                     subtitle = "Top 10 Counties in Texas for Vaccine Uptake",
+                     x = "Vaccine Uptake (%)",
+                     y = "County") +
+                lbjdata::theme_lbj(base_size = 10)
 ```
 
-* [tidyverse](https://www.tidyverse.org)
-* [tidycensus](https://walker-data.com/tidycensus/)
-* [janitor](http://sfirke.github.io/janitor/)
-* [lubridate](https://lubridate.tidyverse.org)
-* [ggtext](https://wilkelab.org/ggtext/)           
-* [cowplot](https://wilkelab.org/cowplot/index.html)     
 
----
-background-image: url('assets/images/wayne_detroit_cases_per.png')
-background-size: cover
-class: center, bottom, inverse animated fadeIn
+]
 
----
-background-image: url('assets/images/wayne_detroit_case_fatality_rate.png')
-background-size: cover
-class: center, bottom, inverse animated animate fadeIn
+.pull-right[
 
----
+```{r draw-viz-real, echo = FALSE}
+ggplot(ranked_uptake) +
+  aes(x=county_name, y = pct_uptake, fill=pct_uptake) +
+  geom_col() +
+  labs(title = "Leaders of the Vax",
+       subtitle = "Top 10 Counties in Texas for Vaccine Uptake",
+       x = "Vaccine Uptake (%)",
+       y = "County") +
+  lbjdata::theme_lbj(base_size = 10)
 
-# Xaringan, xaringanExtra, + flipbookr
-
-These slides are mostly made with three R packages called [`xaringan`](https://github.com/yihui/xaringan), [`xaringanExtra`](https://pkg.garrickadenbuie.com/xaringanExtra/#/), and [`flipbookr`](https://github.com/EvaMaeRey/flipbookr) (which generates the step-by-step code and organizes it alongside the output). 
-
-I'm not really going to go into all the things each of these packages can do, but I hope the slides speak to how great the packages are! If you have R + RStudio installed on your laptop, you can install these packages directly from Github by pasting this in your RStudio console:
-
-```{r eval=FALSE, tidy=FALSE}
-# install.packages("devtools")
-devtools::install_github("yihui/xaringan")
-devtools::install_github("gadenbuie/xaringanExtra")
-devtools::install_github("EvaMaeRey/flipbookr")
 ```
 
-Also, the interactive chart was made with one of my favorite R packages called [`highcharter`](https://jkunst.com/highcharter/) which is an amazing R wrapper for the highcharts.js library.
+]
+
+---
+
+`r chunk_reveal(title = "# Visualizing our Data", chunk_name = "draw-viz-real", break_type = "auto")`
+
+---
+
+# Sorting Our Chart
+
+.pull-left[
+
+```{r sorting-viz, eval = FALSE}
+
+uptake_sorted <- ggplot(ranked_uptake) +
+                aes(x=reorder(county_name, uptake_rank), y = pct_uptake, fill=pct_uptake) +
+                geom_col() +
+                scale_y_continuous(labels = scales::percent) +
+                labs(title = "Leaders of the Vax",
+                     subtitle = "Top 10 Counties in Texas for Vaccine Uptake",
+                     x = "Vaccine Uptake (%)",
+                     y = "County") +
+                lbjdata::theme_lbj(base_family = "Libre Franklin", base_size = 10)
+
+```
+
+
+]
+
+.pull-right[
+
+```{r sorting-viz-real, echo = FALSE}
+
+ggplot(ranked_uptake) +
+  aes(x=reorder(county_name, uptake_rank), y = pct_uptake, fill=pct_uptake) +
+  geom_col() +
+  scale_y_continuous(labels = scales::percent) +
+  labs(title = "Leaders of the Vax",
+       subtitle = "Top 10 Counties in Texas for Vaccine Uptake",
+       x = "Vaccine Uptake (%)",
+       y = "County") +
+  lbjdata::theme_lbj(base_family = "Libre Franklin", base_size = 10)
+
+```
+
+]
+
+---
+
+`r chunk_reveal(title = "# Sorting Our Chart", chunk_name = "sorting-viz-real", break_type = "auto")`
+
+---
+
+# Exporting Our Data
+
+### Step 1: Export Our Chart
+
+```{r, eval = FALSE}
+ggsave("vaccine_uptake_chart.png", uptake_sorted, dpi = 300, width = 10, height = 6, bg = "white")
+```
+
+### Step 2: Export Our Data
+
+```{r, eval = FALSE}
+write_csv(ranked_uptake, "vaccine_uptake_top_10.csv")
+```
+

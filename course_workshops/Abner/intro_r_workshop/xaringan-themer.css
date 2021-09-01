@@ -101,13 +101,15 @@ h1, h2, h3 {
 }
 .remark-inline-code {
   font-size: var(--code-inline-font-size);
-  color: #000;
+  color: #bf5700;
 }
+
 .remark-slide-number {
   color: #272822;
   opacity: 1;
   font-size: 0.9em;
 }
+
 a, a > code {
   color: var(--link-color);
   text-decoration: none;
@@ -258,6 +260,10 @@ table.dataTable.hover tbody tr:hover, table.dataTable.display tbody tr:hover {
 }
 .bg-blue{
   background-color: var(--blue);
+}
+
+.b--burntorange{
+  border-color: var(--burntorange);
 }
 .ctp-grey-blue {
   color: var(--ctp-grey-blue);
