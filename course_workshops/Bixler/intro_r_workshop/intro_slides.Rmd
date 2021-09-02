@@ -155,6 +155,10 @@ vaccine_chart
 
 ```
 
+---
+background-image: url('assets/images/dir_stat.png')
+background-size: cover
+class: center, bottom, inverse
 
 ---
 class: middle
