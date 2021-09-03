@@ -1,5 +1,5 @@
 ---
-title: "An Introduction R + the `tidyverse`"
+title: "An Introduction: R + the `tidyverse`"
 subtitle: "For Dr. Bixler's Program Evaluation Course<html><div style='float:left'></div><hr color='#e2f1fc' size=1px width=1100px></html>"
 author: 
 - "<span style='color:#005f86; font-weight:500'>Matt Worthington</span> | Sr. Project Manager for Data Initiatives, UT Austin - LBJ"
