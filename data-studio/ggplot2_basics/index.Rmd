@@ -567,7 +567,7 @@ class: journey-bg, section, center, middle, inverse
 
 #### What You Should Reference Later
 
-* [**Today's Slides**](slides.lbjdata.org/data-studio/ggplot2-basics/index.html)
+* [**Today's Slides**](slides.lbjdata.org/data-studio/ggplot2_basics/index.html)
 * [**The ggplot2 Website**](https://ggplot2.tidyverse.org)
 * [**Chapter 1 of R For Data Science**](https://r4ds.had.co.nz/data-visualisation.html)
 ]
@@ -656,28 +656,32 @@ Courtesy of Alison Presmanes Hill ([@apreshill](https://twitter.com/apreshill))
 ]
 
 ---
+class: center middle
 
 .rmd-img[![](https://www.mrworthington.com/posts/school-finance-analysis/SFNationalMapPP.png)]
 
 ---
+class: center middle
 
-.rmd-img[![](https://images.squarespace-cdn.com/content/v1/4f3f61bae4b063b909445965/1622454363382-U130NBNWBZMVGI2PF0YH/employed.png)]
+.rmd-tiniest[![](https://images.squarespace-cdn.com/content/v1/4f3f61bae4b063b909445965/1622454363382-U130NBNWBZMVGI2PF0YH/employed.png)]
 
 .tl.burntorange[
 Credit: Georgios Karamanis ([@geokaramanis](https://twitter.com/geokaramanis))
 ]
 
 ---
+class: center middle
 
-.rmd-img[![](https://raw.githubusercontent.com/Z3tt/TidyTuesday/master/plots/2020_08/2020_08_CarbonFoodprint_alt.png)]
+.rmd-med[![](https://raw.githubusercontent.com/Z3tt/TidyTuesday/master/plots/2020_08/2020_08_CarbonFoodprint_alt.png)]
 
 .tl.burntorange[
 Credit: Cédric Scherer ([@CedScherer](https://twitter.com/CedScherer))
 ]
 
 ---
+class: center middle
 
-.rmd-img[![](https://raw.githubusercontent.com/Z3tt/TidyTuesday/master/plots/2020_27/2020_27_Xmen_annotated.png)]
+.rmd-small[![](https://raw.githubusercontent.com/Z3tt/TidyTuesday/master/plots/2020_27/2020_27_Xmen_annotated.png)]
 
 .tl.burntorange[
 Credit: Cédric Scherer ([@CedScherer](https://twitter.com/CedScherer))

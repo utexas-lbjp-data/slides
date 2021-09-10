@@ -16,6 +16,11 @@ margin: .6em 0;
   margin-left: 3rem;
 }
 
+.rmd-med img {
+  max-width: 75%;
+  margin-left: 3rem;
+}
+
 .rmd-small img {
   max-width: 65%;
   margin-left: 3rem;
@@ -23,6 +28,11 @@ margin: .6em 0;
 
 .rmd-tiny img {
   max-width: 43%;
+  margin-left: 3rem;
+}
+
+.rmd-tiniest img {
+  max-width: 40%;
   margin-left: 3rem;
 }
 
