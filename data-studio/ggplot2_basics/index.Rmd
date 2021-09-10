@@ -567,7 +567,7 @@ class: journey-bg, section, center, middle, inverse
 
 #### What You Should Reference Later
 
-* [**Today's Slides**](slides.lbjdata.org/data-studio/ggplot2_basics/index.html)
+* [**Today's Slides**](https://slides.lbjdata.org/data-studio/ggplot2_basics/index.html)
 * [**The ggplot2 Website**](https://ggplot2.tidyverse.org)
 * [**Chapter 1 of R For Data Science**](https://r4ds.had.co.nz/data-visualisation.html)
 ]
