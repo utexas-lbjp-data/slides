@@ -570,6 +570,8 @@ class: journey-bg, section, center, middle, inverse
 * [**Today's Slides**](https://slides.lbjdata.org/data-studio/ggplot2_basics/index.html)
 * [**The ggplot2 Website**](https://ggplot2.tidyverse.org)
 * [**Chapter 1 of R For Data Science**](https://r4ds.had.co.nz/data-visualisation.html)
+* [**ggplot2 Cheatsheets**]()
+* [**ggplot2tor**](https://ggplot2tor.com)
 ]
 ]
 
@@ -638,13 +640,13 @@ class: center, bottom, inverse animated fadeIn
 # What is ggplot2?
 
 .pull-left.b--gray.ba.bw2.ma2.pa4.shadow-1[
-* ["An authoring framework for data science."](https://rmarkdown.rstudio.com/lesson-1.html) (✔️)
-* [A document format (.Rmd)](https://bookdown.org/yihui/rmarkdown/). (✔️)
-* [An R package named rmarkdown](https://rmarkdown.rstudio.com/docs/). (✔️)
-* ["A file format for making dynamic documents with R."](https://rmarkdown.rstudio.com/articles_intro.html) (✔️)
-* ["A tool for integrating text, code, and results."](https://r4ds.had.co.nz/communicate-intro.html) (✔️)
-* ["A computational document."](http://radar.oreilly.com/2011/07/wolframs-computational-documen.html) (✔️)
-* Wizardry. (🧙️)
+* ["A coherent system for describing and building graphs"](https://r4ds.had.co.nz/data-visualisation.html) (✔️)
+* [A tool for implementing a Grammar of Graphics](https://ggplot2-book.org/introduction.html). (✔️)
+* [An R package named ggplot2](https://rmarkdown.rstudio.com/docs/). (✔️)
+* [A tool that people build on](https://exts.ggplot2.tidyverse.org) (✔️)
+* [A tool for making artwork](https://www.data-imaginist.com/art) (✔️)
+* [A tool for reproducible analysis](http://radar.oreilly.com/2011/07/wolframs-computational-documen.html) (✔️)
+* Really fun (🚀️)
 ]
 
 .pull-right[
@@ -685,6 +687,15 @@ class: center middle
 
 .tl.burntorange[
 Credit: Cédric Scherer ([@CedScherer](https://twitter.com/CedScherer))
+]
+
+---
+class: center middle
+
+.rmd-small[![](https://www.data-imaginist.com/art/011_yonder/yonder1831_hu827b7f9bcd74231a2b6a7030989792b6_784253_0x1000_resize_q75_box.jpg)]
+
+.tl.burntorange[
+Credit: Thomas Lin Pederson ([@thomasp85](https://twitter.com/thomasp85))
 ]
 
 ---
@@ -743,11 +754,33 @@ Courtesy of Andrew Heiss ([@andrewheiss](https://twitter.com/andrewheiss))
 ---
 class: vaccine-bg, section, center, middle, inverse
 
-# And now... making charts in ggplot2
+# And now... making charts! 
+
+---
+class: center middle
+
+# The Grammar of Graphics
+
+.rmd-img[![](https://cdn-images-1.medium.com/max/800/1*MMZuYgeC_YjXNC1r4D4sog.png)]
+
+.tl.burntorange[
+Credit: ([Dr Anna Krystalli](https://annakrystalli.me/rrresearchACCE20/plotting-with-ggplot2.html#the-grammar-of-grahics))
+]
+
+---
+class: center middle
+
+# The Grammar of Graphics
+
+.rmd-img[![](https://cdn-images-1.medium.com/max/800/1*w1RnmuE7VRK9aCAbtW9KAQ.gif)]
+
+.tl.burntorange[
+Credit: ([Dr Anna Krystalli](https://annakrystalli.me/rrresearchACCE20/plotting-with-ggplot2.html#the-grammar-of-grahics))
+]
 
 ---
 
-# The Basics of a ggplot2 chart
+# ggplot2 Basics in Action
 
 .pull-left[
 
@@ -801,84 +834,113 @@ diamonds %>%  # Call On Your Dataset
 ]
 
 ---
+class: center middle
 
 ## `ggplot()`
 
-**What it does:** Draws a canvas for your chart
+**What it does:** Loads the data and draws a ggplot2 canvas for your chart
 
-.rmd-small[![](https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/janitor_clean_names.png)]
-
-.tl.burntorange[
-Credit: ([@allison_horst](https://twitter.com/allison_horst))
-]
+.rmd-tiny[![](assets/images/ggplot_function.png)]
 
 ---
+class: center middle
 
 ## `aes()`
 
 **What it does:** Lets you dictate what goes where on the chart, like what's on the x-axis versus the y-axis or how stuff gets colored.
 
-.rmd-small[![](https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/janitor_clean_names.png)]
-
-.tl.burntorange[
-Credit: ([@allison_horst](https://twitter.com/allison_horst))
-]
+.rmd-tiny[![](assets/images/aes_function.png)]
 
 ---
+class: center middle
 
 ## `geom_*()`
 
 **What it does:** Lets you add shapes to your charts (bars vs. points vs. lines vs. maps, etc.)
 
-.rmd-small[![](https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/janitor_clean_names.png)]
-
-.tl.burntorange[
-Credit: ([@allison_horst](https://twitter.com/allison_horst))
-]
+.rmd-tiny[![](assets/images/geom_function.png)]
 
 ---
+class: center middle
+
+## `labs()`
+
+**What it does:** Lets you add or adjust labels on your chart, like the Title, Subtitle, X-Axis, Y-Axis, or Caption Labels.
+
+.rmd-tiny[![](assets/images/labs_function.png)]
+
+---
+class: center middle
 
 ## `theme_*()`
 
 **What it does:** Lets you add style to the chart!
 
-.rmd-small[![](https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/janitor_clean_names.png)]
-
-.tl.burntorange[
-Credit: ([@allison_horst](https://twitter.com/allison_horst))
-]
+.rmd-tiny[![](assets/images/theme_function.png)]
 
 ---
+class: center middle
 
 ## `scale_*()`
 
 **What it does:** Lets you change or adjust things about scales you've mapped using `aes()`.
 
-.rmd-small[![](https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/janitor_clean_names.png)]
+.rmd-tiny[![](assets/images/scale_function.png)]
 
-.tl.burntorange[
-Credit: ([@allison_horst](https://twitter.com/allison_horst))
-]
-
----
-
-## `labs()`
-
-**What it does:** Lets you add or adjust labels on your chart.
-
-.rmd-small[![](https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/janitor_clean_names.png)]
 
 ---
 
 `r chunk_reveal(title = "# A step by step view", chunk_name = "fancy_diamonds", break_type = "auto")`
 
 ---
+class: code50
 
-# Visualizing Our Data
+# Our Data
+
+```{r}
+library(tidyverse)    # Core Set of R Data Science Tools (dplyr, ggplot2, tidyr, readr, etc.)
+library(ggthemes)     # ggplot2 extension package that has themes + functions
+
+# Import Texas County Data ------------------------------------------------
+
+tx_cnty_data <- read_rds("raw_data/texas_cnty_data.rds") 
+
+# Review Data Available ---------------------------------------------------
+
+glimpse(tx_cnty_data) ## Preview The Data
+```
+
+
+---
+
+# 1. Top 10 Chart
 
 .pull-left[
 
-```{r draw-viz, include = FALSE}
+```{r eval=FALSE}
+# 1. Draw A Bar Chart -----------------------------------------------------
+
+## Subset the Top 10 Counties for Vaccine Uptake
+
+top_10_vax <- tx_cnty_data |> 
+  arrange(desc(pct_vaccinated_eligible)) |> 
+  slice(1:10)
+
+## Draw Bar Chart of Top 10 Counties
+
+top_10_vax |> 
+  ggplot() + 
+  aes(x=reorder(county, pct_vaccinated_eligible), y = pct_vaccinated_eligible, fill = pct_vaccinated_eligible) +
+  geom_col() +
+  scale_y_continuous(labels = scales::percent) +
+  theme_minimal() +
+  theme(legend.position  = "none",
+        plot.title = element_text(face = "bold")) +
+  labs(title = "Top 10 Counties for Vacine Uptake",
+       subtitle = "As of September 9th, 2021",
+       caption = "Data: Texas Department of State Health Services",
+       x = "Counties",
+       y = "% Fully Vaccinated (Population 12+)")
 
 ```
 
@@ -887,7 +949,31 @@ Credit: ([@allison_horst](https://twitter.com/allison_horst))
 
 .pull-right[
 
-```{r draw-viz-real, echo = FALSE, include = FALSE}
+```{r draw-viz-1, echo=FALSE, message=FALSE, warning=FALSE, fig.retina=3}
+
+# 1. Draw A Bar Chart -----------------------------------------------------
+
+## Subset the Top 10 Counties for Vaccine Uptake
+
+top_10_vax <- tx_cnty_data %>% 
+  arrange(desc(pct_vaccinated_eligible)) %>% 
+  slice(1:10)
+
+## Draw Bar Chart of Top 10 Counties
+
+top_10_vax %>%
+  ggplot() + 
+  aes(x=reorder(county, pct_vaccinated_eligible), y = pct_vaccinated_eligible, fill = pct_vaccinated_eligible) +
+  geom_col() +
+  scale_y_continuous(labels = scales::percent) +
+  theme_minimal() +
+  theme(legend.position  = "none",
+        plot.title = element_text(face = "bold")) +
+  labs(title = "Top 10 Counties for Vacine Uptake",
+       subtitle = "As of September 9th, 2021",
+       caption = "Data: Texas Department of State Health Services",
+       x = "Counties",
+       y = "% Fully Vaccinated (Population 12+)")
 
 ```
 
@@ -895,22 +981,342 @@ Credit: ([@allison_horst](https://twitter.com/allison_horst))
 
 ---
 
+`r chunk_reveal(title = "# Top 10 - Step by Step", chunk_name = "draw-viz-1", break_type = "auto")`
 
 ---
 
-# Exporting Our Data
+# 2. Map 1
 
-### Step 1: Export Our Chart
+.pull-left[
 
-```{r eval=FALSE, include=FALSE}
-ggsave("vaccine_uptake_chart.png", uptake_sorted, dpi = 300, width = 10, height = 6, bg = "white")
+```{r eval=FALSE}
+
+# 1. Map of Vaccine Uptake 12+ --------------------------------------------
+
+tx_cnty_data %>% 
+  ggplot() + 
+  aes(fill = pct_vaccinated_eligible, color = pct_vaccinated_eligible) +
+  geom_sf(size = 0.15) +
+  scale_color_gradient_tableau(palette = "Blue", labels = scales::percent) +
+  scale_fill_gradient_tableau(palette = "Blue", labels = scales::percent) +
+  theme_void() +
+  theme(legend.position  = "right",
+        plot.title = element_text(face = "bold")) +
+  labs(title = "Vacine Uptake Among Eligible Residents",
+       subtitle = "As of September 9th, 2021",
+       caption = "Data: Texas Department of State Health Services",
+       x = "Counties",
+       y = "% Fully Vaccinated (Population 12+)",
+       fill = "% Fully Vaccinated (12+)",
+       color = "% Fully Vaccinated (12+)")
+
 ```
 
-### Step 2: Export Our Data
+]
 
-```{r eval=FALSE, include=FALSE}
-write_csv(ranked_uptake, "vaccine_uptake_top_10.csv")
+.pull-right[
+
+```{r draw-viz-2, echo = FALSE, include = FALSE}
+
+# 1. Map of Vaccine Uptake 12+ --------------------------------------------
+
+tx_cnty_data %>% 
+  ggplot() + 
+  aes(fill = pct_vaccinated_eligible, color = pct_vaccinated_eligible) +
+  geom_sf(size = 0.15) +
+  scale_color_gradient_tableau(palette = "Blue", labels = scales::percent) +
+  scale_fill_gradient_tableau(palette = "Blue", labels = scales::percent) +
+  theme_void() +
+  theme(legend.position  = "right",
+        plot.title = element_text(face = "bold")) +
+  labs(title = "Vacine Uptake Among Eligible Residents",
+       subtitle = "As of September 9th, 2021",
+       caption = "Data: Texas Department of State Health Services",
+       x = "Counties",
+       y = "% Fully Vaccinated (Population 12+)",
+       fill = "% Fully Vaccinated (12+)",
+       color = "% Fully Vaccinated (12+)")
+
 ```
+
+]
+
+---
+
+`r chunk_reveal(title = "# Map 1 - Step by Step", chunk_name = "draw-viz-2", break_type = "auto")`
+
+---
+
+# 2. Map 2
+
+.pull-left[
+
+```{r eval=FALSE}
+
+# 2. Map of Vaccine Uptake All --------------------------------------------
+
+tx_cnty_data %>% 
+  ggplot() + 
+  aes(fill = pct_vaccinated_all, color = pct_vaccinated_all) +
+  geom_sf(size = 0.15) +
+  scale_color_gradient_tableau(palette = "Blue", labels = scales::percent) +
+  scale_fill_gradient_tableau(palette = "Blue", labels = scales::percent) +
+  theme_void() +
+  theme(legend.position  = "right",
+        plot.title = element_text(face = "bold")) +
+  labs(title = "Vacine Uptake Among All Residents",
+       subtitle = "As of September 9th, 2021",
+       caption = "Data: Texas Department of State Health Services",
+       x = "Counties",
+       y = "% Fully Vaccinated (All)",
+       fill = "% Fully Vaccinated (All)",
+       color = "% Fully Vaccinated (All)")
+
+```
+
+
+]
+
+.pull-right[
+
+```{r draw-viz-3, echo = FALSE, include = FALSE}
+
+# 2. Map of Vaccine Uptake All --------------------------------------------
+
+tx_cnty_data %>% 
+  ggplot() + 
+  aes(fill = pct_vaccinated_all, color = pct_vaccinated_all) +
+  geom_sf(size = 0.15) +
+  scale_color_gradient_tableau(palette = "Blue", labels = scales::percent) +
+  scale_fill_gradient_tableau(palette = "Blue", labels = scales::percent) +
+  theme_void() +
+  theme(legend.position  = "right",
+        plot.title = element_text(face = "bold")) +
+  labs(title = "Vacine Uptake Among All Residents",
+       subtitle = "As of September 9th, 2021",
+       caption = "Data: Texas Department of State Health Services",
+       x = "Counties",
+       y = "% Fully Vaccinated (All)",
+       fill = "% Fully Vaccinated (All)",
+       color = "% Fully Vaccinated (All)")
+
+```
+
+]
+
+---
+
+`r chunk_reveal(title = "# Map 2 - Step by Step, chunk_name = "draw-viz-3", break_type = "auto")`
+
+---
+class: code80
+
+## Our Data for Charts in Part 3
+
+```{r}
+# Pivot the Data Longways -------------------------------------------------
+
+long_data <- tx_cnty_data |> 
+  as_tibble() |> 
+  mutate(cases_per1k = (confirmed_cases/tot_pop)*1000,
+         deaths_per1k = (fatalities/tot_pop)*1000) |> 
+  pivot_longer(cols = c("cases_per1k","deaths_per1k","broadband",
+                        "labor_part_16","unemployment","w_health_insurance","share_above_65"),
+               names_to = "comparison_features",
+               values_to = "values") |> 
+  select(county, pct_vaccinated_eligible, comparison_features, values)
+
+head(long_data)
+```
+
+---
+
+# 3. Scatterplot + Trend 1
+
+.pull-left[
+
+```{r eval=FALSE}
+
+# 1. Comparing Vaccine Uptake to Deaths Per 1k -----------------------------
+
+long_data %>% 
+  filter(comparison_features=="deaths_per1k") %>% 
+  ggplot() + 
+  aes(y = pct_vaccinated_eligible, x = values, alpha = values) +
+  geom_point() +
+  geom_smooth(method="lm") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_color_gradient_tableau(palette = "Blue", labels = scales::percent) +
+  theme_minimal() +
+  theme(legend.position  = "none",
+        plot.title = element_text(face = "bold")) +
+  labs(title = "What May Be Driving Uptake?",
+       subtitle = "As of September 9th, 2021",
+       caption = "Data: Texas Department of State Health Services and US Census",
+       x = "Deaths For Every 1,000 Persons",
+       y = "% Fully Vaccinated (Population 12+)")
+
+```
+
+
+]
+
+.pull-right[
+
+```{r draw-viz-4, echo = FALSE, include = FALSE}
+
+# 1. Comparing Vaccine Uptake to Deaths Per 1k -----------------------------
+
+long_data %>% 
+  filter(comparison_features=="deaths_per1k") %>% 
+  ggplot() + 
+  aes(y = pct_vaccinated_eligible, x = values, alpha = values) +
+  geom_point() +
+  geom_smooth(method="lm") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_color_gradient_tableau(palette = "Blue", labels = scales::percent) +
+  theme_minimal() +
+  theme(legend.position  = "none",
+        plot.title = element_text(face = "bold")) +
+  labs(title = "What May Be Driving Uptake?",
+       subtitle = "As of September 9th, 2021",
+       caption = "Data: Texas Department of State Health Services and US Census",
+       x = "Deaths For Every 1,000 Persons",
+       y = "% Fully Vaccinated (Population 12+)")
+
+```
+
+]
+
+---
+
+`r chunk_reveal(title = "# Scatterplot 1 - Step by Step", chunk_name = "draw-viz-4", break_type = "auto")`
+
+---
+
+# 3. Scatterplot + Trend  2
+
+.pull-left[
+
+```{r eval=FALSE}
+
+# 2. Comparing Vaccine Uptake to Cases Per 1k -----------------------------
+
+long_data %>% 
+  filter(comparison_features=="cases_per1k") %>% 
+  ggplot() + 
+  aes(y = pct_vaccinated_eligible, x = values, alpha = values) +
+  geom_point() +
+  geom_smooth(method="lm") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_color_gradient_tableau(palette = "Blue", labels = scales::percent) +
+  theme_minimal() +
+  theme(legend.position  = "none",
+        plot.title = element_text(face = "bold")) +
+  labs(title = "What May Be Driving Uptake?",
+       subtitle = "As of September 9th, 2021",
+       caption = "Data: Texas Department of State Health Services and US Census",
+       x = "Cases For Every 1,000 Persons",
+       y = "% Fully Vaccinated (Population 12+)")
+
+```
+
+
+]
+
+.pull-right[
+
+```{r draw-viz-5, echo = FALSE, include = FALSE}
+
+# 1. Comparing Vaccine Uptake to Deaths Per 1k -----------------------------
+
+long_data %>% 
+  filter(comparison_features=="deaths_per1k") %>% 
+  ggplot() + 
+  aes(y = pct_vaccinated_eligible, x = values, alpha = values) +
+  geom_point() +
+  geom_smooth(method="lm") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_color_gradient_tableau(palette = "Blue", labels = scales::percent) +
+  theme_minimal() +
+  theme(legend.position  = "none",
+        plot.title = element_text(face = "bold")) +
+  labs(title = "What May Be Driving Uptake?",
+       subtitle = "As of September 9th, 2021",
+       caption = "Data: Texas Department of State Health Services and US Census",
+       x = "Deaths For Every 1,000 Persons",
+       y = "% Fully Vaccinated (Population 12+)")
+
+```
+
+]
+
+---
+
+`r chunk_reveal(title = "# Scatterplot 2 - Step by Step", chunk_name = "draw-viz-5", break_type = "auto")`
+
+---
+
+# 3. Faceted Scatterplot
+
+.pull-left[
+
+```{r eval=FALSE}
+
+# 3. Comparing Vaccine Uptake to Deaths Per 1k -----------------------------
+
+long_data %>% 
+  ggplot() + 
+  aes(y = pct_vaccinated_eligible, x = values, alpha = values) +
+  geom_point() +
+  geom_smooth(method="lm") +
+  facet_wrap(~comparison_features, scales = "free_x") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_color_gradient_tableau(palette = "Blue", labels = scales::percent) +
+  theme_minimal() +
+  theme(legend.position  = "none",
+        plot.title = element_text(face = "bold")) +
+  labs(title = "What May Be Driving Uptake?",
+       subtitle = "As of September 9th, 2021",
+       caption = "Data: Texas Department of State Health Services and US Census",
+       x = "Share (%) of Feature",
+       y = "% Fully Vaccinated (Population 12+)")
+
+```
+
+
+]
+
+.pull-right[
+
+```{r draw-viz-6, echo = FALSE, include = FALSE}
+
+# 3. Comparing Vaccine Uptake to Deaths Per 1k -----------------------------
+
+long_data %>% 
+  ggplot() + 
+  aes(y = pct_vaccinated_eligible, x = values, alpha = values) +
+  geom_point() +
+  geom_smooth(method="lm") +
+  facet_wrap(~comparison_features, scales = "free_x") +
+  scale_y_continuous(labels = scales::percent) +
+  scale_color_gradient_tableau(palette = "Blue", labels = scales::percent) +
+  theme_minimal() +
+  theme(legend.position  = "none",
+        plot.title = element_text(face = "bold")) +
+  labs(title = "What May Be Driving Uptake?",
+       subtitle = "As of September 9th, 2021",
+       caption = "Data: Texas Department of State Health Services and US Census",
+       x = "Share (%) of Feature",
+       y = "% Fully Vaccinated (Population 12+)")
+
+```
+
+]
+
+---
+
+`r chunk_reveal(title = "# Faceted Plot - Step by Step", chunk_name = "draw-viz-6", break_type = "auto")`
 
 ---
 class: journey-bg, section, left, middle, inverse
@@ -919,7 +1325,9 @@ class: journey-bg, section, left, middle, inverse
 
 ## Questions? lbjdata.org
 
-#### [#rstats hashtag](https://twitter.com/search?q=%23rstats) on twitter
+#### [#rstats hashtag](https://twitter.com/hashtag/rstats) on twitter
+#### [#ggplot2 hashtag](https://twitter.com/hashtag/ggplot2) on twitter
+#### [#TidyTuesday hashtag](https://twitter.com/hashtag/TidyTuesday) on twitter
 #### R For Data Science - [Online Book](https://r4ds.had.co.nz) | [Hard Copy](https://www.oreilly.com/library/view/r-for-data/9781491910382/) | [Slack Community](https://www.rfordatasci.com)
 
 ---
@@ -928,6 +1336,10 @@ class: journey-bg, section, center, middle, inverse
 # 🙏 Thank you 🙏
 
 ## Questions? lbjdata.org
+
+## Feedback:
+
+https://www.menti.com/f68w7ni8n5
 
 ### 📧: matthew.worthington@austin.utexas.edu
 ### 🐦: @mrworthington

@@ -1,5 +1,5 @@
 ---
-title: "An Introduction R + the `tidyverse`"
+title: "An Introduction: R + the `tidyverse`"
 subtitle: "For Dr. Abner's Public Management Course<html><div style='float:left'></div><hr color='#e2f1fc' size=1px width=1100px></html>"
 author: 
 - "<span style='color:#005f86; font-weight:500'>Matt Worthington</span> | Sr. Project Manager for Data Initiatives, UT Austin - LBJ"
@@ -154,7 +154,10 @@ vaccine_chart <- readxl::read_excel(path = "raw_data/tx_vaccine_uptake.xlsx", sh
 vaccine_chart
 
 ```
-
+---
+background-image: url('assets/images/dir_stat.png')
+background-size: cover
+class: center, bottom, inverse
 
 ---
 class: middle
