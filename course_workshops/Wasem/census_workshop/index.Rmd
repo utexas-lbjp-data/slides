@@ -1,5 +1,5 @@
 ---
-title: "Census data in R: `tidycensus` + `tidyverse`"
+title: "Census Data in R: `tidycensus` + `tidyverse`"
 subtitle: "For Dr. Wasem's Immigrant Incorporation Course<html><div style='float:left'></div><hr color='#e2f1fc' size=1px width=1100px></html>"
 author: 
 - "<span style='color:#005f86; font-weight:500'>Matt Worthington</span> | Sr. Project Manager for Data Initiatives, UT Austin - LBJ"
@@ -21,6 +21,9 @@ output:
       in_header:
         - 'header.html'
 ---
+background-image: url('assets/images/dir_stat.png')
+background-size: cover
+class: center, bottom, inverse
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
@@ -48,12 +51,11 @@ library(metathis)
 meta() %>%
   meta_name("github-repo" = "utexas-lbjp-data/Analyzing-Texas-Vaccine-Uptake") %>% 
   meta_social(
-    title = "Introduction to R + the tidyverse",
+    title = "Census Data in R: tidycensus + tidyverse",
     description = paste(
-      "Becoming familiar with R, R Markdown, and the tidyverse for Policy Work.",
-      "Presented ain Dr. Abner's LBJ School Class in Fall 2021."
+      "For Dr. Wasem's Immigrant Incorporation Course"
     ),
-    url = "https://slides.lbjdata.org/course_workshops/abner/intro_r_workshop/intro_slides",
+    url = "https://slides.lbjdata.org/course_workshops/Wasem/census_workshop",
     image = "https://slides.lbjdata.org/course_workshops/abner/intro_r_workshop/assets/images/hp_vs_r.png",
     image_alt = paste(
       "Title slide of An Introduction R + the tidyverse"
@@ -95,33 +97,25 @@ htmltools::tagList(
 ```
 
 ---
-background-image: url('assets/images/dir_stat.png')
-background-size: cover
-class: center, bottom, inverse
-
----
 class: middle
 
 .pull-left[
-# About Me
-]
-
-.pull-right[
+### Personal Background
 
 * .orange[**Personal Background**]: Born and raised in San Antonio, Texas. Live in Austin with my wife and three kids. 
 * .orange[**Education Backgrounds**]: English Studies, Special Education, and Public Policy
 * .orange[**Professional Backgrounds**]: Public School Teacher, School District Administrator, and Data Scientist. 
 ]
 
----
-background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_02.jpeg')
-background-size: cover
-class: center, bottom, inverse
+.pull-right[
+### Quant Background
 
----
-background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_03.jpeg')
-background-size: cover
-class: center, bottom, inverse
+* Grew up very poor
+* Single parent household
+* **Struggled with math** in school
+* Was really good at theatre and mostly got into college because of that.
+* Once in college, switched over to become an English Major because I didn't want to act professionally...
+]
 
 ---
 background-image: url('assets/images/hermione_spell_class.png')
@@ -149,6 +143,10 @@ class: center, bottom, inverse
 
 * [Census 2020 form](https://www2.census.gov/programs-surveys/decennial/2020/technical-documentation/questionnaires-and-instructions/questionnaires/2020-informational-questionnaire.pdf)
 
+.tl.burntorange[
+Credit: ([@kyle_e_walker](https://twitter.com/kyle_e_walker))
+]
+
 ---
 
 ## American Community Survey
@@ -159,23 +157,36 @@ class: center, bottom, inverse
 
 * [Sample ACS form](https://www2.census.gov/programs-surveys/acs/methodology/questionnaires/2021/quest21.pdf)
 
+.tl.burntorange[
+Credit: ([@kyle_e_walker](https://twitter.com/kyle_e_walker))
+]
+
+---
+class: center
+
+## Geography Heiarchies in Census Data
+
+.rmd-small[![](assets/images/census_hierarchies.png)]
+
 ---
 
 # What is `tidycensus`? 
 
-The **tidycensus** package [@walker_and_herman2021], first released in 2017, is an R package designed to facilitate the process of acquiring and working with US Census Bureau population data in the R environment. 
+**tidycensus** was first released in 2017 by Dr. Kyle Walker, a professor of Demography at Texas Christian University. An R package, **tidycensus** was designed to facilitate the process of acquiring and working with US Census Bureau population data in the R environment. It is now maintained by Dr. Walker and Matt Herman.
 
-As discussed in the previous chapter, the US Census Bureau makes a wide range of datasets available to the user community through their APIs and other data download resources. **tidycensus** is not a comprehensive portal to these data resources; instead, it focuses on a select number of datasets implemented in a series of core functions. These core functions in **tidycensus** include:
+While **tidycensus** allows you to access a  massive amount of data, it doesn't facilitate access to every single product. And while there are several functions available in **tidycensus**, tonight we're focusing on three core functions in **tidycensus**:
 
--   `get_decennial()`, which requests data from the US Decennial Census APIs for 2000 and 2010. When 2020 Census data are released via the API, R users will be able to access it with this function as well.
+**Primary**
+
+-   `load_variables()`, an interface to navigate through all of the available variables inside of the ACS and Decennial Census products.
 
 -   `get_acs()`, which requests data from the 1-year and 5-year American Community Survey samples. Data are available from the 1-year ACS back to 2005 and the 5-year ACS back to 2005-2009.
 
--   `get_estimates()`, an interface to the Population Estimates APIs. These datasets include yearly estimates of population characteristics by state, county, and metropolitan area, along with components of change demographic estimates like births, deaths, and migration rates.
+**Secondary**
 
--   `get_pums()`, which accesses data from the ACS Public Use Microdata Sample APIs. These samples include anonymized individual-level records from the ACS organized by household and are highly useful for many different social science analyses. `get_pums()` is covered in more depth in Chapters \@ref(introduction-to-census-microdata) and \@ref(analyzing-census-microdata).
+-   `get_decennial()`, which requests data from the US Decennial Census APIs for 2000 and 2010. When 2020 Census data are released via the API, R users will be able to access it with this function as well.
 
--   `get_flows()`, an interface to the ACS Migration Flows APIs. Includes information on in- and out-flows from various geographies for the 5-year ACS samples, enabling origin-destination analyses.
+
 
 ---
 
@@ -259,162 +270,93 @@ harris  |>
 
 ---
 
-# Table Spellbook: `gt`
+# How is Census Data used in R?
 
 .pull-left[
-```{r eval = FALSE}
-library(gt)
-library(gtExtras)
-
-# Create A List of Variables
-demvars <- c(White = "P005003", Black = "P005004",
-             Asian = "P005006", Hispanic = "P004003",
-             AIAN = "P005005", NHOPI = "P005007",
-             Other = "P003007",`Two or More` = "P003008")
-
-# Pull The Census Data 
-harris <- get_decennial(geography = "county", variables = demvars,
-                        state = "TX", county = "Harris County", summary_var = "P001001") |> 
-  # Create pct column 
-  mutate(pct = (value / summary_value)) |>
-  select(variable, value,  pct)
-
-# Draw A Table 
-harris |>
-  gt() |> # Pass The Data To A gt table
-  tab_header(title = md("**Demographics in Harris County**"),
-             subtitle = "Harris County reported 4,092,459 residents in the 2010 Census. Here's how each demographic group compares to the total population.") |>
-  tab_source_note(source_note = "Data: US Census | 2010 Decennial Census | pulled with {tidycensus} in R") |>
-  fmt_number(columns = c("value")) |>
-  fmt_percent(columns = c("pct")) |>
-  cols_label(
-    variable = md("**Group**"),
-    value = md("**Population**"),
-    pct = md("**Pct. of Total**")
-  ) |> 
-  gt_theme_538()
-```
-]
-
-.pull-right[
-```{r table_steps, echo=FALSE, message=FALSE, warning=FALSE}
-
-demvars <- c(White = "P005003",
-              Black = "P005004",
-              Asian = "P005006",
-              Hispanic = "P004003",
-              AIAN = "P005005",
-              NHOPI = "P005007",
-              Other = "P003007",
-              `Two or More` = "P003008")
-
-harris <- get_decennial(geography = "county", variables = demvars,
-                  state = "TX", county = "Harris County", summary_var = "P001001") |> 
-    mutate(pct = (value / summary_value)) |> 
-  select(variable, value,  pct)
-
-harris |> 
-  gt() |> # Pass The Data To A gt table 
-  tab_header(title = md("**Demographics in Harris County**"),
-             subtitle = "Harris County reported 4,092,459 residents in the 2010 Census. Here's how each demographic group compares to the total population.") |>
-  tab_source_note(
-    source_note = "Data: US Census | 2010 Decennial Census (pulled with {tidycensus} in R)"
-  ) |> 
-  fmt_number(columns=c("value")) |> 
-  fmt_percent(columns=c("pct")) |> 
-  cols_label(variable=md("**Group**"),
-             value=md("**Population**"),
-             pct=md("**Pct. of Total**")) |> 
-  gt_theme_538()
-```
-]
-
----
-
-# Mapping with Census Data: [`ggplot`]()
-
-.pull-left[
-[**News Media**](https://twitter.com/jburnmurdoch/status/981074810020204544?s=20)
+[**News Coverage**](https://twitter.com/jburnmurdoch/status/981074810020204544?s=20)
 
 ![](https://pbs.twimg.com/media/DZ15NFRXUAAA_yJ?format=jpg&name=large)
 ]
 
 .pull-right[
-[**Redistricting Analysis**](https://corymccartan.github.io/redistricting21/posts/2021-06-25-colorado-preliminary-congressional-districts/)
+[**Policy Analysis**](https://corymccartan.github.io/redistricting21/posts/2021-06-25-colorado-preliminary-congressional-districts/)
 
 ![](https://corymccartan.github.io/redistricting21/posts/2021-09-03-oregon-congressional-districts/oregon-preliminary-congressional-districts_files/figure-html5/best-1.png)
+]
+
+---
+class: code90
+
+## `tidycensus::load_variables()`
+
+**What it does:** Calls variables from the Census API  
+
+**Prerequisite**: Your Census API key. Obtain one at https://api.census.gov/data/key_signup.html
+
+```{r eval = FALSE}
+load_variables(year = "", dataset = "", cache = "")
+```
+
+* **year**: The year for which you are requesting variables. Either the year or endyear of the decennial Census or ACS sample. 5-year ACS data is available from 2009 through 2018. 1-year ACS data is available from 2005 through 2019.
+
+* **dataset**	:One of "sf1", "sf3", "acs1", "acs3", "acs5", "acs1/profile", "acs3/profile, "acs5/profile", "acs1/subject", "acs3/subject", or "acs5/subject".
+
+* **cache**	:Whether you would like to cache the dataset for future access, or load the dataset from an existing cache. Defaults to FALSE.
+
+```{r eval = FALSE}
+load_variables(2019, "acs5", cache = TRUE) # Loads 2019 ACS Variables
+load_variables(2010, "sf1", cache = TRUE) # Loads 2010 Census Variables
+load_variables(2020, "pl", cache = TRUE) # Loads 2020 Census Variables
+```
+
+
+---
+
+## `tidycensus::get_acs()`
+
+**What it does:** Calls data from the Census API
+
+.pull-left[
+
+```{r eval = FALSE}
+
+get_acs(
+  geography,
+  variables = NULL,
+  table = NULL,
+  cache_table = FALSE,
+  year = 2019,
+  output = "tidy",
+  state = NULL,
+  county = NULL,
+  zcta = NULL,
+  geometry = FALSE,
+  summary_var = NULL,
+  key = NULL,
+  moe_level = 90,
+  survey = "acs5",
+  show_call = FALSE,
+  ...
+)
+```
+]
+
+.pull-right-compact[
+* **geography	**:The geography of your data.
+* **variables**: Character string or vector of character strings of variable IDs. tidycensus automatically returns the estimate and the margin of error associated with the variable.
+* **table**: The ACS table for which you would like to request all variables. Uses lookup tables to identify the variables; performs faster when variable table already exists through load_variables(cache = TRUE). Only one table may be requested per call.
+* **year**:	The year, or endyear, of the ACS sample. 5-year ACS data is available from 2009 through 2019. 1-year ACS data is available from 2005 through 2019. Defaults to 2019.
+* **state**: An optional vector of states for which you are requesting data. State names, postal codes, and FIPS codes are accepted. Defaults to NULL.
+* **county**: The county for which you are requesting data. County names and FIPS codes are accepted. Must be combined with a value supplied to 'state'. Defaults to NULL.
+* **zcta**: The zip code tabulation area(s) for which you are requesting data. Specify a single value or a vector of values to get data for more than one ZCTA. Numeric or character ZCTA GEOIDs are accepted. When specifying ZCTAs, geography must be set to '"zcta"' and 'state' must be specified with 'county' left as 'NULL'. Defaults to NULL.
+* **geometry**: if FALSE (the default), return a regular tibble of ACS data. if TRUE, uses the tigris package to return an sf tibble with simple feature geometry in the 'geometry' column.
+* **summary_var**: Character string of a "summary variable" from the ACS to be included in your output. Usually a variable (e.g. total population) that you'll want to use as a denominator or comparison.
 ]
 
 ---
 class: journey-bg, section, center, middle, inverse
 
 # Let's get started 👟
-
----
-
-# Downloading Materials
-
-.pull-left[
-
-### Today's Agenda
-
-.b--gray.ba.bw2.ma2.shadow-1[
-
-*	Navigating Rstudio
-  *	Rstudio Interface
-  *	R Projects
-  * R Markdown
-      - Markdown Text
-      - Code Chunks
-* Creating Nice Reports
-  * PDF
-  * Word
-  * HTML
-*	Getting Data You Need
-  * Things People Give You
-  * Things That Live Online
-*	Making Good Charts
-* Exporting Data & Charts
-]
-]
-
-
-.pull-right[
-
-### Today's Materials
-
-.b--gray.ba.bw2.ma2.pa2.shadow-1[
-
-#### What You Should Download
-
-* [**Rmarkdown Analysis** ](tinyurl.com/TXVaxUptake): tinyurl.com/TXVaxUptake
-
-#### What You Should Reference Later
-
-* [**Today's Slides**](slides.lbjdata.org/course_workshops/abner/intro_r_workshop/intro_slide)
-* [**The Published Analysis**](https://demos.lbjdata.org/vaccine_uptake/analyzing-vacine-uptake)
-]
-]
-
----
-background-image: url('assets/images/rstudio_hex.png')
-background-size: cover
-class: center, bottom
-
----
-
-# Downloading The Materials 
-
-* [**Rmarkdown Analysis** ](tinyurl.com/TXVaxUptake): tinyurl.com/TXVaxUptake
-
-![](assets/images/github_repo.png)
-
-
----
-
-# Open the `.Rproj` file
-
-.rmd-img[![](assets/images/rproject.png)]
 
 ---
 background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_17.jpeg')
@@ -691,8 +633,6 @@ leave_house(get_dressed(get_out_of_bed(wake_up(me, time = "8:00"), side = "corre
   flair_input_vals(color = "#bf5700") |>
   knit_print.with_flair()
 ```
-
---
   
 ```{r echo=FALSE, tidy=FALSE}
 decorate('
@@ -714,310 +654,25 @@ Courtesy of Andrew Heiss ([@andrewheiss](https://twitter.com/andrewheiss))
 ]
 
 ---
-class: vaccine-bg, section, center, middle, inverse
 
-# And Now... The Analysis
+## Resources For This Workshop
 
----
+* [RStudio Prework Setup](https://slides.lbjdata.org/course_workshops/wasem/prework/index.html#1)
+  - https://slides.lbjdata.org/course_workshops/wasem/prework/index.html#1
 
-# Package Setup
-
-Under the **Analysis Setup** section, there's a chunk tagged `setup` that starts on line 32.
-
-```{r eval=FALSE, echo=TRUE, message=FALSE, warning=FALSE, include=TRUE}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE)
-# In case these aren't installed already from the prework, uncomment the next three lines and run them.
-# install.packages(c("rmarkdown", "tidyverse", "tidycensus", "distill", "devtools"))
-# install.packages(c("janitor", "readxl"))
-# devtools::install_github("utexas-lbjp-data/lbjdata")
-
-library(janitor)       # Package with useful + convenient data cleaning functions
-library(readxl)        # Package with useful functions for working with Excel Files
-library(tidyverse)     # Core Set of R Data Science Tools (dplyr, ggplot2, tidyr, readr, etc.)
-library(lbjdata)       # LBJ Data Package which has the ggplot2 themes
-
-```
-
---
-
-### What's happening here?
-
-.b--burntorange.ba.bw2.ma2.pa2.shadow-1[
-
-Whenever you see `library(...)`, it means we are loading the packages into our Rmarkdown document so we can use the functions inside of them? In other words, we're pulling out the spellbooks and getting ready to do some data magic.
-
-]
----
-
-## `janitor::clean_names()`
-
-**What it does:** Makes all column names machine readble (huge time saver):
-
-.rmd-small[![](https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/janitor_clean_names.png)]
-
-.tl.burntorange[
-Credit: ([@allison_horst](https://twitter.com/allison_horst))
-]
-
----
-
-# Importing Our Data
-
-.pull-left[
-
-**Step 1: Downloading Our Data**
-
-```{r download-data, eval = FALSE}
-
-vax_url <- "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls" 
-download.file(url=vax_url, destfile = "raw_data/tx_vaccine_uptake.xlsx")
-
-```
-
-**Step 2: Import the Downloaded Data**
-
-```{r import-data, eval = FALSE}
-
-vaccine_data_raw <- readxl::read_excel(path = "raw_data/tx_vaccine_uptake.xlsx", sheet = "By County") |> 
-  janitor::clean_names() # This function makes column headers machine readable
-
-dplyr::glimpse(vaccine_data_raw) # glimpse() lets you preview a data object
-
-```
-
-]
-
-.pull-right[
-
-.rmd-img[![](assets/images/import_screenshot.png)]
-
-```{r import-data-real, include=FALSE}
-
-readxl::read_excel(path = "raw_data/tx_vaccine_uptake.xlsx", 
-                                       sheet = "By County") %>% 
-  janitor::clean_names()
-
-```
-
-```{r import-data-act, include=FALSE}
-
-vaccine_data_raw <- readxl::read_excel(path = "raw_data/tx_vaccine_uptake.xlsx", 
-                                       sheet = "By County") %>% 
-  janitor::clean_names()
-
-```
-
-]
-
----
-
-`r chunk_reveal(title = "# Importing - step by step view", chunk_name = "import-data-real", break_type = "auto")`
-
----
-
-## `dplyr::select()`
-
-**What it does:** Selects your preferred columns from your data set. 
-
-<iframe width="750" height = "416" src="https://video.twimg.com/tweet_video/E-D3IWxWYAEIk51.mp4" frameborder="0" style = "border: solid 0px #ffffff" color = "white"  modestbranding = "1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1"></iframe>
-
-.tl.burntorange[
-Credit: ([@illustratedbyte](https://twitter.com/illustratedbyte))
-]
-
----
-
-## `dplyr::mutate()`
-
-**What it does:** Creates or transforms a variable (column) while keeping the existing ones:
-
-.rmd-tiny[![](https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/dplyr_mutate.png)]
-
-.tl.burntorange[
-Credit: ([@allison_horst](https://twitter.com/allison_horst))
-]
-
-
----
-
-## `dplyr::filter()`
-
-**What it does:** Subsets rows based on your conditions
-
-.rmd-small[![](https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/dplyr_filter.jpg)]
-
-.tl.burntorange[
-Credit: ([@allison_horst](https://twitter.com/allison_horst))
-]
----
-
-# Working With Our Data
-
-### Step 1
-
-
-```{r create-pct-column, eval = FALSE}
-
-vaccine_uptake <- vaccine_data_raw %>% 
-  select(county_name, people_fully_vaccinated, population_12) %>% # Pull the three columns we need
-  mutate(people_fully_vaccinated = as.numeric(people_fully_vaccinated), # Reclassify Character Data As Numeric 
-         population_12 = as.numeric(population_12)) %>%
-  mutate(pct_uptake = round(people_fully_vaccinated/population_12, digits = 4)) %>%  # Create PCT Column
-  filter(county_name!="Texas",                                        # Filter out 'Texas' value
-         county_name!="Other",                                        # Filter our 'Other' value
-         county_name!="Federal Long-Term Care Vaccination Program",   # Filter our Federal Programs
-         county_name!="Federal Pharmacy Retail Vaccination Program")
-```
-
-```{r create-pct-column-real, echo=FALSE}
-
-vaccine_data_raw %>% 
-  select(county_name, people_fully_vaccinated, population_12) %>% # Pull the three columns we need
-  mutate(people_fully_vaccinated = as.numeric(people_fully_vaccinated), # Reclassify Character Data As Numeric 
-         population_12 = as.numeric(population_12)) %>%
-  mutate(pct_uptake = round(people_fully_vaccinated/population_12, digits = 4)) %>%  # Create PCT Column
-  filter(county_name!="Texas",                                        # Filter out 'Texas' value
-         county_name!="Other",                                        # Filter our 'Other' value
-         county_name!="Federal Long-Term Care Vaccination Program",   # Filter our Federal Programs
-         county_name!="Federal Pharmacy Retail Vaccination Program")
-```
-
-```{r create-pct-column-act, include=FALSE}
-
-vaccine_uptake <- vaccine_data_raw %>% 
-  select(county_name, people_fully_vaccinated, population_12) %>% # Pull the three columns we need
-  mutate(people_fully_vaccinated = as.numeric(people_fully_vaccinated), # Reclassify Character Data As Numeric 
-         population_12 = as.numeric(population_12)) %>%
-  mutate(pct_uptake = round(people_fully_vaccinated/population_12, digits = 4)) %>%  # Create PCT Column
-  filter(county_name!="Texas",                                        # Filter out 'Texas' value
-         county_name!="Other",                                        # Filter our 'Other' value
-         county_name!="Federal Long-Term Care Vaccination Program",   # Filter our Federal Programs
-         county_name!="Federal Pharmacy Retail Vaccination Program")
-```
-
----
-
-`r chunk_reveal(title = "# Working with Data - Step 1", chunk_name = "create-pct-column-real", break_type = "auto")`
-
----
-
-# Working With Our Data
-
-### Step 2
-
-```{r rank-and-limit, eval = FALSE}
-
-ranked_uptake <- vaccine_uptake %>%                      # Create New Object
-  mutate(uptake_rank = dense_rank(desc(pct_uptake))) %>% # Create Rank Column
-  filter(uptake_rank <= 10) %>%                          # Filter only for Top 10 counties
-  arrange(uptake_rank)                                  # Sort by rank
-
-```
-
-```{r rank-and-limit-real, echo = FALSE}
-
-vaccine_uptake %>%                      # Create New Object
-  mutate(uptake_rank = dense_rank(desc(pct_uptake))) %>% # Create Rank Column
-  filter(uptake_rank <= 10) %>%                          # Filter only for Top 10 counties
-  arrange(uptake_rank)                                  # Sort by rank
-
-```
-
-```{r rank-and-limit-act, include=FALSE}
-
-ranked_uptake <- vaccine_uptake %>%                      # Create New Object
-  mutate(uptake_rank = dense_rank(desc(pct_uptake))) %>% # Create Rank Column
-  filter(uptake_rank <= 10) %>%                          # Filter only for Top 10 counties
-  arrange(uptake_rank)                                  # Sort by rank
-
-```
-
----
-
-`r chunk_reveal(title = "# Working with Data - Step 2", chunk_name = "rank-and-limit-real", break_type = "auto")`
-
----
-
-# The Basics of a ggplot2 chart
-
-.pull-left[
-
-```{r eval=FALSE}
-
-library(ggplot2)
-library(ggthemes)
-
-diamonds |>  # Call On Your Dataset
-  ggplot() +  # Draw A Canvas
-  aes(cut, fill = cut) +  # Define How The Data Gets Mapped
-  geom_bar(show.legend = FALSE) +  # Define What Kind of Chart to Draw
-  labs(
-    x = "Cut",  # Specify X-Axis Label                       
-    y = "Count",  # Specify Y-Axis Label
-    title = "A Fancy diamonds Plot", # Specify Title Label
-    subtitle = "A compelling subtitle", # Specify Subtitle Label
-    caption = "Source: ggplot2 package | Data: 'diamonds'"  # Specify Source/Caption Label
-  ) +
-  theme_minimal() + # Add The LBJ Theme
-  theme(plot.title = element_text(color = "#bf5700")) +   # Modify Title's Color
-  ggthemes::scale_fill_tableau(palette = "Color Blind")   # Add A Color Blind Friendly Palette
-
-```
-
-]
-
-.pull-right[
-
-```{r fancy_diamonds, echo=FALSE, message=FALSE, warning=FALSE, fig.retina=3}
-
-library(ggplot2)
-library(ggthemes)
-
-diamonds %>%  # Call On Your Dataset
-  ggplot() +  # Draw A Canvas
-  aes(cut, fill = cut) +  # Define How The Data Gets Mapped
-  geom_bar(show.legend = FALSE) +  # Define What Kind of Chart to Draw
-  labs(
-    x = "Cut",  # Specify X-Axis Label                       
-    y = "Count",  # Specify Y-Axis Label
-    title = "A Fancy diamonds Plot", # Specify Title Label
-    subtitle = "A compelling subtitle", # Specify Subtitle Label
-    caption = "Source: ggplot2 package | Data: 'diamonds'"  # Specify Source/Caption Label
-  ) +
-  theme_minimal() + # Add The LBJ Theme
-  theme(plot.title = element_text(color = "#bf5700")) +   # Modify Title's Color
-  scale_fill_tableau(palette = "Color Blind")   # Add A Color Blind Friendly Palette  
-
-```
-]
----
-
-`r chunk_reveal(title = "# A step by step view", chunk_name = "fancy_diamonds", break_type = "auto")`
-
----
-
-# Exporting Our Data
-
-### Step 1: Export Our Chart
-
-```{r, eval = FALSE}
-ggsave("vaccine_uptake_chart.png", uptake_sorted, dpi = 300, width = 10, height = 6, bg = "white")
-```
-
-### Step 2: Export Our Data
-
-```{r, eval = FALSE}
-write_csv(ranked_uptake, "vaccine_uptake_top_10.csv")
-```
+* [ACS 2019 Variables](census.lbjdata.org/acs_2019)
+  - https://census.lbjdata.org/acs_2019
 
 ---
 class: journey-bg, section, left, middle, inverse
 
-# 📚 Resources 📚
+# 📚 Resources for R 📚
 
 ## Questions? lbjdata.org
 
 #### [#rstats hashtag](https://twitter.com/search?q=%23rstats) on twitter
+#### [#tidycensus hashtag](https://twitter.com/search?q=%23tidycensus) on twitter
+#### Analyzing US Census Data: Methods, Maps, and Models in R - [Online Book](https://walker-data.com/census-r/index.html)
 #### R For Data Science - [Online Book](https://r4ds.had.co.nz) | [Hard Copy](https://www.oreilly.com/library/view/r-for-data/9781491910382/) | [Slack Community](https://www.rfordatasci.com)
 
 ---

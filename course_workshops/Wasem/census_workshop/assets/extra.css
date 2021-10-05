@@ -9,9 +9,30 @@ font-size: 55px;
 font-weight: 900;
 }
 
+.rmd-img img {
+  max-width: 85%;
+  margin-left: 3rem;
+}
+
+.rmd-small img {
+  max-width: 55%;
+  margin-left: 3rem;
+}
+
+.rmd-tiny img {
+  max-width: 43%;
+  margin-left: 3rem;
+}
+
 .pull-right li {
   padding-bottom: 4px;
   line-height: 1.3;
+}
+
+.pull-right-compact {
+  float: right;
+  width: 47%;
+  font-size: 13px;
 }
 
 .pull-left h1 {
