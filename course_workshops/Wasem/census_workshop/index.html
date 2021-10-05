@@ -1,0 +1,2256 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Census data in R: tidycensus + tidyverse</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Matt Worthington | Sr. Project Manager for Data Initiatives, UT Austin - LBJ" />
+    <meta name="date" content="2021-10-05" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <meta name="github-repo" content="utexas-lbjp-data/Analyzing-Texas-Vaccine-Uptake"/>
+    <meta name="twitter:title" content="Introduction to R + the tidyverse"/>
+    <meta name="twitter:description" content="Becoming familiar with R, R Markdown, and the tidyverse for Policy Work. Presented ain Dr. Abner&#39;s LBJ School Class in Fall 2021."/>
+    <meta name="twitter:url" content="https://slides.lbjdata.org/course_workshops/abner/intro_r_workshop/intro_slides"/>
+    <meta name="twitter:image" content="https://slides.lbjdata.org/course_workshops/abner/intro_r_workshop/assets/images/hp_vs_r.png"/>
+    <meta name="twitter:image:alt" content="Title slide of An Introduction R + the tidyverse"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:creator" content="@mrworthington"/>
+    <meta name="twitter:site" content="@mrworthington"/>
+    <meta property="og:title" content="Introduction to R + the tidyverse"/>
+    <meta property="og:description" content="Becoming familiar with R, R Markdown, and the tidyverse for Policy Work. Presented ain Dr. Abner&#39;s LBJ School Class in Fall 2021."/>
+    <meta property="og:url" content="https://slides.lbjdata.org/course_workshops/abner/intro_r_workshop/intro_slides"/>
+    <meta property="og:image" content="https://slides.lbjdata.org/course_workshops/abner/intro_r_workshop/assets/images/hp_vs_r.png"/>
+    <meta property="og:image:alt" content="Title slide of An Introduction R + the tidyverse"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="article:author" content="Matt Worthington"/>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/shareon/shareon.min.css" rel="stylesheet" />
+    <script src="libs/shareon/shareon.min.js"></script>
+    <link href="libs/xaringanExtra-shareagain/shareagain.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-shareagain/shareagain.js"></script>
+    <script src="libs/xaringanExtra-webcam/webcam.js"></script>
+    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
+    <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra_fit-screen/fit-screen.js"></script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/fa1ce86f40.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cloud.typography.com/6771036/7957232/css/fonts.css" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZCYBFS8PQ0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-ZCYBFS8PQ0');
+    </script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="assets/extra.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Census data in R: <code>tidycensus</code> + <code>tidyverse</code>
+## For Dr. Wasem’s Immigrant Incorporation Course
+<html>
+<div style="float:left">
+
+</div>
+<hr color='#e2f1fc' size=1px width=1100px>
+</html>
+### <span style="color:#005f86; font-weight:500">Matt Worthington</span> | Sr. Project Manager for Data Initiatives, UT Austin - LBJ
+### <span style="color:#bf5700; font-weight:300">October 05, 2021</span>
+
+---
+
+
+
+
+
+
+<style>.shareagain-bar {
+--shareagain-foreground: rgb(255, 255, 255);
+--shareagain-background: rgba(0, 0, 0, 0.5);
+--shareagain-facebook: none;
+--shareagain-pinterest: none;
+--shareagain-reddit: none;
+}</style>
+
+---
+background-image: url('assets/images/dir_stat.png')
+background-size: cover
+class: center, bottom, inverse
+
+---
+class: middle
+
+.pull-left[
+# About Me
+]
+
+.pull-right[
+
+* .orange[**Personal Background**]: Born and raised in San Antonio, Texas. Live in Austin with my wife and three kids. 
+* .orange[**Education Backgrounds**]: English Studies, Special Education, and Public Policy
+* .orange[**Professional Backgrounds**]: Public School Teacher, School District Administrator, and Data Scientist. 
+]
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_02.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_03.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('assets/images/hermione_spell_class.png')
+background-size: cover
+class: center, bottom, inverse
+
+## .blue[How to understand R if you are new...]
+
+---
+background-image: url('assets/images/hp_vs_r.png')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+## What is the US Census?
+
+* __Complete count__ of the United States population that takes place every 10 years
+
+* __Mandated__ by Article 1, Section 2 of the US Constitution; taken since 1790
+
+* Used to guide federal spending; determines proportional representation in US Congress
+
+* __US Census Bureau__: Government agency responsible for conducting the Census; part of the Department of Commerce
+
+* [Census 2020 form](https://www2.census.gov/programs-surveys/decennial/2020/technical-documentation/questionnaires-and-instructions/questionnaires/2020-informational-questionnaire.pdf)
+
+---
+
+## American Community Survey
+
+* Up through 2000: detailed socio-economic characteristics of the US population collected by the Census __long form__
+
+* American Community Survey (ACS): yearly survey of approximately 3 million households; replaces the long form
+
+* [Sample ACS form](https://www2.census.gov/programs-surveys/acs/methodology/questionnaires/2021/quest21.pdf)
+
+---
+
+# What is `tidycensus`? 
+
+The **tidycensus** package [@walker_and_herman2021], first released in 2017, is an R package designed to facilitate the process of acquiring and working with US Census Bureau population data in the R environment. 
+
+As discussed in the previous chapter, the US Census Bureau makes a wide range of datasets available to the user community through their APIs and other data download resources. **tidycensus** is not a comprehensive portal to these data resources; instead, it focuses on a select number of datasets implemented in a series of core functions. These core functions in **tidycensus** include:
+
+-   `get_decennial()`, which requests data from the US Decennial Census APIs for 2000 and 2010. When 2020 Census data are released via the API, R users will be able to access it with this function as well.
+
+-   `get_acs()`, which requests data from the 1-year and 5-year American Community Survey samples. Data are available from the 1-year ACS back to 2005 and the 5-year ACS back to 2005-2009.
+
+-   `get_estimates()`, an interface to the Population Estimates APIs. These datasets include yearly estimates of population characteristics by state, county, and metropolitan area, along with components of change demographic estimates like births, deaths, and migration rates.
+
+-   `get_pums()`, which accesses data from the ACS Public Use Microdata Sample APIs. These samples include anonymized individual-level records from the ACS organized by household and are highly useful for many different social science analyses. `get_pums()` is covered in more depth in Chapters \@ref(introduction-to-census-microdata) and \@ref(analyzing-census-microdata).
+
+-   `get_flows()`, an interface to the ACS Migration Flows APIs. Includes information on in- and out-flows from various geographies for the 5-year ACS samples, enabling origin-destination analyses.
+
+---
+
+# In Action: `tidycensus` 
+
+.pull-left[
+
+```r
+library(tidycensus)
+
+# Create A List of Variables
+demvars &lt;- c(White = "P1_003N",
+             Black = "P1_004N",
+             Asian = "P1_006N",
+             Hispanic = "P2_002N")
+
+# Pull The Census Data 
+harris &lt;- get_decennial(
+             geography = "tract",             
+             variables = demvars,
+             year = 2020,
+             state = "TX", 
+             county = "Harris County", 
+             geometry = TRUE,
+             summary_var = "P1_001N"
+             ) |&gt;
+  # Create pct column 
+  mutate(pct = 100 * (value / summary_value)) 
+
+# Draw A Chart 
+harris  |&gt;
+  ggplot(aes(fill = pct)) +
+  facet_wrap(~variable) +
+  geom_sf(color = NA) +
+  coord_sf(crs = 26915, datum=NA) +
+  scale_fill_distiller(palette = "Blues", direction = 1) +
+  theme_minimal() +
+  labs(title="Population Demographics in Harris County",
+       subtitle="US Census | 2020 Decennial Census")
+```
+
+
+]
+
+.pull-right[
+
+
+&lt;img src="index_files/figure-html/unnamed-chunk-3-1.png" width="504" /&gt;
+
+]
+
+---
+
+# Table Spellbook: `gt`
+
+.pull-left[
+
+```r
+library(gt)
+library(gtExtras)
+
+# Create A List of Variables
+demvars &lt;- c(White = "P005003", Black = "P005004",
+             Asian = "P005006", Hispanic = "P004003",
+             AIAN = "P005005", NHOPI = "P005007",
+             Other = "P003007",`Two or More` = "P003008")
+
+# Pull The Census Data 
+harris &lt;- get_decennial(geography = "county", variables = demvars,
+                        state = "TX", county = "Harris County", summary_var = "P001001") |&gt; 
+  # Create pct column 
+  mutate(pct = (value / summary_value)) |&gt;
+  select(variable, value,  pct)
+
+# Draw A Table 
+harris |&gt;
+  gt() |&gt; # Pass The Data To A gt table
+  tab_header(title = md("**Demographics in Harris County**"),
+             subtitle = "Harris County reported 4,092,459 residents in the 2010 Census. Here's how each demographic group compares to the total population.") |&gt;
+  tab_source_note(source_note = "Data: US Census | 2010 Decennial Census | pulled with {tidycensus} in R") |&gt;
+  fmt_number(columns = c("value")) |&gt;
+  fmt_percent(columns = c("pct")) |&gt;
+  cols_label(
+    variable = md("**Group**"),
+    value = md("**Population**"),
+    pct = md("**Pct. of Total**")
+  ) |&gt; 
+  gt_theme_538()
+```
+]
+
+.pull-right[
+<div id="tasvmprffw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+html {
+  font-family: Chivo, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#tasvmprffw .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: 300;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: none;
+  border-top-width: 3px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#tasvmprffw .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#tasvmprffw .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#tasvmprffw .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#tasvmprffw .gt_bottom_border {
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tasvmprffw .gt_col_headings {
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#tasvmprffw .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: normal;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#tasvmprffw .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: normal;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#tasvmprffw .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#tasvmprffw .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#tasvmprffw .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#tasvmprffw .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #000000;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#tasvmprffw .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #000000;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #FFFFFF;
+  vertical-align: middle;
+}
+
+#tasvmprffw .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#tasvmprffw .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#tasvmprffw .gt_row {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#tasvmprffw .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 0px;
+  border-right-color: rgba(255, 255, 255, 0);
+  padding-left: 12px;
+}
+
+#tasvmprffw .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tasvmprffw .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#tasvmprffw .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#tasvmprffw .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#tasvmprffw .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#tasvmprffw .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#tasvmprffw .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#tasvmprffw .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#tasvmprffw .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#tasvmprffw .gt_sourcenote {
+  font-size: 12px;
+  padding: 4px;
+}
+
+#tasvmprffw .gt_left {
+  text-align: left;
+}
+
+#tasvmprffw .gt_center {
+  text-align: center;
+}
+
+#tasvmprffw .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#tasvmprffw .gt_font_normal {
+  font-weight: normal;
+}
+
+#tasvmprffw .gt_font_bold {
+  font-weight: bold;
+}
+
+#tasvmprffw .gt_font_italic {
+  font-style: italic;
+}
+
+#tasvmprffw .gt_super {
+  font-size: 65%;
+}
+
+#tasvmprffw .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 65%;
+}
+</style>
+<table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <th colspan="3" class="gt_heading gt_title gt_font_normal" style><strong>Demographics in Harris County</strong></th>
+    </tr>
+    <tr>
+      <th colspan="3" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style>Harris County reported 4,092,459 residents in the 2010 Census. Here's how each demographic group compares to the total population.</th>
+    </tr>
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;"><strong>Group</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;"><strong>Population</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;"><strong>Pct. of Total</strong></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_left">White</td>
+<td class="gt_row gt_right">1,349,646.00</td>
+<td class="gt_row gt_right">32.98&percnt;</td></tr>
+    <tr><td class="gt_row gt_left">Black</td>
+<td class="gt_row gt_right">754,258.00</td>
+<td class="gt_row gt_right">18.43&percnt;</td></tr>
+    <tr><td class="gt_row gt_left">Asian</td>
+<td class="gt_row gt_right">249,853.00</td>
+<td class="gt_row gt_right">6.11&percnt;</td></tr>
+    <tr><td class="gt_row gt_left">Hispanic</td>
+<td class="gt_row gt_right">1,671,540.00</td>
+<td class="gt_row gt_right">40.84&percnt;</td></tr>
+    <tr><td class="gt_row gt_left">AIAN</td>
+<td class="gt_row gt_right">8,150.00</td>
+<td class="gt_row gt_right">0.20&percnt;</td></tr>
+    <tr><td class="gt_row gt_left">NHOPI</td>
+<td class="gt_row gt_right">2,260.00</td>
+<td class="gt_row gt_right">0.06&percnt;</td></tr>
+    <tr><td class="gt_row gt_left">Other</td>
+<td class="gt_row gt_right">583,566.00</td>
+<td class="gt_row gt_right">14.26&percnt;</td></tr>
+    <tr><td class="gt_row gt_left" style="border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: transparent;">Two or More</td>
+<td class="gt_row gt_right" style="border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: transparent;">131,332.00</td>
+<td class="gt_row gt_right" style="border-bottom-width: 3px; border-bottom-style: solid; border-bottom-color: transparent;">3.21&percnt;</td></tr>
+  </tbody>
+  <tfoot class="gt_sourcenotes">
+    <tr>
+      <td class="gt_sourcenote" colspan="3">Data: US Census | 2010 Decennial Census (pulled with {tidycensus} in R)</td>
+    </tr>
+  </tfoot>
+  
+</table>
+</div>
+]
+
+---
+
+# Mapping with Census Data: [`ggplot`]()
+
+.pull-left[
+[**News Media**](https://twitter.com/jburnmurdoch/status/981074810020204544?s=20)
+
+![](https://pbs.twimg.com/media/DZ15NFRXUAAA_yJ?format=jpg&amp;name=large)
+]
+
+.pull-right[
+[**Redistricting Analysis**](https://corymccartan.github.io/redistricting21/posts/2021-06-25-colorado-preliminary-congressional-districts/)
+
+![](https://corymccartan.github.io/redistricting21/posts/2021-09-03-oregon-congressional-districts/oregon-preliminary-congressional-districts_files/figure-html5/best-1.png)
+]
+
+---
+class: journey-bg, section, center, middle, inverse
+
+# Let's get started 👟
+
+---
+
+# Downloading Materials
+
+.pull-left[
+
+### Today's Agenda
+
+.b--gray.ba.bw2.ma2.shadow-1[
+
+*	Navigating Rstudio
+  *	Rstudio Interface
+  *	R Projects
+  * R Markdown
+      - Markdown Text
+      - Code Chunks
+* Creating Nice Reports
+  * PDF
+  * Word
+  * HTML
+*	Getting Data You Need
+  * Things People Give You
+  * Things That Live Online
+*	Making Good Charts
+* Exporting Data &amp; Charts
+]
+]
+
+
+.pull-right[
+
+### Today's Materials
+
+.b--gray.ba.bw2.ma2.pa2.shadow-1[
+
+#### What You Should Download
+
+* [**Rmarkdown Analysis** ](tinyurl.com/TXVaxUptake): tinyurl.com/TXVaxUptake
+
+#### What You Should Reference Later
+
+* [**Today's Slides**](slides.lbjdata.org/course_workshops/abner/intro_r_workshop/intro_slide)
+* [**The Published Analysis**](https://demos.lbjdata.org/vaccine_uptake/analyzing-vacine-uptake)
+]
+]
+
+---
+background-image: url('assets/images/rstudio_hex.png')
+background-size: cover
+class: center, bottom
+
+---
+
+# Downloading The Materials 
+
+* [**Rmarkdown Analysis** ](tinyurl.com/TXVaxUptake): tinyurl.com/TXVaxUptake
+
+![](assets/images/github_repo.png)
+
+
+---
+
+# Open the `.Rproj` file
+
+.rmd-img[![](assets/images/rproject.png)]
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_17.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_18.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('assets/images/tidyverse_hex.png')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('assets/images/tidyverse_network.png')
+background-size: cover
+class: center, bottom, inverse animated fadeIn
+
+---
+background-image: url('assets/images/tidyverse_data_lifecycle_map.png')
+background-size: cover
+class: center, bottom, inverse animated fadeIn
+
+---
+background-image: url('assets/images/lifecycle_focus.png')
+background-size: cover
+class: center, bottom, inverse animated fadeIn
+
+---
+background-image: url('assets/images/what_todays_focus_will_be.png')
+background-size: cover
+class: center, bottom, inverse animated animate fadeIn
+
+---
+background-image: url('assets/images/marie_kondo.png')
+background-size: cover
+class: center, bottom, inverse animated fadeIn
+
+---
+
+# What is R Markdown?
+
+.pull-left.b--gray.ba.bw2.ma2.pa4.shadow-1[
+* ["An authoring framework for data science."](https://rmarkdown.rstudio.com/lesson-1.html) (✔️)
+* [A document format (.Rmd)](https://bookdown.org/yihui/rmarkdown/). (✔️)
+* [An R package named rmarkdown](https://rmarkdown.rstudio.com/docs/). (✔️)
+* ["A file format for making dynamic documents with R."](https://rmarkdown.rstudio.com/articles_intro.html) (✔️)
+* ["A tool for integrating text, code, and results."](https://r4ds.had.co.nz/communicate-intro.html) (✔️)
+* ["A computational document."](http://radar.oreilly.com/2011/07/wolframs-computational-documen.html) (✔️)
+* Wizardry. (🧙️)
+]
+
+.pull-right[
+.rmd-small[![](https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/rmarkdown.png)]
+]
+
+.tl.burntorange[
+Courtesy of Alison Presmanes Hill ([@apreshill](https://twitter.com/apreshill))
+]
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_15.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_16.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_17.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_18.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_19.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_20.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_21.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_22.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_23.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_24.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_25.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_26.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_27.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_28.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_29.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_30.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_31.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_32.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_33.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_34.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_35.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_36.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+class: middle
+
+.pull-left[
+
+### Writing in Markdown 
+
+If you're not familiar with Markdown, that's okay. If you're like me, you grew up using things like Microsoft Office and Google Docs to write, so you're probably not familiar with markdown, but Markdown is a lot easier. So... what is it? 
+
+Markdown is just an easy way to write formatted text.  Like anything else, it takes practice, but is used widely in popular writing apps like [Bear](https://bear.app), [iA Writer](https://ia.net/writer), [Ulysses](https://ulysses.app). For the purposes of this workshop, we'll use it in an RStudio document tool called "[Rmarkdown](https://rmarkdown.rstudio.com)". Here's a quick way to get familiar with writing in Markdown:
+
+.bg--burntorange.b--text-color.ba.bw2.br3.shadow-5.ph4.mt5.f7[
+*__Note__: If writing in Markdown still feels weird, don't worry. You can also use R Markdown's Visual Markdown Editor.*
+]
+
+]
+
+.pull-right[
+
+![Doing the Markdown 10-min Tutorial](https://d33wubrfki0l68.cloudfront.net/59f29676ef5e4d74685e14f801bbc10c2dbd3cef/c0688/lesson-images/markdown-1-markup.png)
+
+* **First, visit this link:** Go to [https://commonmark.org/help/tutorial/](https://commonmark.org/help/tutorial/)  
+* **Then, do the 10-minute tutorial:** It's a bit of time, but goes quick and will help you have a better grasp on writing in markdown.
+* **Finally, bookmark this site**: [https://commonmark.org/help/](https://commonmark.org/help/)
+
+]
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_38.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_39.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_40.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_41.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_42.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_43.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_44.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_45.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_46.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_47.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+class: title center pipe-page
+
+# `|&gt;` and `%&gt;%`
+
+
+&lt;code class ='r hljs remark-code'&gt;&lt;b&gt;leave_house&lt;/b&gt;(&lt;b&gt;get_dressed&lt;/b&gt;(&lt;b&gt;get_out_of_bed&lt;/b&gt;(&lt;b&gt;wake_up&lt;/b&gt;(&lt;span style='color:#bf5700'&gt;me&lt;/span&gt;, &lt;span style='color:#005f86'&gt;time&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;"8:00"&lt;/span&gt;), &lt;span style='color:#005f86'&gt;side&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;"correct"&lt;/span&gt;), &lt;span style='color:#005f86'&gt;pants&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;TRUE&lt;/span&gt;, &lt;span style='color:#005f86'&gt;shirt&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;TRUE&lt;/span&gt;), &lt;span style='color:#005f86'&gt;car&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;TRUE&lt;/span&gt;, &lt;span style='color:#005f86'&gt;bike&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;FALSE&lt;/span&gt;)&lt;/code&gt;
+
+--
+  
+
+&lt;code class ='r hljs remark-code'&gt;me &lt;span style='background-color:#ffff7f'&gt;|&gt;&lt;/span&gt; &lt;br&gt;&amp;nbsp;&amp;nbsp;&lt;b&gt;wake_up&lt;/b&gt;(&lt;span style='color:#005f86'&gt;time&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;"8:00"&lt;/span&gt;) &lt;span style='background-color:#ffff7f'&gt;|&gt;&lt;/span&gt; &lt;br&gt;&amp;nbsp;&amp;nbsp;&lt;b&gt;get_out_of_bed&lt;/b&gt;(&lt;span style='color:#005f86'&gt;side&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;"correct"&lt;/span&gt;) &lt;span style='background-color:#ffff7f'&gt;|&gt;&lt;/span&gt; &lt;br&gt;&amp;nbsp;&amp;nbsp;&lt;b&gt;get_dressed&lt;/b&gt;(&lt;span style='color:#005f86'&gt;pants&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;TRUE&lt;/span&gt;, &lt;span style='color:#005f86'&gt;shirt&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;TRUE&lt;/span&gt;) &lt;span style='background-color:#ffff7f'&gt;|&gt;&lt;/span&gt; &lt;br&gt;&amp;nbsp;&amp;nbsp;&lt;b&gt;leave_house&lt;/b&gt;(&lt;span style='color:#005f86'&gt;car&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;TRUE&lt;/span&gt;, &lt;span style='color:#005f86'&gt;bike&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;FALSE&lt;/span&gt;)&lt;/code&gt;
+
+.tl.footnote-small[
+Courtesy of Andrew Heiss ([@andrewheiss](https://twitter.com/andrewheiss))
+]
+
+---
+class: vaccine-bg, section, center, middle, inverse
+
+# And Now... The Analysis
+
+---
+
+# Package Setup
+
+Under the **Analysis Setup** section, there's a chunk tagged `setup` that starts on line 32.
+
+
+```r
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+# In case these aren't installed already from the prework, uncomment the next three lines and run them.
+# install.packages(c("rmarkdown", "tidyverse", "tidycensus", "distill", "devtools"))
+# install.packages(c("janitor", "readxl"))
+# devtools::install_github("utexas-lbjp-data/lbjdata")
+
+library(janitor)       # Package with useful + convenient data cleaning functions
+library(readxl)        # Package with useful functions for working with Excel Files
+library(tidyverse)     # Core Set of R Data Science Tools (dplyr, ggplot2, tidyr, readr, etc.)
+library(lbjdata)       # LBJ Data Package which has the ggplot2 themes
+```
+
+--
+
+### What's happening here?
+
+.b--burntorange.ba.bw2.ma2.pa2.shadow-1[
+
+Whenever you see `library(...)`, it means we are loading the packages into our Rmarkdown document so we can use the functions inside of them? In other words, we're pulling out the spellbooks and getting ready to do some data magic.
+
+]
+---
+
+## `janitor::clean_names()`
+
+**What it does:** Makes all column names machine readble (huge time saver):
+
+.rmd-small[![](https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/janitor_clean_names.png)]
+
+.tl.burntorange[
+Credit: ([@allison_horst](https://twitter.com/allison_horst))
+]
+
+---
+
+# Importing Our Data
+
+.pull-left[
+
+**Step 1: Downloading Our Data**
+
+
+```r
+vax_url &lt;- "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls" 
+download.file(url=vax_url, destfile = "raw_data/tx_vaccine_uptake.xlsx")
+```
+
+**Step 2: Import the Downloaded Data**
+
+
+```r
+vaccine_data_raw &lt;- readxl::read_excel(path = "raw_data/tx_vaccine_uptake.xlsx", sheet = "By County") |&gt; 
+  janitor::clean_names() # This function makes column headers machine readable
+
+dplyr::glimpse(vaccine_data_raw) # glimpse() lets you preview a data object
+```
+
+]
+
+.pull-right[
+
+.rmd-img[![](assets/images/import_screenshot.png)]
+
+
+
+
+
+]
+
+---
+
+count: false
+ 
+# Importing - step by step view
+.panel1-import-data-real-auto[
+
+```r
+*readxl::read_excel(path = "raw_data/tx_vaccine_uptake.xlsx",
+*                                      sheet = "By County")
+```
+]
+ 
+.panel2-import-data-real-auto[
+
+```
+# A tibble: 259 × 14
+   `County Name`        `Public Health Reg… `Total Doses All… `Vaccine Doses Ad…
+   &lt;chr&gt;                &lt;chr&gt;                           &lt;dbl&gt; &lt;chr&gt;             
+ 1 Texas                --                           27513735 31694004          
+ 2 Federal Long-Term C… --                             720525 --                
+ 3 Federal Pharmacy Re… --                            5509700 --                
+ 4 Anderson             4/5N                            17870 42423             
+ 5 Andrews              9/10                             6100 15229             
+ 6 Angelina             4/5N                            58100 71038             
+ 7 Aransas              11                               6840 27219             
+ 8 Archer               2/3                              3200 7524              
+ 9 Armstrong            1                                2100 1322              
+10 Atascosa             8                               19000 46260             
+# … with 249 more rows, and 10 more variables:
+#   People Vaccinated with at least One Dose &lt;chr&gt;,
+#   People Fully Vaccinated &lt;chr&gt;, Population
+12+ &lt;chr&gt;, Population, 16+ &lt;chr&gt;,
+#   Population, 65+ &lt;chr&gt;, Population, Phase 1A Healthcare Workers &lt;chr&gt;,
+#   Population, Phase 1A Long-term Care Residents &lt;chr&gt;,
+#   Population, 16-64
+ Any Medical Condition &lt;chr&gt;,
+#   Population, Education and Child Care Personnel &lt;chr&gt;, …
+```
+]
+
+---
+count: false
+ 
+# Importing - step by step view
+.panel1-import-data-real-auto[
+
+```r
+readxl::read_excel(path = "raw_data/tx_vaccine_uptake.xlsx",
+                                       sheet = "By County") %&gt;%
+* janitor::clean_names()
+```
+]
+ 
+.panel2-import-data-real-auto[
+
+```
+# A tibble: 259 × 14
+   county_name          public_health_regi… total_doses_allo… vaccine_doses_adm…
+   &lt;chr&gt;                &lt;chr&gt;                           &lt;dbl&gt; &lt;chr&gt;             
+ 1 Texas                --                           27513735 31694004          
+ 2 Federal Long-Term C… --                             720525 --                
+ 3 Federal Pharmacy Re… --                            5509700 --                
+ 4 Anderson             4/5N                            17870 42423             
+ 5 Andrews              9/10                             6100 15229             
+ 6 Angelina             4/5N                            58100 71038             
+ 7 Aransas              11                               6840 27219             
+ 8 Archer               2/3                              3200 7524              
+ 9 Armstrong            1                                2100 1322              
+10 Atascosa             8                               19000 46260             
+# … with 249 more rows, and 10 more variables:
+#   people_vaccinated_with_at_least_one_dose &lt;chr&gt;,
+#   people_fully_vaccinated &lt;chr&gt;, population_12 &lt;chr&gt;, population_16 &lt;chr&gt;,
+#   population_65 &lt;chr&gt;, population_phase_1a_healthcare_workers &lt;chr&gt;,
+#   population_phase_1a_long_term_care_residents &lt;chr&gt;,
+#   population_16_64_any_medical_condition &lt;chr&gt;,
+#   population_education_and_child_care_personnel &lt;chr&gt;, …
+```
+]
+
+---
+count: false
+ 
+# Importing - step by step view
+.panel1-import-data-real-auto[
+
+```r
+readxl::read_excel(path = "raw_data/tx_vaccine_uptake.xlsx",
+                                       sheet = "By County") %&gt;%
+  janitor::clean_names()
+```
+]
+ 
+.panel2-import-data-real-auto[
+
+```
+# A tibble: 259 × 14
+   county_name          public_health_regi… total_doses_allo… vaccine_doses_adm…
+   &lt;chr&gt;                &lt;chr&gt;                           &lt;dbl&gt; &lt;chr&gt;             
+ 1 Texas                --                           27513735 31694004          
+ 2 Federal Long-Term C… --                             720525 --                
+ 3 Federal Pharmacy Re… --                            5509700 --                
+ 4 Anderson             4/5N                            17870 42423             
+ 5 Andrews              9/10                             6100 15229             
+ 6 Angelina             4/5N                            58100 71038             
+ 7 Aransas              11                               6840 27219             
+ 8 Archer               2/3                              3200 7524              
+ 9 Armstrong            1                                2100 1322              
+10 Atascosa             8                               19000 46260             
+# … with 249 more rows, and 10 more variables:
+#   people_vaccinated_with_at_least_one_dose &lt;chr&gt;,
+#   people_fully_vaccinated &lt;chr&gt;, population_12 &lt;chr&gt;, population_16 &lt;chr&gt;,
+#   population_65 &lt;chr&gt;, population_phase_1a_healthcare_workers &lt;chr&gt;,
+#   population_phase_1a_long_term_care_residents &lt;chr&gt;,
+#   population_16_64_any_medical_condition &lt;chr&gt;,
+#   population_education_and_child_care_personnel &lt;chr&gt;, …
+```
+]
+
+&lt;style&gt;
+.panel1-import-data-real-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-import-data-real-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-import-data-real-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+## `dplyr::select()`
+
+**What it does:** Selects your preferred columns from your data set. 
+
+&lt;iframe width="750" height = "416" src="https://video.twimg.com/tweet_video/E-D3IWxWYAEIk51.mp4" frameborder="0" style = "border: solid 0px #ffffff" color = "white"  modestbranding = "1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen data-external="1"&gt;&lt;/iframe&gt;
+
+.tl.burntorange[
+Credit: ([@illustratedbyte](https://twitter.com/illustratedbyte))
+]
+
+---
+
+## `dplyr::mutate()`
+
+**What it does:** Creates or transforms a variable (column) while keeping the existing ones:
+
+.rmd-tiny[![](https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/dplyr_mutate.png)]
+
+.tl.burntorange[
+Credit: ([@allison_horst](https://twitter.com/allison_horst))
+]
+
+
+---
+
+## `dplyr::filter()`
+
+**What it does:** Subsets rows based on your conditions
+
+.rmd-small[![](https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/dplyr_filter.jpg)]
+
+.tl.burntorange[
+Credit: ([@allison_horst](https://twitter.com/allison_horst))
+]
+---
+
+# Working With Our Data
+
+### Step 1
+
+
+
+```r
+vaccine_uptake &lt;- vaccine_data_raw %&gt;% 
+  select(county_name, people_fully_vaccinated, population_12) %&gt;% # Pull the three columns we need
+  mutate(people_fully_vaccinated = as.numeric(people_fully_vaccinated), # Reclassify Character Data As Numeric 
+         population_12 = as.numeric(population_12)) %&gt;%
+  mutate(pct_uptake = round(people_fully_vaccinated/population_12, digits = 4)) %&gt;%  # Create PCT Column
+  filter(county_name!="Texas",                                        # Filter out 'Texas' value
+         county_name!="Other",                                        # Filter our 'Other' value
+         county_name!="Federal Long-Term Care Vaccination Program",   # Filter our Federal Programs
+         county_name!="Federal Pharmacy Retail Vaccination Program")
+```
+
+
+```
+# A tibble: 254 × 4
+   county_name people_fully_vaccinated population_12 pct_uptake
+   &lt;chr&gt;                         &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;
+ 1 Anderson                      20534         50661      0.405
+ 2 Andrews                        7083         14863      0.477
+ 3 Angelina                      34014         72486      0.469
+ 4 Aransas                       12774         20834      0.613
+ 5 Archer                         3646          7388      0.494
+ 6 Armstrong                       620          1584      0.391
+ 7 Atascosa                      21833         41738      0.523
+ 8 Austin                        13052         25335      0.515
+ 9 Bailey                         2348          5603      0.419
+10 Bandera                        9171         20596      0.445
+# … with 244 more rows
+```
+
+
+
+---
+
+count: false
+ 
+# Working with Data - Step 1
+.panel1-create-pct-column-real-auto[
+
+```r
+*vaccine_data_raw
+```
+]
+ 
+.panel2-create-pct-column-real-auto[
+
+```
+# A tibble: 259 × 14
+   county_name          public_health_regi… total_doses_allo… vaccine_doses_adm…
+   &lt;chr&gt;                &lt;chr&gt;                           &lt;dbl&gt; &lt;chr&gt;             
+ 1 Texas                --                           27513735 31694004          
+ 2 Federal Long-Term C… --                             720525 --                
+ 3 Federal Pharmacy Re… --                            5509700 --                
+ 4 Anderson             4/5N                            17870 42423             
+ 5 Andrews              9/10                             6100 15229             
+ 6 Angelina             4/5N                            58100 71038             
+ 7 Aransas              11                               6840 27219             
+ 8 Archer               2/3                              3200 7524              
+ 9 Armstrong            1                                2100 1322              
+10 Atascosa             8                               19000 46260             
+# … with 249 more rows, and 10 more variables:
+#   people_vaccinated_with_at_least_one_dose &lt;chr&gt;,
+#   people_fully_vaccinated &lt;chr&gt;, population_12 &lt;chr&gt;, population_16 &lt;chr&gt;,
+#   population_65 &lt;chr&gt;, population_phase_1a_healthcare_workers &lt;chr&gt;,
+#   population_phase_1a_long_term_care_residents &lt;chr&gt;,
+#   population_16_64_any_medical_condition &lt;chr&gt;,
+#   population_education_and_child_care_personnel &lt;chr&gt;, …
+```
+]
+
+---
+count: false
+ 
+# Working with Data - Step 1
+.panel1-create-pct-column-real-auto[
+
+```r
+vaccine_data_raw %&gt;%
+* select(county_name, people_fully_vaccinated, population_12)   # Pull the three columns we need
+```
+]
+ 
+.panel2-create-pct-column-real-auto[
+
+```
+# A tibble: 259 × 3
+   county_name                                 people_fully_vacci… population_12
+   &lt;chr&gt;                                       &lt;chr&gt;               &lt;chr&gt;        
+ 1 Texas                                       14946236            24068624     
+ 2 Federal Long-Term Care Vaccination Program  --                  --           
+ 3 Federal Pharmacy Retail Vaccination Program --                  --           
+ 4 Anderson                                    20534               50661        
+ 5 Andrews                                     7083                14863        
+ 6 Angelina                                    34014               72486        
+ 7 Aransas                                     12774               20834        
+ 8 Archer                                      3646                7388         
+ 9 Armstrong                                   620                 1584         
+10 Atascosa                                    21833               41738        
+# … with 249 more rows
+```
+]
+
+---
+count: false
+ 
+# Working with Data - Step 1
+.panel1-create-pct-column-real-auto[
+
+```r
+vaccine_data_raw %&gt;%
+  select(county_name, people_fully_vaccinated, population_12) %&gt;%  # Pull the three columns we need
+* mutate(people_fully_vaccinated = as.numeric(people_fully_vaccinated),  # Reclassify Character Data As Numeric
+*        population_12 = as.numeric(population_12))
+```
+]
+ 
+.panel2-create-pct-column-real-auto[
+
+```
+# A tibble: 259 × 3
+   county_name                                 people_fully_vacci… population_12
+   &lt;chr&gt;                                                     &lt;dbl&gt;         &lt;dbl&gt;
+ 1 Texas                                                  14946236      24068624
+ 2 Federal Long-Term Care Vaccination Program                   NA            NA
+ 3 Federal Pharmacy Retail Vaccination Program                  NA            NA
+ 4 Anderson                                                  20534         50661
+ 5 Andrews                                                    7083         14863
+ 6 Angelina                                                  34014         72486
+ 7 Aransas                                                   12774         20834
+ 8 Archer                                                     3646          7388
+ 9 Armstrong                                                   620          1584
+10 Atascosa                                                  21833         41738
+# … with 249 more rows
+```
+]
+
+---
+count: false
+ 
+# Working with Data - Step 1
+.panel1-create-pct-column-real-auto[
+
+```r
+vaccine_data_raw %&gt;%
+  select(county_name, people_fully_vaccinated, population_12) %&gt;%  # Pull the three columns we need
+  mutate(people_fully_vaccinated = as.numeric(people_fully_vaccinated),  # Reclassify Character Data As Numeric
+         population_12 = as.numeric(population_12)) %&gt;%
+* mutate(pct_uptake = round(people_fully_vaccinated/population_12, digits = 4))   # Create PCT Column
+```
+]
+ 
+.panel2-create-pct-column-real-auto[
+
+```
+# A tibble: 259 × 4
+   county_name                     people_fully_vaccin… population_12 pct_uptake
+   &lt;chr&gt;                                          &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;
+ 1 Texas                                       14946236      24068624      0.621
+ 2 Federal Long-Term Care Vaccina…                   NA            NA     NA    
+ 3 Federal Pharmacy Retail Vaccin…                   NA            NA     NA    
+ 4 Anderson                                       20534         50661      0.405
+ 5 Andrews                                         7083         14863      0.477
+ 6 Angelina                                       34014         72486      0.469
+ 7 Aransas                                        12774         20834      0.613
+ 8 Archer                                          3646          7388      0.494
+ 9 Armstrong                                        620          1584      0.391
+10 Atascosa                                       21833         41738      0.523
+# … with 249 more rows
+```
+]
+
+---
+count: false
+ 
+# Working with Data - Step 1
+.panel1-create-pct-column-real-auto[
+
+```r
+vaccine_data_raw %&gt;%
+  select(county_name, people_fully_vaccinated, population_12) %&gt;%  # Pull the three columns we need
+  mutate(people_fully_vaccinated = as.numeric(people_fully_vaccinated),  # Reclassify Character Data As Numeric
+         population_12 = as.numeric(population_12)) %&gt;%
+  mutate(pct_uptake = round(people_fully_vaccinated/population_12, digits = 4)) %&gt;%  # Create PCT Column
+* filter(county_name!="Texas",  # Filter out 'Texas' value
+*        county_name!="Other",  # Filter our 'Other' value
+*        county_name!="Federal Long-Term Care Vaccination Program",  # Filter our Federal Programs
+*        county_name!="Federal Pharmacy Retail Vaccination Program")
+```
+]
+ 
+.panel2-create-pct-column-real-auto[
+
+```
+# A tibble: 254 × 4
+   county_name people_fully_vaccinated population_12 pct_uptake
+   &lt;chr&gt;                         &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;
+ 1 Anderson                      20534         50661      0.405
+ 2 Andrews                        7083         14863      0.477
+ 3 Angelina                      34014         72486      0.469
+ 4 Aransas                       12774         20834      0.613
+ 5 Archer                         3646          7388      0.494
+ 6 Armstrong                       620          1584      0.391
+ 7 Atascosa                      21833         41738      0.523
+ 8 Austin                        13052         25335      0.515
+ 9 Bailey                         2348          5603      0.419
+10 Bandera                        9171         20596      0.445
+# … with 244 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-create-pct-column-real-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-create-pct-column-real-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-create-pct-column-real-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+# Working With Our Data
+
+### Step 2
+
+
+```r
+ranked_uptake &lt;- vaccine_uptake %&gt;%                      # Create New Object
+  mutate(uptake_rank = dense_rank(desc(pct_uptake))) %&gt;% # Create Rank Column
+  filter(uptake_rank &lt;= 10) %&gt;%                          # Filter only for Top 10 counties
+  arrange(uptake_rank)                                  # Sort by rank
+```
+
+
+```
+# A tibble: 10 × 5
+   county_name people_fully_vaccinated population_12 pct_uptake uptake_rank
+   &lt;chr&gt;                         &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;       &lt;int&gt;
+ 1 Presidio                       5305          5392      0.984           1
+ 2 Webb                         192672        215919      0.892           2
+ 3 Starr                         43575         49864      0.874           3
+ 4 Cameron                      273136        339698      0.804           4
+ 5 Maverick                      37318         46417      0.804           5
+ 6 Hidalgo                      538593        681678      0.790           6
+ 7 El Paso                      524348        688420      0.762           7
+ 8 Fort Bend                    502692        665167      0.756           8
+ 9 Travis                       778256       1092827      0.712           9
+10 Zapata                         7718         10966      0.704          10
+```
+
+
+
+---
+
+count: false
+ 
+# Working with Data - Step 2
+.panel1-rank-and-limit-real-auto[
+
+```r
+*vaccine_uptake   # Create New Object
+```
+]
+ 
+.panel2-rank-and-limit-real-auto[
+
+```
+# A tibble: 254 × 4
+   county_name people_fully_vaccinated population_12 pct_uptake
+   &lt;chr&gt;                         &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;
+ 1 Anderson                      20534         50661      0.405
+ 2 Andrews                        7083         14863      0.477
+ 3 Angelina                      34014         72486      0.469
+ 4 Aransas                       12774         20834      0.613
+ 5 Archer                         3646          7388      0.494
+ 6 Armstrong                       620          1584      0.391
+ 7 Atascosa                      21833         41738      0.523
+ 8 Austin                        13052         25335      0.515
+ 9 Bailey                         2348          5603      0.419
+10 Bandera                        9171         20596      0.445
+# … with 244 more rows
+```
+]
+
+---
+count: false
+ 
+# Working with Data - Step 2
+.panel1-rank-and-limit-real-auto[
+
+```r
+vaccine_uptake %&gt;%  # Create New Object
+* mutate(uptake_rank = dense_rank(desc(pct_uptake)))   # Create Rank Column
+```
+]
+ 
+.panel2-rank-and-limit-real-auto[
+
+```
+# A tibble: 254 × 5
+   county_name people_fully_vaccinated population_12 pct_uptake uptake_rank
+   &lt;chr&gt;                         &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;       &lt;int&gt;
+ 1 Anderson                      20534         50661      0.405         182
+ 2 Andrews                        7083         14863      0.477          94
+ 3 Angelina                      34014         72486      0.469         104
+ 4 Aransas                       12774         20834      0.613          31
+ 5 Archer                         3646          7388      0.494          83
+ 6 Armstrong                       620          1584      0.391         197
+ 7 Atascosa                      21833         41738      0.523          65
+ 8 Austin                        13052         25335      0.515          70
+ 9 Bailey                         2348          5603      0.419         166
+10 Bandera                        9171         20596      0.445         135
+# … with 244 more rows
+```
+]
+
+---
+count: false
+ 
+# Working with Data - Step 2
+.panel1-rank-and-limit-real-auto[
+
+```r
+vaccine_uptake %&gt;%  # Create New Object
+  mutate(uptake_rank = dense_rank(desc(pct_uptake))) %&gt;%  # Create Rank Column
+* filter(uptake_rank &lt;= 10)   # Filter only for Top 10 counties
+```
+]
+ 
+.panel2-rank-and-limit-real-auto[
+
+```
+# A tibble: 10 × 5
+   county_name people_fully_vaccinated population_12 pct_uptake uptake_rank
+   &lt;chr&gt;                         &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;       &lt;int&gt;
+ 1 Cameron                      273136        339698      0.804           4
+ 2 El Paso                      524348        688420      0.762           7
+ 3 Fort Bend                    502692        665167      0.756           8
+ 4 Hidalgo                      538593        681678      0.790           6
+ 5 Maverick                      37318         46417      0.804           5
+ 6 Presidio                       5305          5392      0.984           1
+ 7 Starr                         43575         49864      0.874           3
+ 8 Travis                       778256       1092827      0.712           9
+ 9 Webb                         192672        215919      0.892           2
+10 Zapata                         7718         10966      0.704          10
+```
+]
+
+---
+count: false
+ 
+# Working with Data - Step 2
+.panel1-rank-and-limit-real-auto[
+
+```r
+vaccine_uptake %&gt;%  # Create New Object
+  mutate(uptake_rank = dense_rank(desc(pct_uptake))) %&gt;%  # Create Rank Column
+  filter(uptake_rank &lt;= 10) %&gt;%  # Filter only for Top 10 counties
+* arrange(uptake_rank)  # Sort by rank
+```
+]
+ 
+.panel2-rank-and-limit-real-auto[
+
+```
+# A tibble: 10 × 5
+   county_name people_fully_vaccinated population_12 pct_uptake uptake_rank
+   &lt;chr&gt;                         &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;       &lt;int&gt;
+ 1 Presidio                       5305          5392      0.984           1
+ 2 Webb                         192672        215919      0.892           2
+ 3 Starr                         43575         49864      0.874           3
+ 4 Cameron                      273136        339698      0.804           4
+ 5 Maverick                      37318         46417      0.804           5
+ 6 Hidalgo                      538593        681678      0.790           6
+ 7 El Paso                      524348        688420      0.762           7
+ 8 Fort Bend                    502692        665167      0.756           8
+ 9 Travis                       778256       1092827      0.712           9
+10 Zapata                         7718         10966      0.704          10
+```
+]
+
+---
+count: false
+ 
+# Working with Data - Step 2
+.panel1-rank-and-limit-real-auto[
+
+```r
+vaccine_uptake %&gt;%  # Create New Object
+  mutate(uptake_rank = dense_rank(desc(pct_uptake))) %&gt;%  # Create Rank Column
+  filter(uptake_rank &lt;= 10) %&gt;%  # Filter only for Top 10 counties
+  arrange(uptake_rank)  # Sort by rank
+```
+]
+ 
+.panel2-rank-and-limit-real-auto[
+
+```
+# A tibble: 10 × 5
+   county_name people_fully_vaccinated population_12 pct_uptake uptake_rank
+   &lt;chr&gt;                         &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt;       &lt;int&gt;
+ 1 Presidio                       5305          5392      0.984           1
+ 2 Webb                         192672        215919      0.892           2
+ 3 Starr                         43575         49864      0.874           3
+ 4 Cameron                      273136        339698      0.804           4
+ 5 Maverick                      37318         46417      0.804           5
+ 6 Hidalgo                      538593        681678      0.790           6
+ 7 El Paso                      524348        688420      0.762           7
+ 8 Fort Bend                    502692        665167      0.756           8
+ 9 Travis                       778256       1092827      0.712           9
+10 Zapata                         7718         10966      0.704          10
+```
+]
+
+&lt;style&gt;
+.panel1-rank-and-limit-real-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-rank-and-limit-real-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-rank-and-limit-real-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+# The Basics of a ggplot2 chart
+
+.pull-left[
+
+
+```r
+library(ggplot2)
+library(ggthemes)
+
+diamonds |&gt;  # Call On Your Dataset
+  ggplot() +  # Draw A Canvas
+  aes(cut, fill = cut) +  # Define How The Data Gets Mapped
+  geom_bar(show.legend = FALSE) +  # Define What Kind of Chart to Draw
+  labs(
+    x = "Cut",  # Specify X-Axis Label                       
+    y = "Count",  # Specify Y-Axis Label
+    title = "A Fancy diamonds Plot", # Specify Title Label
+    subtitle = "A compelling subtitle", # Specify Subtitle Label
+    caption = "Source: ggplot2 package | Data: 'diamonds'"  # Specify Source/Caption Label
+  ) +
+  theme_minimal() + # Add The LBJ Theme
+  theme(plot.title = element_text(color = "#bf5700")) +   # Modify Title's Color
+  ggthemes::scale_fill_tableau(palette = "Color Blind")   # Add A Color Blind Friendly Palette
+```
+
+]
+
+.pull-right[
+
+&lt;img src="index_files/figure-html/fancy_diamonds-1.png" width="504" /&gt;
+]
+---
+
+count: false
+ 
+# A step by step view
+.panel1-fancy_diamonds-auto[
+
+```r
+*library(ggplot2)
+```
+]
+ 
+.panel2-fancy_diamonds-auto[
+
+]
+
+---
+count: false
+ 
+# A step by step view
+.panel1-fancy_diamonds-auto[
+
+```r
+library(ggplot2)
+*library(ggthemes)
+```
+]
+ 
+.panel2-fancy_diamonds-auto[
+
+]
+
+---
+count: false
+ 
+# A step by step view
+.panel1-fancy_diamonds-auto[
+
+```r
+library(ggplot2)
+library(ggthemes)
+
+*diamonds   # Call On Your Dataset
+```
+]
+ 
+.panel2-fancy_diamonds-auto[
+
+```
+# A tibble: 53,940 × 10
+   carat cut       color clarity depth table price     x     y     z
+   &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1  0.23 Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43
+ 2  0.21 Premium   E     SI1      59.8    61   326  3.89  3.84  2.31
+ 3  0.23 Good      E     VS1      56.9    65   327  4.05  4.07  2.31
+ 4  0.29 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63
+ 5  0.31 Good      J     SI2      63.3    58   335  4.34  4.35  2.75
+ 6  0.24 Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48
+ 7  0.24 Very Good I     VVS1     62.3    57   336  3.95  3.98  2.47
+ 8  0.26 Very Good H     SI1      61.9    55   337  4.07  4.11  2.53
+ 9  0.22 Fair      E     VS2      65.1    61   337  3.87  3.78  2.49
+10  0.23 Very Good H     VS1      59.4    61   338  4     4.05  2.39
+# … with 53,930 more rows
+```
+]
+
+---
+count: false
+ 
+# A step by step view
+.panel1-fancy_diamonds-auto[
+
+```r
+library(ggplot2)
+library(ggthemes)
+
+diamonds %&gt;%  # Call On Your Dataset
+* ggplot()   # Draw A Canvas
+```
+]
+ 
+.panel2-fancy_diamonds-auto[
+&lt;img src="index_files/figure-html/fancy_diamonds_auto_04_output-1.png" width="504" /&gt;
+]
+
+---
+count: false
+ 
+# A step by step view
+.panel1-fancy_diamonds-auto[
+
+```r
+library(ggplot2)
+library(ggthemes)
+
+diamonds %&gt;%  # Call On Your Dataset
+  ggplot() +  # Draw A Canvas
+* aes(cut, fill = cut)   # Define How The Data Gets Mapped
+```
+]
+ 
+.panel2-fancy_diamonds-auto[
+&lt;img src="index_files/figure-html/fancy_diamonds_auto_05_output-1.png" width="504" /&gt;
+]
+
+---
+count: false
+ 
+# A step by step view
+.panel1-fancy_diamonds-auto[
+
+```r
+library(ggplot2)
+library(ggthemes)
+
+diamonds %&gt;%  # Call On Your Dataset
+  ggplot() +  # Draw A Canvas
+  aes(cut, fill = cut) +  # Define How The Data Gets Mapped
+* geom_bar(show.legend = FALSE)   # Define What Kind of Chart to Draw
+```
+]
+ 
+.panel2-fancy_diamonds-auto[
+&lt;img src="index_files/figure-html/fancy_diamonds_auto_06_output-1.png" width="504" /&gt;
+]
+
+---
+count: false
+ 
+# A step by step view
+.panel1-fancy_diamonds-auto[
+
+```r
+library(ggplot2)
+library(ggthemes)
+
+diamonds %&gt;%  # Call On Your Dataset
+  ggplot() +  # Draw A Canvas
+  aes(cut, fill = cut) +  # Define How The Data Gets Mapped
+  geom_bar(show.legend = FALSE) +  # Define What Kind of Chart to Draw
+* labs(
+*   x = "Cut",  # Specify X-Axis Label
+*   y = "Count",  # Specify Y-Axis Label
+*   title = "A Fancy diamonds Plot",  # Specify Title Label
+*   subtitle = "A compelling subtitle",  # Specify Subtitle Label
+*   caption = "Source: ggplot2 package | Data: 'diamonds'"  # Specify Source/Caption Label
+* )
+```
+]
+ 
+.panel2-fancy_diamonds-auto[
+&lt;img src="index_files/figure-html/fancy_diamonds_auto_07_output-1.png" width="504" /&gt;
+]
+
+---
+count: false
+ 
+# A step by step view
+.panel1-fancy_diamonds-auto[
+
+```r
+library(ggplot2)
+library(ggthemes)
+
+diamonds %&gt;%  # Call On Your Dataset
+  ggplot() +  # Draw A Canvas
+  aes(cut, fill = cut) +  # Define How The Data Gets Mapped
+  geom_bar(show.legend = FALSE) +  # Define What Kind of Chart to Draw
+  labs(
+    x = "Cut",  # Specify X-Axis Label
+    y = "Count",  # Specify Y-Axis Label
+    title = "A Fancy diamonds Plot",  # Specify Title Label
+    subtitle = "A compelling subtitle",  # Specify Subtitle Label
+    caption = "Source: ggplot2 package | Data: 'diamonds'"  # Specify Source/Caption Label
+  ) +
+* theme_minimal()   # Add The LBJ Theme
+```
+]
+ 
+.panel2-fancy_diamonds-auto[
+&lt;img src="index_files/figure-html/fancy_diamonds_auto_08_output-1.png" width="504" /&gt;
+]
+
+---
+count: false
+ 
+# A step by step view
+.panel1-fancy_diamonds-auto[
+
+```r
+library(ggplot2)
+library(ggthemes)
+
+diamonds %&gt;%  # Call On Your Dataset
+  ggplot() +  # Draw A Canvas
+  aes(cut, fill = cut) +  # Define How The Data Gets Mapped
+  geom_bar(show.legend = FALSE) +  # Define What Kind of Chart to Draw
+  labs(
+    x = "Cut",  # Specify X-Axis Label
+    y = "Count",  # Specify Y-Axis Label
+    title = "A Fancy diamonds Plot",  # Specify Title Label
+    subtitle = "A compelling subtitle",  # Specify Subtitle Label
+    caption = "Source: ggplot2 package | Data: 'diamonds'"  # Specify Source/Caption Label
+  ) +
+  theme_minimal() +  # Add The LBJ Theme
+* theme(plot.title = element_text(color = "#bf5700"))   # Modify Title's Color
+```
+]
+ 
+.panel2-fancy_diamonds-auto[
+&lt;img src="index_files/figure-html/fancy_diamonds_auto_09_output-1.png" width="504" /&gt;
+]
+
+---
+count: false
+ 
+# A step by step view
+.panel1-fancy_diamonds-auto[
+
+```r
+library(ggplot2)
+library(ggthemes)
+
+diamonds %&gt;%  # Call On Your Dataset
+  ggplot() +  # Draw A Canvas
+  aes(cut, fill = cut) +  # Define How The Data Gets Mapped
+  geom_bar(show.legend = FALSE) +  # Define What Kind of Chart to Draw
+  labs(
+    x = "Cut",  # Specify X-Axis Label
+    y = "Count",  # Specify Y-Axis Label
+    title = "A Fancy diamonds Plot",  # Specify Title Label
+    subtitle = "A compelling subtitle",  # Specify Subtitle Label
+    caption = "Source: ggplot2 package | Data: 'diamonds'"  # Specify Source/Caption Label
+  ) +
+  theme_minimal() +  # Add The LBJ Theme
+  theme(plot.title = element_text(color = "#bf5700")) +  # Modify Title's Color
+* scale_fill_tableau(palette = "Color Blind")  # Add A Color Blind Friendly Palette
+```
+]
+ 
+.panel2-fancy_diamonds-auto[
+&lt;img src="index_files/figure-html/fancy_diamonds_auto_10_output-1.png" width="504" /&gt;
+]
+
+---
+count: false
+ 
+# A step by step view
+.panel1-fancy_diamonds-auto[
+
+```r
+library(ggplot2)
+library(ggthemes)
+
+diamonds %&gt;%  # Call On Your Dataset
+  ggplot() +  # Draw A Canvas
+  aes(cut, fill = cut) +  # Define How The Data Gets Mapped
+  geom_bar(show.legend = FALSE) +  # Define What Kind of Chart to Draw
+  labs(
+    x = "Cut",  # Specify X-Axis Label
+    y = "Count",  # Specify Y-Axis Label
+    title = "A Fancy diamonds Plot",  # Specify Title Label
+    subtitle = "A compelling subtitle",  # Specify Subtitle Label
+    caption = "Source: ggplot2 package | Data: 'diamonds'"  # Specify Source/Caption Label
+  ) +
+  theme_minimal() +  # Add The LBJ Theme
+  theme(plot.title = element_text(color = "#bf5700")) +  # Modify Title's Color
+  scale_fill_tableau(palette = "Color Blind")  # Add A Color Blind Friendly Palette
+```
+]
+ 
+.panel2-fancy_diamonds-auto[
+&lt;img src="index_files/figure-html/fancy_diamonds_auto_11_output-1.png" width="504" /&gt;
+]
+
+&lt;style&gt;
+.panel1-fancy_diamonds-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-fancy_diamonds-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-fancy_diamonds-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+# Exporting Our Data
+
+### Step 1: Export Our Chart
+
+
+```r
+ggsave("vaccine_uptake_chart.png", uptake_sorted, dpi = 300, width = 10, height = 6, bg = "white")
+```
+
+### Step 2: Export Our Data
+
+
+```r
+write_csv(ranked_uptake, "vaccine_uptake_top_10.csv")
+```
+
+---
+class: journey-bg, section, left, middle, inverse
+
+# 📚 Resources 📚
+
+## Questions? lbjdata.org
+
+#### [#rstats hashtag](https://twitter.com/search?q=%23rstats) on twitter
+#### R For Data Science - [Online Book](https://r4ds.had.co.nz) | [Hard Copy](https://www.oreilly.com/library/view/r-for-data/9781491910382/) | [Slack Community](https://www.rfordatasci.com)
+
+---
+class: journey-bg, section, center, middle, inverse
+
+# 🙏 Thank you 🙏
+
+## Questions? lbjdata.org
+
+### 📧: matthew.worthington@austin.utexas.edu
+### 🐦: @mrworthington
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="https://platform.twitter.com/widgets.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

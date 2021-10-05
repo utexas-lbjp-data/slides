@@ -1,6 +1,6 @@
 ---
-title: "An Introduction: R + the `tidyverse`"
-subtitle: "For Dr. Abner's Public Management Course<html><div style='float:left'></div><hr color='#e2f1fc' size=1px width=1100px></html>"
+title: "Census data in R: `tidycensus` + `tidyverse`"
+subtitle: "For Dr. Wasem's Immigrant Incorporation Course<html><div style='float:left'></div><hr color='#e2f1fc' size=1px width=1100px></html>"
 author: 
 - "<span style='color:#005f86; font-weight:500'>Matt Worthington</span> | Sr. Project Manager for Data Initiatives, UT Austin - LBJ"
 date: '<span style="color:#bf5700; font-weight:300">`r format(Sys.Date(), "%B %d, %Y")`</span>'
@@ -21,8 +21,6 @@ output:
       in_header:
         - 'header.html'
 ---
-background-image: url('assets/images/analysis_screen1.png')
-background-size: cover
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
@@ -35,9 +33,10 @@ library(janitor)          # Really useful functions for cleaning data
 library(lubridate)        # Makes Working With Dates Pretty Easy
 library(grid)             # Organizes Visual Objects
 library(ggtext)           # Helps with text in ggplot2 objects
-library(cowplot)          # Helps with arranging and layering of ggplot2 objects 
-library(hrbrthemes)       # A package I really like with lots of useful functions
+# library(cowplot)          # Helps with arranging and layering of ggplot2 objects 
+# library(hrbrthemes)       # A package I really like with lots of useful functions
 library(gt)               # A package for making really nice tables in R
+library(gtExtras)
 library(flair)
 library(htmlwidgets)
 readRenviron("~/.Renviron")
@@ -65,29 +64,6 @@ meta() %>%
     twitter_creator = "@mrworthington",
     twitter_site = "@mrworthington"
   )
-```
-
-```{r message=FALSE, warning=FALSE, include=FALSE}
-
-theme_lbj <- function(base_size=14,base_family="SF Pro Text",title_size=18, subtitle_size=14, caption_size=10, ...) {
-  ggplot2::theme_minimal(base_size = base_size,base_family = base_family,...) +
-    ggplot2::theme(plot.title = ggplot2::element_text(size = title_size, color= "#005f86", family = "SFProDisplay-Heavy", margin = margin(t=0, r=0, b=4, l=0)),
-                   plot.subtitle = ggplot2::element_text(color = "#bf5700", size = subtitle_size, family = "SFProDisplay-Regular", margin = margin(t=0, r=0, b=4, l=0)),
-                   plot.caption = ggplot2::element_text(family="SFProDisplay-Regular", color="#333f48",size=caption_size, lineheight = 1, hjust = 0, vjust=-5,
-                                                        margin = margin(t=4, r=0, b=4, l=0)),
-                   plot.margin = ggplot2::unit(c(t=0, r=1.5, b=2, l=1), "lines"),
-                   axis.title.x = ggplot2::element_text(family="SFProText-Bold", size=8, color="#5d5d5d", hjust=1),
-                   axis.title.y = ggplot2::element_text(family="SFProText-Bold", size=8, color="#5d5d5d", hjust=1),
-                   strip.text = element_text(family="SFProText-Bold", color="#ffffff"),
-                   strip.background = element_rect(color="#333f48", fill="#333f48"),
-                   legend.title = element_text(family="SFProText-Bold", color="#8d8d8d"),
-                   axis.line.x =  ggplot2::element_line(color="#3d3d3d", size=.5),
-                   panel.grid.major.y = ggplot2::element_line(color="#e3e3e3"),
-                   panel.grid.minor.y = ggplot2::element_line(linetype=2, size=0, color="#e3e3e3"),
-                   panel.grid.major.x = ggplot2::element_blank(),
-                   panel.grid.minor.x = ggplot2::element_blank(),
-                   axis.ticks.x = ggplot2::element_line(size = .5))
-}
 ```
 
 ```{r xaringanExtra, echo=FALSE}
@@ -118,42 +94,6 @@ htmltools::tagList(
 )
 ```
 
----
-class: middle, center
-
-```{r echo=FALSE, fig.width=14}
-
-vax_url <- "https://dshs.texas.gov/immunize/covid19/COVID-19-Vaccine-Data-by-County.xls" 
-download.file(url=vax_url, destfile = "raw_data/tx_vaccine_uptake.xlsx")
-
-vaccine_chart <- readxl::read_excel(path = "raw_data/tx_vaccine_uptake.xlsx", sheet = "By County") |> 
-  janitor::clean_names() |> 
-  select(county_name, people_fully_vaccinated, population_12) |> # Pull the three columns we need
-  mutate(people_fully_vaccinated = as.numeric(people_fully_vaccinated), # Reclassify Character Data As Numeric 
-         population_12 = as.numeric(population_12)) |>
-  mutate(pct_uptake = round(people_fully_vaccinated/population_12, digits = 4)) |>  # Create PCT Column
-  filter(county_name!="Texas",                                        # Filter out 'Texas' value
-         county_name!="Other",                                        # Filter our 'Other' value
-         county_name!="Federal Long-Term Care Vaccination Program",   # Filter our Federal Programs
-         county_name!="Federal Pharmacy Retail Vaccination Program") |> 
-  mutate(uptake_rank = dense_rank(desc(pct_uptake))) |> # Create Rank Column
-  filter(uptake_rank <= 10) |>                          # Filter only for Top 10 counties
-  arrange(uptake_rank) |> 
-  ggplot() +
-  aes(x=reorder(county_name, uptake_rank), y = pct_uptake, fill=pct_uptake) +
-  geom_col() +
-  scale_y_continuous(labels = scales::percent) +
-  labs(title = "Leaders of the Vax",
-       subtitle = "Top 10 Counties in Texas for Vaccine Uptake",
-       x = "Vaccine Uptake (%)",
-       y = "County") +
-  lbjdata::theme_lbj(base_family = "Libre Franklin", base_size = 16) +
-  theme(plot.title = element_markdown(size = 28),
-        plot.subtitle = element_markdown(size = 20))
-
-vaccine_chart
-
-```
 ---
 background-image: url('assets/images/dir_stat.png')
 background-size: cover
@@ -197,52 +137,69 @@ class: center, bottom, inverse
 
 ---
 
-# How I Hope We End Today
+## What is the US Census?
 
-.pull-left[
+* __Complete count__ of the United States population that takes place every 10 years
 
-#### Anywhere from here..
+* __Mandated__ by Article 1, Section 2 of the US Constitution; taken since 1790
 
-.rmd-img[![](https://media3.giphy.com/media/l0EwZ92cG9x9VPC7u/giphy.gif?cid=790b76118edecd6d0b794b704e7116316ccb7d0c3b4d378e&rid=giphy.gif&ct=g)]
+* Used to guide federal spending; determines proportional representation in US Congress
 
-]
+* __US Census Bureau__: Government agency responsible for conducting the Census; part of the Department of Commerce
 
-.pull-right[
-
-#### to here.
-
-
-.rmd-img[![](https://media1.giphy.com/media/xT1R9IKI80368giYne/giphy.gif?cid=790b7611b023f5345d803015ac0a3ada474f508173d36f94&rid=giphy.gif&ct=g)]
-
-]
-
----
-class: showcase-bg, section, center, middle
-
-# 🪄 Showcase
+* [Census 2020 form](https://www2.census.gov/programs-surveys/decennial/2020/technical-documentation/questionnaires-and-instructions/questionnaires/2020-informational-questionnaire.pdf)
 
 ---
 
-# Census Spellbook: `tidycensus` 
+## American Community Survey
+
+* Up through 2000: detailed socio-economic characteristics of the US population collected by the Census __long form__
+
+* American Community Survey (ACS): yearly survey of approximately 3 million households; replaces the long form
+
+* [Sample ACS form](https://www2.census.gov/programs-surveys/acs/methodology/questionnaires/2021/quest21.pdf)
+
+---
+
+# What is `tidycensus`? 
+
+The **tidycensus** package [@walker_and_herman2021], first released in 2017, is an R package designed to facilitate the process of acquiring and working with US Census Bureau population data in the R environment. 
+
+As discussed in the previous chapter, the US Census Bureau makes a wide range of datasets available to the user community through their APIs and other data download resources. **tidycensus** is not a comprehensive portal to these data resources; instead, it focuses on a select number of datasets implemented in a series of core functions. These core functions in **tidycensus** include:
+
+-   `get_decennial()`, which requests data from the US Decennial Census APIs for 2000 and 2010. When 2020 Census data are released via the API, R users will be able to access it with this function as well.
+
+-   `get_acs()`, which requests data from the 1-year and 5-year American Community Survey samples. Data are available from the 1-year ACS back to 2005 and the 5-year ACS back to 2005-2009.
+
+-   `get_estimates()`, an interface to the Population Estimates APIs. These datasets include yearly estimates of population characteristics by state, county, and metropolitan area, along with components of change demographic estimates like births, deaths, and migration rates.
+
+-   `get_pums()`, which accesses data from the ACS Public Use Microdata Sample APIs. These samples include anonymized individual-level records from the ACS organized by household and are highly useful for many different social science analyses. `get_pums()` is covered in more depth in Chapters \@ref(introduction-to-census-microdata) and \@ref(analyzing-census-microdata).
+
+-   `get_flows()`, an interface to the ACS Migration Flows APIs. Includes information on in- and out-flows from various geographies for the 5-year ACS samples, enabling origin-destination analyses.
+
+---
+
+# In Action: `tidycensus` 
 
 .pull-left[
 ```{r message=FALSE, warning=FALSE, eval=FALSE}
 library(tidycensus)
 
 # Create A List of Variables
-demvars <- c(White = "P005003",    
-              Black = "P005004",    
-              Asian = "P005006",
-              Hispanic = "P004003")
+demvars <- c(White = "P1_003N",
+             Black = "P1_004N",
+             Asian = "P1_006N",
+             Hispanic = "P2_002N")
 
 # Pull The Census Data 
 harris <- get_decennial(
              geography = "tract",             
              variables = demvars,
+             year = 2020,
              state = "TX", 
              county = "Harris County", 
              geometry = TRUE,
-             summary_var = "P001001"
+             summary_var = "P1_001N"
              ) |>
   # Create pct column 
   mutate(pct = 100 * (value / summary_value)) 
@@ -253,25 +210,31 @@ harris  |>
   facet_wrap(~variable) +
   geom_sf(color = NA) +
   coord_sf(crs = 26915, datum=NA) +
-  scale_fill_viridis_c() +
-  theme_lbj() +
+  scale_fill_distiller(palette = "Blues", direction = 1) +
+  theme_minimal() +
   labs(title="Population Demographics in Harris County",
-       subtitle="US Census | 2010 Decennial Census")
+       subtitle="US Census | 2020 Decennial Census")
 ```
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
-library(tidycensus)
-
 # Create A List of Variables
-demvars <- c(White = "P005003",    
-              Black = "P005004",    
-              Asian = "P005006",
-              Hispanic = "P004003")
+demvars <- c(White = "P1_003N",
+             Black = "P1_004N",
+             Asian = "P1_006N",
+             Hispanic = "P2_002N")
 
-
-harris <- get_decennial(geography = "tract", variables = demvars,
-                  state = "TX", county = "Harris County", geometry = TRUE,
-                  summary_var = "P001001")
+# Pull The Census Data 
+harris <- get_decennial(
+             geography = "tract",             
+             variables = demvars,
+             year = 2020,
+             state = "TX", 
+             county = "Harris County", 
+             geometry = TRUE,
+             summary_var = "P1_001N"
+             ) |>
+  # Create pct column 
+  mutate(pct = 100 * (value / summary_value)) 
 ```
 ]
 
@@ -280,16 +243,15 @@ harris <- get_decennial(geography = "tract", variables = demvars,
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 
-harris |>
-  mutate(pct = 100 * (value / summary_value)) |>
+harris  |>
   ggplot(aes(fill = pct)) +
   facet_wrap(~variable) +
   geom_sf(color = NA) +
   coord_sf(crs = 26915, datum=NA) +
-  scale_fill_viridis_c() +
-  theme_lbj() +
+  scale_fill_distiller(palette = "Blues", direction = 1) +
+  theme_minimal() +
   labs(title="Population Demographics in Harris County",
-       subtitle="US Census | 2010 Decennial Census")
+       subtitle="US Census | 2020 Decennial Census")
 
 ```
 
@@ -302,6 +264,7 @@ harris |>
 .pull-left[
 ```{r eval = FALSE}
 library(gt)
+library(gtExtras)
 
 # Create A List of Variables
 demvars <- c(White = "P005003", Black = "P005004",
@@ -328,7 +291,8 @@ harris |>
     variable = md("**Group**"),
     value = md("**Population**"),
     pct = md("**Pct. of Total**")
-  )
+  ) |> 
+  gt_theme_538()
 ```
 ]
 
@@ -360,196 +324,26 @@ harris |>
   fmt_percent(columns=c("pct")) |> 
   cols_label(variable=md("**Group**"),
              value=md("**Population**"),
-             pct=md("**Pct. of Total**"))
+             pct=md("**Pct. of Total**")) |> 
+  gt_theme_538()
 ```
 ]
 
 ---
 
-# Static Charts: [`ggplot`]()
+# Mapping with Census Data: [`ggplot`]()
 
 .pull-left[
+[**News Media**](https://twitter.com/jburnmurdoch/status/981074810020204544?s=20)
+
 ![](https://pbs.twimg.com/media/DZ15NFRXUAAA_yJ?format=jpg&name=large)
 ]
 
 .pull-right[
-![](https://pbs.twimg.com/media/E9figN0WYAQOXWK?format=jpg&name=large)
+[**Redistricting Analysis**](https://corymccartan.github.io/redistricting21/posts/2021-06-25-colorado-preliminary-congressional-districts/)
+
+![](https://corymccartan.github.io/redistricting21/posts/2021-09-03-oregon-congressional-districts/oregon-preliminary-congressional-districts_files/figure-html5/best-1.png)
 ]
-
----
-
-# Interactive Charts: [`highcharter`](https://jkunst.com/highcharter/index.html)
-
-```{r include=FALSE}
-library(highcharter)
-
-hc_matt <- hc_theme_merge(
-  hc_theme_smpl(),
-  hc_theme(chart = list(backgroundColor = "#fff", 
-                        style = list(fontFamily = '-apple-system, sans-serif !important', 
-                                     fontSize = "28px", 
-                                     color="#4d4d4d")),
-           title = list(style = list(fontFamily = '-apple-system, sans-serif !important', 
-                                     fontWeight = "900",
-                                     color="#2d2d2d"),
-                        align = "left"), 
-           subtitle = list(style = list(fontFamily = '-apple-system, sans-serif !important',
-                                        color="#7d7d7d",
-                                        textTransform="initial",
-                                        fontWeight="400",
-                                        fontSize = "14px"),
-                           align = "left"), 
-           legend = list(align = "right", 
-                         style = list(fontFamily = '-apple-system, sans-serif !important', color="#6d6d6d"),
-                         itemStyle = list(fontFamily = '-apple-system, sans-serif !important', color = '#6d6d6d'),
-                         itemHoverStyle = list(color = 'gray'),   
-                         verticalAlign = "top"),
-           credits = list(style = list(color = "#fff")),
-           xAxis = list(labels =list(style = list(fontFamily = '-apple-system, sans-serif !important', color="#2d2d2d")), 
-                        title = list(style = list(color = "#4d4d4d", fontSize = "12px", 
-                                                  color="#4d4d4d",fontWeight="500")),
-                        gridLineWidth = 0,
-                        gridLineColor = "#9d9d9d", 
-                        lineColor = 'rgba(0,0,0,0.7)', 
-                        minorGridLineColor = 'rgba(0,0,0,0.7)', 
-                        tickColor = "#9d9d9d", 
-                        tickWidth = 1), 
-           yAxis = list(labels =list(style = list(fontFamily = '-apple-system, sans-serif !important', color="#2d2d2d")), 
-                        title = list(style = list(color = "#fff", fontSize = "12px", 
-                                                  color="#fff",fontWeight="500")), 
-                        gridLineWidth = .5,
-                        gridLineColor = 'rgba(0,0,0,0.15)', 
-                        lineColor = 'rgba(0,0,0,0.15)', 
-                        minorGridLineColor = 'rgba(0,0,0,0.15)', 
-                        tickColor = "#9d9d9d", 
-                        tickWidth = 2)))
-
-   myMenuItems <- c("downloadCSV", "downloadCSV", "separator", "downloadPNG", "downloadJPEG", "downloadPDF")
-```
-
-```{r highcharter, echo=FALSE, message=FALSE, warning=FALSE}
-library(highcharter)
-
-# key_events <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQ2q_c5RpywszCamM3VINgAwZ51OJoPfBFflEvXpuAqAZrw9SDovcGnfDOlF7uwzCnZf5XMkEluhlUb/pub?output=csv") |> 
-#   clean_names() |> 
-#   mutate(date=as_date(date))
-
-r_naught <- read_csv("https://d14wlfuexuxgcm.cloudfront.net/covid/rt.csv") |> 
-  filter(region=="TX")
-
-# key_events_fltr <- key_events |>
-#       filter(!str_detect(event,"Stimulus"))
-#     
-#     dates <- key_events_fltr$date
-#     events <- key_events_fltr$event
-#     
-#     plotLines <- map2(key_events_fltr$date,key_events_fltr$event,
-#                       ~list(label = list(text = .y,
-#                                          style = list(color = "rgba(255, 255, 255, 0.6)", 
-#                                                       fontSize='12px',textTransform='initial')),
-#                             color = "rgba(255, 255, 255, 0.6)",
-#                             width = 1,
-#                             dashStyle = "Dash",
-#                             value = datetime_to_timestamp(as.Date(.x, tz="UTC"))))
-
-
-r_naught |> 
-      hchart("line", hcaes(x = date, y = mean), animation=FALSE,
-             tooltip = FALSE,
-             threshold = 1, negativeColor = "#92ACCF",  color = "#D94B3D") |>
-      hc_add_series(r_naught, type = "arearange",
-                    hcaes(x = date, low = lower_80,
-                          high = upper_80),
-                    threshold = 1, negativeColor = "#92ACCF", color = "#D94B3D",
-                    linkedTo = "r_naught") |>
-      hc_plotOptions(arearange = list(fillOpacity=.3)) |>
-      hc_title(
-        text ="Texas Effective Reproduction Rate · R<sub>t</sub>",
-        useHTML = TRUE) |> 
-      hc_subtitle(
-        text ="<span>From R<sub>t</sub> Live: R<sub>t</sub>  is the average number of people who become infected by an infectious person.</span><br/><span style='color: #D94B3D'>  If it’s above 1.0, COVID-19 will spread quickly.</span> <span style='color: #92ACCF'> If it’s below 1.0, infections will slow.</span>",
-        useHTML = TRUE) |>
-      hc_yAxis(title = list(text="Effective Reproduction Rate (R<sub>t</sub>)"),
-               min = min(r_naught$lower_80), 
-               max = max(r_naught$upper_80)) |> 
-      hc_xAxis(title=NULL) |> 
-      hc_tooltip(table = FALSE, sort = FALSE,
-                 pointFormat = "Effective Reproduction Rate · R<sub>t</sub>: {point.mean:,.2f}<br>") |> 
-      hc_credits(
-        enabled = TRUE,
-        text = "Source: rt.live Analysis",
-        href = "https://rt.live") |>
-      hc_add_theme(hc_matt) |> 
-      hc_exporting(enabled=TRUE, scale=2, sourceWidth= 1200, sourceHeight = 600, 
-                   allowHTML = TRUE,
-                   buttons = list(contextButton = list(menuItems = myMenuItems, 
-                                                       symbol = 'menuball', 
-                                                       symbolStrokeWidth = 1,
-                                                       symbolFill = 'rgba(255,209, 0, 0.9)',
-                                                       symbolStroke ='#3A4A9F',
-                                                       theme = list(fill='#fff'))),
-                   chartOptions = list(title =  list(style = list(fontWeight = '800', fontSize = '22px', textTransform = "uppercase")),
-                                       subtitle =  list(style = list(fontSize = '14px'))))
-```
-
----
-
-# Dashboards: `shiny`
-
-.pull-left[
-
-#### Texas Workforce Commission
-
-![](assets/images/twc_dashboard.png)
-
-]
-
-.pull-right[
-
-#### National Center for Farmworker Health
-
-![](assets/images/ncfh_dashboard.png)
-
-]
-
----
-
-# Websites: `blogdown` + `distill`
-
-.pull-left[
-
-.center[#### [Blogdown](https://pkgs.rstudio.com/blogdown/)]
-
-![](assets/images/blogdown.png)
-
-]
-
-.pull-right[
-
-.center[#### [Distill](https://pkgs.rstudio.com/distill/)]
-
-![](assets/images/distill.png)
-
-]
-
----
-
-# Books: `bookdown`
-
-.rmd-img[![](assets/images/bookdown.png)]
-
----
-
-# Documents: `rmarkdown`
-
-.rmd-img[![](assets/images/rmd_magic.png)]
-
----
-
-# Like anything, this is a journey...
-
-.rmd-img[![](https://github.com/allisonhorst/stats-illustrations/raw/master/rstats-artwork/r_rollercoaster.png
-)]
 
 ---
 class: journey-bg, section, center, middle, inverse
@@ -1164,7 +958,7 @@ diamonds |>  # Call On Your Dataset
     subtitle = "A compelling subtitle", # Specify Subtitle Label
     caption = "Source: ggplot2 package | Data: 'diamonds'"  # Specify Source/Caption Label
   ) +
-  theme_lbj() + # Add The LBJ Theme
+  theme_minimal() + # Add The LBJ Theme
   theme(plot.title = element_text(color = "#bf5700")) +   # Modify Title's Color
   ggthemes::scale_fill_tableau(palette = "Color Blind")   # Add A Color Blind Friendly Palette
 
@@ -1190,7 +984,7 @@ diamonds %>%  # Call On Your Dataset
     subtitle = "A compelling subtitle", # Specify Subtitle Label
     caption = "Source: ggplot2 package | Data: 'diamonds'"  # Specify Source/Caption Label
   ) +
-  theme_lbj() + # Add The LBJ Theme
+  theme_minimal() + # Add The LBJ Theme
   theme(plot.title = element_text(color = "#bf5700")) +   # Modify Title's Color
   scale_fill_tableau(palette = "Color Blind")   # Add A Color Blind Friendly Palette  
 
@@ -1199,91 +993,6 @@ diamonds %>%  # Call On Your Dataset
 ---
 
 `r chunk_reveal(title = "# A step by step view", chunk_name = "fancy_diamonds", break_type = "auto")`
-
----
-
-# Visualizing Our Data
-
-.pull-left[
-
-```{r draw-viz, eval = FALSE}
-uptake_chart <- ggplot(ranked_uptake) +
-                aes(x=county_name, y = pct_uptake, fill=pct_uptake) +
-                geom_col() +
-                labs(title = "Leaders of the Vax",
-                     subtitle = "Top 10 Counties in Texas for Vaccine Uptake",
-                     x = "Vaccine Uptake (%)",
-                     y = "County") +
-                lbjdata::theme_lbj(base_size = 10)
-```
-
-
-]
-
-.pull-right[
-
-```{r draw-viz-real, echo = FALSE}
-ggplot(ranked_uptake) +
-  aes(x=county_name, y = pct_uptake, fill=pct_uptake) +
-  geom_col() +
-  labs(title = "Leaders of the Vax",
-       subtitle = "Top 10 Counties in Texas for Vaccine Uptake",
-       x = "Vaccine Uptake (%)",
-       y = "County") +
-  lbjdata::theme_lbj(base_size = 10)
-
-```
-
-]
-
----
-
-`r chunk_reveal(title = "# Visualizing our Data", chunk_name = "draw-viz-real", break_type = "auto")`
-
----
-
-# Sorting Our Chart
-
-.pull-left[
-
-```{r sorting-viz, eval = FALSE}
-
-uptake_sorted <- ggplot(ranked_uptake) +
-                aes(x=reorder(county_name, uptake_rank), y = pct_uptake, fill=pct_uptake) +
-                geom_col() +
-                scale_y_continuous(labels = scales::percent) +
-                labs(title = "Leaders of the Vax",
-                     subtitle = "Top 10 Counties in Texas for Vaccine Uptake",
-                     x = "Vaccine Uptake (%)",
-                     y = "County") +
-                lbjdata::theme_lbj(base_family = "Libre Franklin", base_size = 10)
-
-```
-
-
-]
-
-.pull-right[
-
-```{r sorting-viz-real, echo = FALSE}
-
-ggplot(ranked_uptake) +
-  aes(x=reorder(county_name, uptake_rank), y = pct_uptake, fill=pct_uptake) +
-  geom_col() +
-  scale_y_continuous(labels = scales::percent) +
-  labs(title = "Leaders of the Vax",
-       subtitle = "Top 10 Counties in Texas for Vaccine Uptake",
-       x = "Vaccine Uptake (%)",
-       y = "County") +
-  lbjdata::theme_lbj(base_family = "Libre Franklin", base_size = 10)
-
-```
-
-]
-
----
-
-`r chunk_reveal(title = "# Sorting Our Chart", chunk_name = "sorting-viz-real", break_type = "auto")`
 
 ---
 

@@ -18,17 +18,17 @@
  *  Version: 0.3.0
  *
  * ------------------------------------------------------- */
-@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,400&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,400&display=swap');*/
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
 
 :root {
   /* Fonts */
-  --text-font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial;
-  --text-font-is-google: 1;
+  --text-font-family: "Whitney SSm A", "Whitney SSm B", -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial;
+  --text-font-is-google: 0;
   --text-font-family-fallback: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial;
   --text-font-base: sans-serif;
-  --header-font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial;
-  --header-font-is-google: 1;
+  --header-font-family: "Whitney SSm A", "Whitney SSm B", -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial;
+  --header-font-is-google: 0;
   --code-font-family: 'JetBrains Mono';
   --code-font-is-google: 1;
   --base-font-size: 20px;
