@@ -27,8 +27,8 @@
   --text-font-is-google: 0;
   --text-font-family-fallback: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial;
   --text-font-base: sans-serif;
-  --header-font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial;
-  --header-font-is-google: 1;
+  --header-font-family: "Whitney SSm A", "Whitney SSm B", -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, Ubuntu, roboto, noto, segoe ui, arial;
+  --header-font-is-google: 0;
   --code-font-family: 'JetBrains Mono';
   --code-font-is-google: 1;
   --base-font-size: 20px;
