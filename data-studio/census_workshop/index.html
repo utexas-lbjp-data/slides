@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Census Data in R: tidycensus + tidyverse</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Ethan Tenison | Project Manager for Data Initiatives, UT Austin - RGK Center" />
+    <meta name="author" content="Matt Worthington | Sr. Project Manager for Data Initiatives, UT Austin - LBJ" />
+    <meta name="date" content="2021-10-08" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <meta name="github-repo" content="utexas-lbjp-data/Analyzing-Texas-Vaccine-Uptake"/>
+    <meta name="twitter:title" content="Census Data in R: tidycensus + tidyverse"/>
+    <meta name="twitter:description" content="For Dr. Wasem&#39;s Immigrant Incorporation Course"/>
+    <meta name="twitter:url" content="https://slides.lbjdata.org/course_workshops/Wasem/census_workshop"/>
+    <meta name="twitter:image" content="https://slides.lbjdata.org/course_workshops/abner/intro_r_workshop/assets/images/hp_vs_r.png"/>
+    <meta name="twitter:image:alt" content="Title slide of An Introduction R + the tidyverse"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:creator" content="@mrworthington"/>
+    <meta name="twitter:site" content="@mrworthington"/>
+    <meta property="og:title" content="Census Data in R: tidycensus + tidyverse"/>
+    <meta property="og:description" content="For Dr. Wasem&#39;s Immigrant Incorporation Course"/>
+    <meta property="og:url" content="https://slides.lbjdata.org/course_workshops/Wasem/census_workshop"/>
+    <meta property="og:image" content="https://slides.lbjdata.org/course_workshops/abner/intro_r_workshop/assets/images/hp_vs_r.png"/>
+    <meta property="og:image:alt" content="Title slide of An Introduction R + the tidyverse"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="article:author" content="Matt Worthington"/>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link href="libs/animate.css/animate.xaringan.css" rel="stylesheet" />
+    <link href="libs/tachyons/tachyons.min.css" rel="stylesheet" />
+    <script src="libs/clipboard/clipboard.min.js"></script>
+    <link href="libs/shareon/shareon.min.css" rel="stylesheet" />
+    <script src="libs/shareon/shareon.min.js"></script>
+    <link href="libs/xaringanExtra-shareagain/shareagain.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-shareagain/shareagain.js"></script>
+    <script src="libs/xaringanExtra-webcam/webcam.js"></script>
+    <script id="xaringanExtra-webcam-options" type="application/json">{"width":"200","height":"200","margin":"1em"}</script>
+    <link href="libs/xaringanExtra-extra-styles/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra_fit-screen/fit-screen.js"></script>
+    <link href="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-clipboard/xaringanExtra-clipboard.js"></script>
+    <script>window.xaringanExtraClipboard(null, {"button":"<i class=\"fa fa-clipboard\"><\/i>","success":"<i class=\"fa fa-check\" style=\"color: #90BE6D\"><\/i>","error":"<i class=\"fa fa-times-circle\" style=\"color: #F94144\"><\/i>"})</script>
+    <link href="libs/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="libs/font-awesome/css/v4-shims.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/fa1ce86f40.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cloud.typography.com/6771036/7957232/css/fonts.css" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZCYBFS8PQ0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-ZCYBFS8PQ0');
+    </script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="assets/extra.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Census Data in R: <code>tidycensus</code> + <code>tidyverse</code>
+## Oct 8 Session | LBJ Data Studio
+<html>
+<div style="float:left">
+
+</div>
+<hr color='#e2f1fc' size=1px width=1100px>
+</html>
+### <span style="color:#005f86; font-weight:500">Ethan Tenison</span> | Project Manager for Data Initiatives, UT Austin - RGK Center
+### <span style="color:#005f86; font-weight:500">Matt Worthington</span> | Sr. Project Manager for Data Initiatives, UT Austin - LBJ
+### <span style="color:#bf5700; font-weight:300">October 08, 2021</span>
+
+---
+
+background-image: url('assets/images/dir_stat.png')
+background-size: cover
+class: center, bottom, inverse
+
+
+
+
+
+<style>.shareagain-bar {
+--shareagain-foreground: rgb(255, 255, 255);
+--shareagain-background: rgba(0, 0, 0, 0.5);
+--shareagain-facebook: none;
+--shareagain-pinterest: none;
+--shareagain-reddit: none;
+}</style>
+
+---
+class: middle
+
+.pull-left[
+### Personal Background
+
+* .orange[**Personal Background**]: Born and raised in San Antonio, Texas. Live in Austin with my wife and three kids. 
+* .orange[**Education Backgrounds**]: English Studies, Special Education, and Public Policy
+* .orange[**Professional Backgrounds**]: Public School Teacher, School District Administrator, and Data Scientist. 
+]
+
+.pull-right[
+### Quant Background
+
+* Grew up very poor
+* Single parent household
+* **Struggled with math** in school
+* Was really good at theatre and mostly got into college because of that.
+* Once in college, switched over to become an English Major because I didn't want to act professionally...
+]
+
+---
+background-image: url('assets/images/hermione_spell_class.png')
+background-size: cover
+class: center, bottom, inverse
+
+## .blue[How to understand R if you are new...]
+
+---
+background-image: url('assets/images/hp_vs_r.png')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+## What is the US Census?
+
+* __Complete count__ of the United States population that takes place every 10 years
+
+* __Mandated__ by Article 1, Section 2 of the US Constitution; taken since 1790
+
+* Used to guide federal spending; determines proportional representation in US Congress
+
+* __US Census Bureau__: Government agency responsible for conducting the Census; part of the Department of Commerce
+
+* [Census 2020 form](https://www2.census.gov/programs-surveys/decennial/2020/technical-documentation/questionnaires-and-instructions/questionnaires/2020-informational-questionnaire.pdf)
+
+.tl.burntorange[
+Credit: ([@kyle_e_walker](https://twitter.com/kyle_e_walker))
+]
+
+---
+
+## American Community Survey
+
+* Up through 2000: detailed socio-economic characteristics of the US population collected by the Census __long form__
+
+* American Community Survey (ACS): yearly survey of approximately 3 million households; replaces the long form
+
+* [Sample ACS form](https://www2.census.gov/programs-surveys/acs/methodology/questionnaires/2021/quest21.pdf)
+
+.tl.burntorange[
+Credit: ([@kyle_e_walker](https://twitter.com/kyle_e_walker))
+]
+
+---
+class: center
+
+## Geography Heiarchies in Census Data
+
+.rmd-small[![](assets/images/census_hierarchies.png)]
+
+---
+
+# What is `tidycensus`? 
+
+**tidycensus** was first released in 2017 by Dr. Kyle Walker, a professor of Demography at Texas Christian University. An R package, **tidycensus** was designed to facilitate the process of acquiring and working with US Census Bureau population data in the R environment. It is now maintained by Dr. Walker and Matt Herman.
+
+While **tidycensus** allows you to access a  massive amount of data, it doesn't facilitate access to every single product. And while there are several functions available in **tidycensus**, tonight we're focusing on three core functions in **tidycensus**:
+
+**Primary**
+
+-   `load_variables()`, an interface to navigate through all of the available variables inside of the ACS and Decennial Census products.
+
+-   `get_acs()`, which requests data from the 1-year and 5-year American Community Survey samples. Data are available from the 1-year ACS back to 2005 and the 5-year ACS back to 2005-2009.
+
+**Secondary**
+
+-   `get_decennial()`, which requests data from the US Decennial Census APIs for 2000 and 2010. When 2020 Census data are released via the API, R users will be able to access it with this function as well.
+
+
+.tl.burntorange[
+Credit: ([@kyle_e_walker](https://twitter.com/kyle_e_walker))
+]
+
+---
+
+# In Action: `tidycensus` 
+
+.pull-left[
+
+```r
+library(tidycensus)
+
+# Create A List of Variables
+demvars &lt;- c(White = "P1_003N",
+             Black = "P1_004N",
+             Asian = "P1_006N",
+             Hispanic = "P2_002N")
+
+# Pull The Census Data 
+harris &lt;- get_decennial(
+             geography = "tract",             
+             variables = demvars,
+             year = 2020,
+             state = "TX", 
+             county = "Harris County", 
+             geometry = TRUE,
+             summary_var = "P1_001N"
+             ) |&gt;
+  # Create pct column 
+  mutate(pct = 100 * (value / summary_value)) 
+
+# Draw A Chart 
+harris  |&gt;
+  ggplot(aes(fill = pct)) +
+  facet_wrap(~variable) +
+  geom_sf(color = NA) +
+  coord_sf(crs = 26915, datum=NA) +
+  scale_fill_distiller(palette = "Blues", direction = 1) +
+  theme_minimal() +
+  labs(title="Population Demographics in Harris County",
+       subtitle="US Census | 2020 Decennial Census")
+```
+
+
+]
+
+.pull-right[
+
+
+&lt;img src="index_files/figure-html/unnamed-chunk-3-1.png" width="504" /&gt;
+
+]
+
+---
+
+# How is Census Data used in R?
+
+.pull-left[
+[**News Coverage**](https://twitter.com/jburnmurdoch/status/981074810020204544?s=20)
+
+![](https://pbs.twimg.com/media/DZ15NFRXUAAA_yJ?format=jpg&amp;name=large)
+]
+
+.pull-right[
+[**Policy Analysis**](https://corymccartan.github.io/redistricting21/posts/2021-06-25-colorado-preliminary-congressional-districts/)
+
+![](https://corymccartan.github.io/redistricting21/posts/2021-09-03-oregon-congressional-districts/oregon-preliminary-congressional-districts_files/figure-html5/best-1.png)
+]
+
+---
+class: inverse middle center section
+
+## You need a Census API Key 
+
+### Obtain one at https://api.census.gov/data/key_signup.html
+
+---
+class: code90
+
+## `tidycensus::load_variables()`
+
+**What it does:** Calls variables from the Census API  
+
+**Prerequisite**: Your Census API key. Obtain one at https://api.census.gov/data/key_signup.html
+
+
+```r
+load_variables(year = "", dataset = "", cache = "")
+```
+
+* **year**: The year for which you are requesting variables. Either the year or endyear of the decennial Census or ACS sample. 5-year ACS data is available from 2009 through 2018. 1-year ACS data is available from 2005 through 2019.
+
+* **dataset**	:One of "sf1", "sf3", "acs1", "acs3", "acs5", "acs1/profile", "acs3/profile, "acs5/profile", "acs1/subject", "acs3/subject", or "acs5/subject".
+
+* **cache**	:Whether you would like to cache the dataset for future access, or load the dataset from an existing cache. Defaults to FALSE.
+
+
+```r
+load_variables(2019, "acs5", cache = TRUE) # Loads 2019 ACS Variables
+load_variables(2010, "sf1", cache = TRUE) # Loads 2010 Census Variables
+load_variables(2020, "pl", cache = TRUE) # Loads 2020 Census Variables
+```
+
+
+---
+
+## `tidycensus::get_acs()`
+
+**What it does:** Calls data from the Census API
+
+.pull-left[
+
+
+```r
+get_acs(
+  geography,
+  variables = NULL,
+  table = NULL,
+  cache_table = FALSE,
+  year = 2019,
+  output = "tidy",
+  state = NULL,
+  county = NULL,
+  zcta = NULL,
+  geometry = FALSE,
+  summary_var = NULL,
+  key = NULL,
+  moe_level = 90,
+  survey = "acs5",
+  show_call = FALSE,
+  ...
+)
+```
+]
+
+.pull-right-compact[
+* **geography	**:The geography of your data.
+* **variables**: Character string or vector of character strings of variable IDs. tidycensus automatically returns the estimate and the margin of error associated with the variable.
+* **table**: The ACS table for which you would like to request all variables. Uses lookup tables to identify the variables; performs faster when variable table already exists through load_variables(cache = TRUE). Only one table may be requested per call.
+* **year**:	The year, or endyear, of the ACS sample. 5-year ACS data is available from 2009 through 2019. 1-year ACS data is available from 2005 through 2019. Defaults to 2019.
+* **state**: An optional vector of states for which you are requesting data. State names, postal codes, and FIPS codes are accepted. Defaults to NULL.
+* **county**: The county for which you are requesting data. County names and FIPS codes are accepted. Must be combined with a value supplied to 'state'. Defaults to NULL.
+* **zcta**: The zip code tabulation area(s) for which you are requesting data. Specify a single value or a vector of values to get data for more than one ZCTA. Numeric or character ZCTA GEOIDs are accepted. When specifying ZCTAs, geography must be set to '"zcta"' and 'state' must be specified with 'county' left as 'NULL'. Defaults to NULL.
+* **geometry**: if FALSE (the default), return a regular tibble of ACS data. if TRUE, uses the tigris package to return an sf tibble with simple feature geometry in the 'geometry' column.
+* **summary_var**: Character string of a "summary variable" from the ACS to be included in your output. Usually a variable (e.g. total population) that you'll want to use as a denominator or comparison.
+]
+
+---
+class: journey-bg, section, center, middle, inverse
+
+# Let's get started 👟
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_17.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_18.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('assets/images/tidyverse_hex.png')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('assets/images/tidyverse_network.png')
+background-size: cover
+class: center, bottom, inverse animated fadeIn
+
+---
+background-image: url('assets/images/tidyverse_data_lifecycle_map.png')
+background-size: cover
+class: center, bottom, inverse animated fadeIn
+
+---
+background-image: url('assets/images/lifecycle_focus.png')
+background-size: cover
+class: center, bottom, inverse animated fadeIn
+
+---
+background-image: url('assets/images/what_todays_focus_will_be.png')
+background-size: cover
+class: center, bottom, inverse animated animate fadeIn
+
+---
+background-image: url('assets/images/marie_kondo.png')
+background-size: cover
+class: center, bottom, inverse animated fadeIn
+
+---
+
+# What is R Markdown?
+
+.pull-left.b--gray.ba.bw2.ma2.pa4.shadow-1[
+* ["An authoring framework for data science."](https://rmarkdown.rstudio.com/lesson-1.html) (✔️)
+* [A document format (.Rmd)](https://bookdown.org/yihui/rmarkdown/). (✔️)
+* [An R package named rmarkdown](https://rmarkdown.rstudio.com/docs/). (✔️)
+* ["A file format for making dynamic documents with R."](https://rmarkdown.rstudio.com/articles_intro.html) (✔️)
+* ["A tool for integrating text, code, and results."](https://r4ds.had.co.nz/communicate-intro.html) (✔️)
+* ["A computational document."](http://radar.oreilly.com/2011/07/wolframs-computational-documen.html) (✔️)
+* Wizardry. (🧙️)
+]
+
+.pull-right[
+.rmd-small[![](https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/rmarkdown.png)]
+]
+
+.tl.burntorange[
+Courtesy of Alison Presmanes Hill ([@apreshill](https://twitter.com/apreshill))
+]
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_15.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_16.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_17.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_18.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_19.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_20.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_21.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_22.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_23.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_24.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_25.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_26.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_27.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_28.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_29.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_30.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_31.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_32.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_33.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_34.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_35.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_36.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+class: middle
+
+.pull-left[
+
+### Writing in Markdown 
+
+If you're not familiar with Markdown, that's okay. If you're like me, you grew up using things like Microsoft Office and Google Docs to write, so you're probably not familiar with markdown, but Markdown is a lot easier. So... what is it? 
+
+Markdown is just an easy way to write formatted text.  Like anything else, it takes practice, but is used widely in popular writing apps like [Bear](https://bear.app), [iA Writer](https://ia.net/writer), [Ulysses](https://ulysses.app). For the purposes of this workshop, we'll use it in an RStudio document tool called "[Rmarkdown](https://rmarkdown.rstudio.com)". Here's a quick way to get familiar with writing in Markdown:
+
+.bg--burntorange.b--text-color.ba.bw2.br3.shadow-5.ph4.mt5.f7[
+*__Note__: If writing in Markdown still feels weird, don't worry. You can also use R Markdown's Visual Markdown Editor.*
+]
+
+]
+
+.pull-right[
+
+![Doing the Markdown 10-min Tutorial](https://d33wubrfki0l68.cloudfront.net/59f29676ef5e4d74685e14f801bbc10c2dbd3cef/c0688/lesson-images/markdown-1-markup.png)
+
+* **First, visit this link:** Go to [https://commonmark.org/help/tutorial/](https://commonmark.org/help/tutorial/)  
+* **Then, do the 10-minute tutorial:** It's a bit of time, but goes quick and will help you have a better grasp on writing in markdown.
+* **Finally, bookmark this site**: [https://commonmark.org/help/](https://commonmark.org/help/)
+
+]
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_38.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_39.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_40.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_41.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_42.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_43.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_44.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_45.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_46.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+background-image: url('https://utexas-lbjp-data.github.io/assets/rmarkdown/slide_47.jpeg')
+background-size: cover
+class: center, bottom, inverse
+
+---
+class: title center pipe-page
+
+# `|&gt;` and `%&gt;%`
+
+
+&lt;code class ='r hljs remark-code'&gt;&lt;b&gt;leave_house&lt;/b&gt;(&lt;b&gt;get_dressed&lt;/b&gt;(&lt;b&gt;get_out_of_bed&lt;/b&gt;(&lt;b&gt;wake_up&lt;/b&gt;(&lt;span style='color:#bf5700'&gt;me&lt;/span&gt;, &lt;span style='color:#005f86'&gt;time&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;"8:00"&lt;/span&gt;), &lt;span style='color:#005f86'&gt;side&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;"correct"&lt;/span&gt;), &lt;span style='color:#005f86'&gt;pants&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;TRUE&lt;/span&gt;, &lt;span style='color:#005f86'&gt;shirt&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;TRUE&lt;/span&gt;), &lt;span style='color:#005f86'&gt;car&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;TRUE&lt;/span&gt;, &lt;span style='color:#005f86'&gt;bike&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;FALSE&lt;/span&gt;)&lt;/code&gt;
+  
+
+&lt;code class ='r hljs remark-code'&gt;me &lt;span style='background-color:#ffff7f'&gt;|&gt;&lt;/span&gt; &lt;br&gt;&amp;nbsp;&amp;nbsp;&lt;b&gt;wake_up&lt;/b&gt;(&lt;span style='color:#005f86'&gt;time&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;"8:00"&lt;/span&gt;) &lt;span style='background-color:#ffff7f'&gt;|&gt;&lt;/span&gt; &lt;br&gt;&amp;nbsp;&amp;nbsp;&lt;b&gt;get_out_of_bed&lt;/b&gt;(&lt;span style='color:#005f86'&gt;side&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;"correct"&lt;/span&gt;) &lt;span style='background-color:#ffff7f'&gt;|&gt;&lt;/span&gt; &lt;br&gt;&amp;nbsp;&amp;nbsp;&lt;b&gt;get_dressed&lt;/b&gt;(&lt;span style='color:#005f86'&gt;pants&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;TRUE&lt;/span&gt;, &lt;span style='color:#005f86'&gt;shirt&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;TRUE&lt;/span&gt;) &lt;span style='background-color:#ffff7f'&gt;|&gt;&lt;/span&gt; &lt;br&gt;&amp;nbsp;&amp;nbsp;&lt;b&gt;leave_house&lt;/b&gt;(&lt;span style='color:#005f86'&gt;car&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;TRUE&lt;/span&gt;, &lt;span style='color:#005f86'&gt;bike&lt;/span&gt; = &lt;span style='color:#bf5700'&gt;FALSE&lt;/span&gt;)&lt;/code&gt;
+
+.tl.footnote-small[
+Courtesy of Andrew Heiss ([@andrewheiss](https://twitter.com/andrewheiss))
+]
+
+---
+
+## Resources For This Workshop
+
+* [RStudio Prework Setup Spefically Tailored to Tidycensus](https://slides.lbjdata.org/course_workshops/wasem/prework/index.html#1)
+* [ACS 2019 Variables](census.lbjdata.org/acs_2019)
+* [tidycensus documentation](https://slides.lbjdata.org/course_workshops/wasem/prework/index.html#1)
+
+#### Other Noteworthy API Packages 
+
+* [censusapi](https://www.hrecht.com/censusapi/): Non-spatial accessor to all of Census API data.
+* [ipumsr](http://tech.popdata.org/ipumsr/): IPUMS provides census and global survey data.
+* [blscrapeR](https://github.com/keberwein/blscrapeR): Bureau of Labor Statistics Data
+* [fredr](https://sboysel.github.io/fredr/):Federal Reserve of Economic Data 
+* [idbr](https://github.com/walkerke/idbr): Interface to the US Census Bureau International Data Base
+* [cancensus](https://mountainmath.github.io/cancensus/index.html): Candian Census Data
+* [mxmaps](https://www.diegovalle.net/mxmaps/) and [inegiR](https://github.com/Eflores89/inegiR): Tools for working with data in Mexico.
+* [rKenyaCensus](https://www.rstudio.com/resources/rstudioglobal-2021/rkenyacensus-package/): Kenyan Data
+* [geobr](https://ipeagit.github.io/geobr/): Brazilian Data
+* [nomisr](https://docs.ropensci.org/nomisr/): Data from the UK
+* [WDI](http://vincentarelbundock.github.io/WDI/): World Bank Data
+
+---
+class: middle section, center
+
+&lt;div style='position: relative; padding-bottom: 56.25%; padding-top: 35px; height: 0; overflow: hidden;'&gt;&lt;iframe sandbox='allow-scripts allow-same-origin allow-presentation' allowfullscreen='true' allowtransparency='true' frameborder='0' height='315' src='https://www.mentimeter.com/embed/847636dd1da2f15ab7dcbcc201269aa8/6b732a3a617f' style='position: absolute; top: 0; left: 0; width: 100%; height: 100%;' width='420'&gt;&lt;/iframe&gt;&lt;/div&gt;
+
+---
+class: journey-bg, section, left, middle, inverse
+
+# 📚 Resources for R 📚
+
+## Questions? lbjdata.org
+
+#### [#rstats hashtag](https://twitter.com/search?q=%23rstats) on twitter
+#### [#tidycensus hashtag](https://twitter.com/search?q=%23tidycensus) on twitter
+#### Analyzing US Census Data: Methods, Maps, and Models in R - [Online Book](https://walker-data.com/census-r/index.html)
+#### R For Data Science - [Online Book](https://r4ds.had.co.nz) | [Hard Copy](https://www.oreilly.com/library/view/r-for-data/9781491910382/) | [Slack Community](https://www.rfordatasci.com)
+
+---
+class: journey-bg, section, center, middle, inverse
+
+# 🙏 Thank you 🙏
+
+## Questions? lbjdata.org
+
+### 📧: matthew.worthington@austin.utexas.edu
+### 🐦: @mrworthington
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="https://platform.twitter.com/widgets.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
