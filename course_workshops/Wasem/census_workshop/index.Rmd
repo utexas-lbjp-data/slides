@@ -187,6 +187,9 @@ While **tidycensus** allows you to access a  massive amount of data, it doesn't 
 -   `get_decennial()`, which requests data from the US Decennial Census APIs for 2000 and 2010. When 2020 Census data are released via the API, R users will be able to access it with this function as well.
 
 
+.tl.burntorange[
+Credit: ([@kyle_e_walker](https://twitter.com/kyle_e_walker))
+]
 
 ---
 
